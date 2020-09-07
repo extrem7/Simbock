@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "013efed573c33be3c70007cafc6a443f",
+    "content-hash": "65d4eed604ad7edf794ebdc48809e575",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -1511,6 +1511,61 @@
                 "psysh"
             ],
             "time": "2020-08-11T19:28:08+00:00"
+        },
+        {
+            "name": "laravel/ui",
+            "version": "v2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel/ui.git",
+                "reference": "fb1404f04ece6eee128e3fb750d3a1e064238b33"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel/ui/zipball/fb1404f04ece6eee128e3fb750d3a1e064238b33",
+                "reference": "fb1404f04ece6eee128e3fb750d3a1e064238b33",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^7.0|^8.0",
+                "illuminate/filesystem": "^7.0|^8.0",
+                "illuminate/support": "^7.0|^8.0",
+                "php": "^7.2.5"
+            },
+            "require-dev": {
+                "mockery/mockery": "^1.0",
+                "phpunit/phpunit": "^8.0|^9.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravel\\Ui\\UiServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laravel\\Ui\\": "src/",
+                    "Illuminate\\Foundation\\Auth\\": "auth-backend/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "Laravel UI utilities and presets.",
+            "keywords": [
+                "laravel",
+                "ui"
+            ],
+            "time": "2020-08-25T18:30:43+00:00"
         },
         {
             "name": "league/commonmark",
@@ -6041,6 +6096,49 @@
                 }
             ],
             "time": "2020-07-22T23:32:04+00:00"
+        },
+        {
+            "name": "zschuessler/laravel-route-to-class",
+            "version": "2.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zschuessler/laravel-route-to-class.git",
+                "reference": "0f6a5aa9c04044c8b17f1a17b2d07174d4d3a0bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zschuessler/laravel-route-to-class/zipball/0f6a5aa9c04044c8b17f1a17b2d07174d4d3a0bb",
+                "reference": "0f6a5aa9c04044c8b17f1a17b2d07174d4d3a0bb",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "5.3.*||5.4.*||5.5.*||5.6.*||5.7.*||5.8.*||^6.0||^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Zschuessler\\RouteToClass\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Zschuessler\\RouteToClass\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "NLPL"
+            ],
+            "authors": [
+                {
+                    "name": "Zachary Schuessler",
+                    "email": "zlschuessler@gmail.com"
+                }
+            ],
+            "description": "A Laravel 5 view composer that will convert the current route to a body class. 'admin/product/5/edit' becomes 'admin-product-edit'",
+            "time": "2020-04-13T21:03:15+00:00"
         }
     ],
     "packages-dev": [
@@ -9282,8 +9380,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^7.2.5",
-        "ext-dom": "*"
+        "php": "^7.4",
+        "ext-json": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"

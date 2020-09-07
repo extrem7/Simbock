@@ -1,0 +1,37 @@
+.navbar-dark {
+    border-color: #4f5962;
+}
+
+.pagination {
+    justify-content: center;
+    flex-wrap: wrap;
+
+    .page-link {
+        border: 0;
+        color: white !important;
+        margin: 0 5px;
+        background-color: #333333;
+
+        &:hover {
+            background-color: $red;
+            color: #fff;
+        }
+    }
+
+    .page-item {
+        &.active {
+            .page-link {
+                background-color: $red;
+                color: #fff;
+            }
+        }
+
+        &.disabled {
+            .page-link {
+                background-color: #333333;
+                border-color: #333333;
+
+            }
+        }
+    }
+}
