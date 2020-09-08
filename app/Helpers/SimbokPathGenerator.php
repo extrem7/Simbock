@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Models\Article;
+use App\Models\Blog\Article;
 use App\Models\User;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;

@@ -14,7 +14,7 @@ class UserRepository
     public function shareForCRUD()
     {
         $roles = collect($this->getRoles())
-            ->map(fn($val, $key) => ['value' => $key, 'label' => ucfirst($val)])->values();
+            ->map(fn($val, $key) => ['value' => $key, 'text' => ucfirst($val)])->values();
 
         share(compact('roles'));
     }

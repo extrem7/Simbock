@@ -59,7 +59,7 @@
         data() {
             return {
                 initialData: this.shared('articles'),
-                resource: 'articles',
+                resource: 'blog.articles',
                 fields: [
                     {key: 'id', sortable: true},
                     {key: 'title', sortable: true},

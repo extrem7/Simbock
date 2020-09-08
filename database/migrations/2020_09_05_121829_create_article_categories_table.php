@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateArticleCategoriesTable extends Migration
 {
+    /* php artisan migrate:refresh --path=/database/migrations/2020_09_05_121829_create_article_categories_table.php */
     public function up()
     {
         Schema::create('article_categories', function (Blueprint $table) {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Blog;
 
 use App\Models\Traits\SearchTrait;
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -25,7 +25,7 @@ class Article extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'title', 'slug', 'excerpt', 'body', 'authors', 'original', 'meta_title', 'meta_description', 'status', 'order_column'
+        'category_id', 'title', 'slug', 'excerpt', 'body', 'meta_title', 'meta_description', 'status'
     ];
 
     protected $search = [
@@ -33,7 +33,6 @@ class Article extends Model implements HasMedia
     ];
 
     // FUNCTIONS
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('image')

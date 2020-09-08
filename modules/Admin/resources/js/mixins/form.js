@@ -12,6 +12,39 @@ import {ReactiveProvideMixin} from 'vue-reactive-provide'
 import jsonToForm from 'json-form-data'
 
 export default {
+    components: {
+        Editor,
+        Invalid,
+        CardFooter,
+
+        vSelect,
+        RedCropper,
+    },
+    mixins: [
+        ReactiveProvideMixin({
+            name: 'errorsInject',
+            include: ['errors']
+        }),
+        ReactiveProvideMixin({
+            name: 'footerInject',
+            include: ['resource', 'isEdit', 'isLoading']
+        })
+    ],
+    directives: {
+        valid(el, {modifiers}, {context}) {
+            if (Object.keys(modifiers)[0] in context.errors) {
+                el.classList.remove('is-valid')
+                el.classList.add('is-invalid')
+            } else {
+                el.classList.remove('is-invalid')
+                if (context.wasValidated) {
+                    el.classList.add('is-valid')
+                } else if (el.classList.contains('is-valid')) {
+                    el.classList.remove('is-valid')
+                }
+            }
+        }
+    },
     data() {
         return {
             id: null,
@@ -28,15 +61,19 @@ export default {
             }
         }
     },
+    provide() {
+        return {
+            resource: this.resource,
+            isEdit: this.isEdit,
+        }
+    },
     methods: {
         setupEdit(model) {
-            if (model) {
-                if (!this.isEdit) this.isEdit = true
+            if (!this.isEdit) this.isEdit = true
 
-                this.id = model.id
-                for (let field in this.form) {
-                    if (model[field] !== undefined && model[field] !== null) this.form[field] = model[field]
-                }
+            this.id = model.id
+            for (let field in this.form) {
+                if (model[field] !== undefined && model[field] !== null) this.form[field] = model[field]
             }
         },
         async send(url, form) {
@@ -60,45 +97,33 @@ export default {
             const form = jsonToForm(json, options)
             if (this.isEdit) form.append('_method', 'PATCH')
             return form
-        }
-    },
-    provide() {
-        return {
-            resource: this.resource,
-            isEdit: this.isEdit,
-        }
-    },
-    directives: {
-        valid(el, {modifiers}, {context}) {
-            if (Object.keys(modifiers)[0] in context.errors) {
-                el.classList.remove('is-valid')
-                el.classList.add('is-invalid')
-            } else {
-                el.classList.remove('is-invalid')
-                if (context.wasValidated) {
-                    el.classList.add('is-valid')
-                } else if (el.classList.contains('is-valid')) {
-                    el.classList.remove('is-valid')
+        },
+        async easySubmit() {
+            let form = this.form
+            try {
+                if (this.isEdit) {
+                    form._method = 'PATCH'
+                    const {status, data} = await this.send(this.route(`admin.${this.resource}.update`, this.id), form)
+                    if (status === 200) {
+                        this.setupEdit(data[this.singular])
+                        this.$bus.emit('alert', {text: data.status})
+                    }
+                } else {
+                    const {status, data} = await this.send(this.route(`admin.${this.resource}.store`), form)
+                    if (status === 201) {
+                        const model = data[this.singular]
+                        this.setupEdit(model)
+                        document.title = data.title
+                        history.pushState(
+                            null, data.title, this.route(`admin.${this.resource}.edit`, model.id)
+                        )
+                        this.$bus.emit('alert', {text: data.status})
+                    }
                 }
+
+            } catch (e) {
+                console.log(e)
             }
         }
-    },
-    mixins: [
-        ReactiveProvideMixin({
-            name: 'errorsInject',
-            include: ['errors']
-        }),
-        ReactiveProvideMixin({
-            name: 'footerInject',
-            include: ['resource', 'isEdit', 'isLoading']
-        })
-    ],
-    components: {
-        Editor,
-        Invalid,
-        CardFooter,
-
-        vSelect,
-        RedCropper,
     }
 }

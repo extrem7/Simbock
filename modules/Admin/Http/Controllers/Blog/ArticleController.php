@@ -1,11 +1,12 @@
 <?php
 
-namespace Modules\Admin\Http\Controllers;
+namespace Modules\Admin\Http\Controllers\Blog;
 
-use App\Models\Article;
-use App\Repositories\ArticleRepository;
-use Modules\Admin\Http\Requests\ArticleRequest;
+use App\Models\Blog\Article;
+use Modules\Admin\Http\Controllers\Controller;
+use Modules\Admin\Http\Requests\Blog\ArticleRequest;
 use Modules\Admin\Http\Requests\IndexRequest;
+use Modules\Admin\Repositories\ArticleRepository;
 
 class ArticleController extends Controller
 {
@@ -18,7 +19,7 @@ class ArticleController extends Controller
 
     public function index(IndexRequest $request)
     {
-        $this->seo()->setTitle('Blog');
+        $this->seo()->setTitle('Blog articles');
 
         $sort = $request->get('sortDesc') ?? true;
 

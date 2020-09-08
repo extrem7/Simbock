@@ -5,13 +5,18 @@ namespace Modules\Admin\Http\Controllers;
 use App\Models\User;
 use Hash;
 use Illuminate\Database\Eloquent\Builder;
+use Modules\Admin\Http\Controllers\Traits\CRUDController;
 use Modules\Admin\Http\Requests\IndexRequest;
 use Modules\Admin\Http\Requests\UserRequest;
 use Modules\Admin\Repositories\UserRepository;
 
 class UserController extends Controller
 {
+    use CRUDController;
+
     protected UserRepository $userService;
+
+    protected string $resource = 'users';
 
     public function __construct()
     {
@@ -49,24 +54,25 @@ class UserController extends Controller
 
         $this->userService->shareForCRUD();
 
-        return view('admin::users.form');
+        return $this->form();
     }
 
     public function store(UserRequest $request)
     {
-        $data = $request->validated();
+        $this->seo()->setTitle('Edit a user');
 
-        $data['password'] = Hash::make($data['password']);
+        $password = Hash::make($request->input('password'));
 
-        $user = new User($data);
+        $user = User::create(array_merge($request->only('email', 'name'), compact('password')));
 
-        $user->assignRole($data['role']);
-        if ($request->hasFile('avatar'))
-            $user->uploadAvatar($request->file('avatar'));
+        $user->assignRole($request->input('role'));
+        $request->uploadAvatar($user);
 
-        $user->save();
-
-        return response()->json(['status' => 'User has been created', 'id' => $user->id], 201);
+        return response()->json([
+            'status' => 'User has been created',
+            'title' => $this->seo()->getTitle(),
+            'user' => $user
+        ], 201);
     }
 
     public function edit(User $user)
@@ -75,31 +81,28 @@ class UserController extends Controller
 
         $this->userService->shareForCRUD();
 
-        $user->oldAvatar = $user->getAvatar();
+        $user->load('avatarMedia');
+        $user->append('avatar');
+
         $user->role = $user->roles()->first()->id ?? null;
+
         share(compact('user'));
 
-        return view('admin::users.form');
+        return $this->form();
     }
 
     public function update(UserRequest $request, User $user)
     {
-        $data = $request->validated();
-
-        if ($data['password']) {
-            $data['password'] = Hash::make($data['password']);
-        } else {
-            unset($data['password']);
+        $data = $request->only('email', 'name');
+        if ($password = $request->input('password')) {
+            $data['password'] = Hash::make($password);
         }
+        $user->update($data);
 
-        $user->fill($data);
-        $user->syncRoles($data['role']);
-        if ($request->hasFile('avatar'))
-            $user->uploadAvatar($request->file('avatar'));
-        $user->save();
-        $user->load('avatarMedia');
+        $user->syncRoles($request->input('role'));
+        $request->uploadAvatar($user);
 
-        return response()->json(['status' => 'User has been updated', 'avatar' => $user->getAvatar()]);
+        return response()->json(['status' => 'User has been updated', 'user' => $user]);
     }
 
     public function destroy(User $user)

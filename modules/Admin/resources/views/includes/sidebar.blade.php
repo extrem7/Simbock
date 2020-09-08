@@ -23,18 +23,65 @@
                 </a>
             </li>
 
-            <li class="nav-item">
-                <a href="{{route('admin.articles.index')}}" class="nav-link {{ Nav::isResource('articles') }}">
+            <li class="nav-item has-treeview {{ Nav::urlDoesContain('blog','menu-open') }}">
+                <a href="#" class="nav-link">
                     <i class="nav-icon fa fa-newspaper"></i>
-                    <p>Blog</p>
+                    <p>
+                        Blog
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
                 </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('admin.blog.articles.index')}}"
+                           class="nav-link {{ Nav::isResource('articles') }}">
+                            <i class="nav-icon fa fa-file-alt"></i>
+                            <p>Articles</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('admin.blog.categories.index')}}"
+                           class="nav-link {{ Nav::isResource('blog/categories') }}">
+                            <i class="nav-icon fas fa-tags"></i>
+                            <p>Categories</p>
+                        </a>
+                    </li>
+                </ul>
             </li>
+
             <li class="nav-item">
                 <a href="{{route('admin.users.index')}}" class="nav-link {{ Nav::isResource('users') }}">
                     <i class="nav-icon fas fa-users"></i>
                     <p>Users</p>
                 </a>
             </li>
+
+            <li class="nav-item has-treeview {{ Nav::urlDoesContain('jobs','menu-open') }}">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-briefcase"></i>
+                    <p>
+                        Jobs
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{{route('admin.sectors.index')}}"
+                           class="nav-link {{ Nav::isResource('sectors') }}">
+                            <i class="nav-icon fas fa-tractor"></i>
+                            <p>Sectors</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{route('admin.roles.index')}}"
+                           class="nav-link {{ Nav::isResource('roles') }}">
+                            <i class="nav-icon fas fa-user-tag"></i>
+                            <p>Roles</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
             @if(config('telescope.enabled'))
                 <li class="nav-item">
                     <a href="{{config('app.url').route('telescope',null,false)}}" class="nav-link"

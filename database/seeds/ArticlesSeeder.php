@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Article;
+use App\Models\Blog\Article;
 use Illuminate\Database\Seeder;
 
 class ArticlesSeeder extends Seeder

@@ -2,7 +2,7 @@
 
 /** @var Factory $factory */
 
-use App\Models\Article;
+use App\Models\Blog\Article;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 

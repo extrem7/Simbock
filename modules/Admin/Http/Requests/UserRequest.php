@@ -2,25 +2,11 @@
 
 namespace Modules\Admin\Http\Requests;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
     public function rules()
     {
         $update = request()->isMethod('PATCH');
@@ -32,5 +18,19 @@ class UserRequest extends FormRequest
             'role' => ['required', 'numeric', 'exists:roles,id'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,bmp,png'],
         ];
+    }
+
+    public function uploadAvatar(User $user)
+    {
+        if ($this->hasFile('avatar')) {
+            $user->uploadAvatar($this->file('avatar'));
+            $user->load('avatarMedia');
+            $user->append('avatar');
+        }
+    }
+
+    public function authorize()
+    {
+        return true;
     }
 }

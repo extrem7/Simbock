@@ -1,6 +1,7 @@
 import CreateBtn from '@/components/includes/forms/CreateBtn'
 import Search from "@/components/includes/forms/Search"
 import ActionsButtons from "@/components/includes/forms/ActionsButtons"
+import DragBtn from '@/components/includes/forms/DragBtn'
 
 export const index = {
     data() {
@@ -43,6 +44,29 @@ export const destroy = {
             } catch (e) {
             }
         }
+    }
+}
+
+export const sortable = {
+    methods: {
+        async sort() {
+            const order = this.items.map(({id}) => id)
+            this.isBusy = true
+            try {
+                const {status, data} = await this.axios.post(this.route(`admin.${this.resource}.sort`), {order})
+                if (status === 200 && data.status) {
+                    this.$bus.emit('alert', {text: data.status})
+                }
+            } catch (e) {
+                console.log(e)
+            } finally {
+                this.isBusy = false
+            }
+        }
+    },
+    components: {
+        Draggable: () => import( 'vuedraggable'),
+        DragBtn
     }
 }
 
@@ -113,6 +137,11 @@ export const datatable = {
         this.initial = this.initialData.data
         this.perPage = this.initialData.per_page
         this.total = this.initialData.total
+    },
+    provide() {
+        return {
+            resource: this.resource,
+        }
     },
     mixins: [index, destroy],
     components: {

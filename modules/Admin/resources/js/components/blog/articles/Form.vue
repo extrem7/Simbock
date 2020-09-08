@@ -2,6 +2,12 @@
     <form @submit.prevent="submit" class="card">
         <div class="card-body">
             <div class="form-group">
+                <label for="category">Category</label>
+                <b-form-select :options="categories" id="category" v-model="form.category_id"
+                               v-valid="form.category_id"></b-form-select>
+                <invalid name="category_id"></invalid>
+            </div>
+            <div class="form-group">
                 <label for="title">Title</label>
                 <input class="form-control meta_description mb-2" id="title" placeholder="Title" type="text"
                        v-model="form.title" v-valid.title>
@@ -49,9 +55,8 @@
 
             <div class="form-group">
                 <label for="status">Status</label>
-                <v-select :clearable="false" :options="statuses" :reduce="label => label.value" :searchable="false"
-                          inputId="status" placeholder="Status" v-model="form.status"
-                          v-valid.status></v-select>
+                <b-form-select :options="statuses" id="category" v-model="form.status"
+                               v-valid="form.status"></b-form-select>
                 <invalid name="status"></invalid>
             </div>
         </div>
@@ -64,9 +69,18 @@
 
     export default {
         mixins: [form],
+        created() {
+            const article = this.shared('article')
+            if (article) {
+                this.setupEdit(article)
+            } else {
+                this.form.status = this.statuses[0].value
+            }
+        },
         data() {
             return {
                 form: {
+                    category_id: null,
                     title: '',
                     slug: '',
                     body: '',
@@ -77,40 +91,39 @@
 
                     status: null,
                 },
-                resource: 'articles',
+                resource: 'blog.articles',
+                categories: [{text: 'Choose category', value: null}, ...this.shared('categories')],
                 statuses: this.shared('statuses'),
                 oldImage: null
             }
         },
-        created() {
-            const article = this.shared('article')
-            this.setupEdit(article)
-
-            if (!this.isEdit)
-                this.form.status = this.statuses[0].value
-        },
         methods: {
             async submit() {
-                const form = this.jtf(this.form)
+                const form = this.jtf(this.form, {
+                    includeNullValues: true,
+                    mapping: (value) => value === null ? '' : value
+                })
 
                 const image = await this.$refs.cropper.getBlob()
                 if (image) form.append('image', image, image.name)
 
                 try {
                     if (this.isEdit) {
-                        const {status, data} = await this.send(this.route('admin.articles.update', this.id), form)
+                        const {status, data} = await this.send(
+                            this.route(`admin.${this.resource}.update`, this.id), form
+                        )
                         if (status === 200) {
                             this.setupEdit(data.article)
                             this.$bus.emit('alert', {text: data.status})
                         }
                     } else {
-                        const {status, data} = await this.send(this.route('admin.articles.store'), form)
+                        const {status, data} = await this.send(this.route(`admin.${this.resource}.store`), form)
                         if (status === 201) {
                             const article = data.article
                             this.setupEdit(article)
                             document.title = data.title
                             history.pushState(
-                                null, data.title, this.route('admin.articles.edit', article.id)
+                                null, data.title, this.route(`admin.${this.resource}.edit`, article.id)
                             )
                             this.$bus.emit('alert', {text: data.status})
                         }

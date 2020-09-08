@@ -1,8 +1,8 @@
 <?php
 
-namespace Modules\Admin\Http\Requests;
+namespace Modules\Admin\Http\Requests\Blog;
 
-use App\Models\Article;
+use App\Models\Blog\Article;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ArticleRequest extends FormRequest
@@ -13,6 +13,7 @@ class ArticleRequest extends FormRequest
         $types = collect(Article::$statuses)->keys()->implode(',');
 
         return [
+            'category_id' => ['nullable', 'exists:article_categories,id'],
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255'],
             'body' => ['required', 'string'],
