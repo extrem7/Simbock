@@ -3,10 +3,15 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Models\Page;
+use Modules\Admin\Http\Controllers\Traits\CRUDController;
 use Modules\Admin\Http\Requests\PageRequest;
 
 class PageController extends Controller
 {
+    use CRUDController;
+
+    protected string $resource = 'pages';
+
     public function index()
     {
         $this->seo()->setTitle('Pages');
@@ -20,14 +25,14 @@ class PageController extends Controller
 
         share(compact('pages'));
 
-        return view('admin::pages.index');
+        return $this->listing();
     }
 
     public function create()
     {
         $this->seo()->setTitle('Create a new page');
 
-        return view('admin::pages.form');
+        return $this->form();
     }
 
     public function store(PageRequest $request)
@@ -50,7 +55,7 @@ class PageController extends Controller
 
         share(compact('page'));
 
-        return view('admin::pages.form');
+        return $this->form();
     }
 
     public function update(PageRequest $request, Page $page)

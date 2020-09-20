@@ -3,8 +3,6 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Models\Blog\Article;
-use App\Models\Rss\Channel;
-use App\Models\Rss\Post;
 use App\Models\User;
 
 class DashboardController extends Controller

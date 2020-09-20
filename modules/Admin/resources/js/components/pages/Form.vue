@@ -1,41 +1,41 @@
 <template>
-    <form @submit.prevent="submit" class="card">
-        <div class="card-body">
-            <div class="form-group">
-                <label for="title">Title</label>
-                <input class="form-control" id="title" placeholder="Title" type="text"
-                       v-model="form.title" v-valid.title>
-                <invalid name="title"></invalid>
-            </div>
-            <div class="form-group">
-                <label for="slug">Slug</label>
-                <input class="form-control" id="slug" placeholder="Slug" type="text"
-                       v-model="form.slug" v-valid.slug>
-                <invalid name="slug"></invalid>
-            </div>
-            <div class="form-group">
-                <label for="body">Body</label>
-                <editor id="body" placeholder="Body" v-model="form.body"></editor>
-                <invalid name="body"></invalid>
-            </div>
+    <div class="col-md-10 col-lg-8">
+        <form class="card" @submit.prevent="submit">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="title">Title</label>
+                    <input id="title" v-model="form.title" v-valid.title class="form-control" placeholder="Title">
+                    <invalid name="title"></invalid>
+                </div>
+                <div class="form-group">
+                    <label for="slug">Slug</label>
+                    <input id="slug" v-model="form.slug" v-valid.slug class="form-control" placeholder="Slug">
+                    <invalid name="slug"></invalid>
+                </div>
+                <div class="form-group">
+                    <label for="body">Body</label>
+                    <editor id="body" v-model="form.body" placeholder="Body"></editor>
+                    <invalid name="body"></invalid>
+                </div>
 
-            <h4 class="mt-4">Seo settings</h4>
-            <div class="form-group">
-                <label for="meta_title">Title</label>
-                <input class="form-control" id="meta_title" placeholder="Title" type="text"
-                       v-model="form.meta_title" v-valid.meta_title>
-                <invalid name="meta_title"></invalid>
+                <h4 class="mt-4">Seo settings</h4>
+                <div class="form-group">
+                    <label for="meta_title">Title</label>
+                    <input id="meta_title" v-model="form.meta_title" v-valid.meta_title class="form-control"
+                           placeholder="Title">
+                    <invalid name="meta_title"></invalid>
+                </div>
+                <div class="form-group">
+                    <label for="meta_description">Description</label>
+                    <input id="meta_description" v-model="form.meta_description" v-valid.meta_description
+
+                           class="form-control" placeholder="Description">
+                    <invalid name="meta_description"></invalid>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="meta_description">Description</label>
-                <input class="form-control" id="meta_description" placeholder="Description"
-                       type="text"
-                       v-model="form.meta_description" v-valid.meta_description>
-                <invalid name="meta_description"></invalid>
-            </div>
-        </div>
-        <card-footer></card-footer>
-    </form>
+            <card-footer></card-footer>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -52,40 +52,17 @@
                     meta_title: '',
                     meta_description: '',
                 },
-                resource: 'pages'
+                resource: 'pages',
+                singular: 'page'
             }
         },
         created() {
             const page = this.shared('page')
-            this.setupEdit(page)
+            if (page) this.setupEdit(page)
         },
         methods: {
-            async submit() {
-                let form = this.form
-                try {
-                    if (this.isEdit) {
-                        form._method = 'PATCH'
-                        const {status, data} = await this.send(this.route('admin.pages.update', this.id), form)
-                        if (status === 200) {
-                            this.setupEdit(data.page)
-                            this.$bus.emit('alert', {text: data.status})
-                        }
-                    } else {
-                        const {status, data} = await this.send(this.route('admin.pages.store'), form)
-                        if (status === 201) {
-                            const page = data.page
-                            this.setupEdit(page)
-                            document.title = data.title
-                            history.pushState(
-                                null, data.title, this.route('admin.pages.edit', page.id)
-                            )
-                            this.$bus.emit('alert', {text: data.status})
-                        }
-                    }
-
-                } catch (e) {
-                    console.log(e)
-                }
+            submit() {
+                this.easySubmit()
             }
         }
     }

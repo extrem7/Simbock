@@ -59,6 +59,11 @@ class User extends Authenticatable implements HasMedia
     }
 
     // RELATIONS
+    public function company()
+    {
+        return $this->hasOne(Company::class);
+    }
+
     public function avatarMedia()
     {
         return $this->morphOne(Media::class, 'model')->where('collection_name', 'avatar');

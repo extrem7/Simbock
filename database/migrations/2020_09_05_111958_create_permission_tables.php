@@ -6,11 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreatePermissionTables extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+    /* php artisan migrate:refresh --path=/database/migrations/2020_09_05_111958_create_permission_tables.php */
     public function up()
     {
         $tableNames = config('permission.table_names');
@@ -88,11 +84,6 @@ class CreatePermissionTables extends Migration
             ->forget(config('permission.cache.key'));
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         $tableNames = config('permission.table_names');

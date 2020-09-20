@@ -33,9 +33,11 @@ if (!function_exists('valid_class')) {
     }
 }
 
-function get_admins_mails(): array
-{
-    return array_map(fn($e) => trim($e), explode(',', setting('emails_for_messages')));
+if (!function_exists('parse_emails')) {
+    function parse_emails(string $emails): array
+    {
+        return array_map(fn($e) => trim($e), explode(',', $emails));
+    }
 }
 
 function checked($name, $default = false)

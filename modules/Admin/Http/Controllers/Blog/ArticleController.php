@@ -3,14 +3,20 @@
 namespace Modules\Admin\Http\Controllers\Blog;
 
 use App\Models\Blog\Article;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Modules\Admin\Http\Controllers\Controller;
+use Modules\Admin\Http\Controllers\Traits\CRUDController;
 use Modules\Admin\Http\Requests\Blog\ArticleRequest;
 use Modules\Admin\Http\Requests\IndexRequest;
 use Modules\Admin\Repositories\ArticleRepository;
 
 class ArticleController extends Controller
 {
+    use CRUDController;
+
     protected ArticleRepository $articleRepository;
+
+    protected string $resource = 'articles';
 
     public function __construct()
     {
@@ -23,14 +29,15 @@ class ArticleController extends Controller
 
         $sort = $request->get('sortDesc') ?? true;
 
-        $articles = Article::query()->select(['id', 'slug', 'title', 'status', 'created_at', 'updated_at'])
+        /* @var $articles LengthAwarePaginator */
+        $articles = Article::with('category')
             ->when($request->get('searchQuery'), fn($q) => $q->search($request->get('searchQuery')))
             ->orderBy($request->get('sortBy') ?? 'id', $sort ? 'desc' : 'asc')
-            ->paginate(10);
+            ->paginate(10, ['category_id', 'id', 'slug', 'title', 'status', 'created_at', 'updated_at']);
 
-        $articles->getCollection()->transform(function ($article) {
+        $articles->getCollection()->transform(function (Article $article) {
+            $article->append('link');
             $article['status'] = Article::$statuses[$article['status']];
-            // $article['link'] = route('frontend.articles.show', $article->slug);
             return $article;
         });
         if (request()->expectsJson()) {
@@ -39,7 +46,7 @@ class ArticleController extends Controller
             share(compact('articles'));
         }
 
-        return view('admin::articles.index');
+        return $this->listing();
     }
 
     public function create()
@@ -48,7 +55,7 @@ class ArticleController extends Controller
 
         $this->articleRepository->shareForCRUD();
 
-        return view('admin::articles.form');
+        return $this->form();
     }
 
     public function store(ArticleRequest $request)
@@ -79,7 +86,7 @@ class ArticleController extends Controller
 
         share(compact('article'));
 
-        return view('admin::articles.form');
+        return $this->form();
     }
 
     public function update(ArticleRequest $request, Article $article)

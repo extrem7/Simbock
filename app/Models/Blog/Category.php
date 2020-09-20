@@ -37,6 +37,6 @@ class Category extends Model implements Sortable
     // ACCESSORS
     public function getLinkAttribute()
     {
-        return route('articles.categories.show', $this->slug ?? $this->id);
+        return route('frontend.articles.category', $this->slug);
     }
 }

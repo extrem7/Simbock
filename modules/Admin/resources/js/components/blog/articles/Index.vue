@@ -24,7 +24,10 @@
                 sort-icon-left
                 v-show="total">
                 <template v-slot:cell(title)="data">
-                    <a :href="data.item.link" target="_blank">{{data.item.title}}</a>
+                    <a :href="data.item.link" target="_blank">{{ data.item.title }}</a>
+                </template>
+                <template v-slot:cell(category)="{item}">
+                    {{ item.category ? item.category.name : '' }}
                 </template>
                 <template v-slot:cell(created_at)="data">
                     {{ data.item.created_at | moment("DD.MM.YYYY HH:mm") }}
@@ -63,6 +66,7 @@
                 fields: [
                     {key: 'id', sortable: true},
                     {key: 'title', sortable: true},
+                    {key: 'category'},
                     {key: 'status', sortable: true},
                     {key: 'created_at', thClass: 'date-column', sortable: true},
                     {key: 'updated_at', thClass: 'date-column', sortable: true},

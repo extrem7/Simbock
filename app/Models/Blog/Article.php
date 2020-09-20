@@ -38,8 +38,8 @@ class Article extends Model implements HasMedia
         $this->addMediaCollection('image')
             ->singleFile()
             ->registerMediaConversions(function (Media $media) {
-                $this->addMediaConversion('thumb')
-                    ->crop('crop-center', 150, 150)
+                $this->addMediaConversion('thumbnail')
+                    ->crop('crop-center', 370, 250)
                     ->sharpen(0)
                     ->nonQueued();
             });
@@ -71,6 +71,11 @@ class Article extends Model implements HasMedia
     }
 
     // RELATIONS
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+
     public function imageMedia()
     {
         return $this->morphOne(Media::class, 'model')
@@ -81,6 +86,11 @@ class Article extends Model implements HasMedia
     public function scopePublished($query)
     {
         return $query->whereStatus(self::PUBLISHED);
+    }
+
+    public function scopeWithImage($query)
+    {
+        return $query->with('imageMedia');
     }
 
     //SETTERS
@@ -95,24 +105,17 @@ class Article extends Model implements HasMedia
         return $this->getImage();
     }
 
-    public function getThumbAttribute()
-    {
-        return $this->getImage('thumb');
-    }
-
     public function getThumbnailAttribute()
     {
         return $this->getImage('thumbnail');
     }
 
-    public function getBannerAttribute()
-    {
-        return $this->getImage('banner');
-    }
-
     public function getLinkAttribute()
     {
-        return route('frontend.articles.show', $this->slug ?? $this->id);
+        return route('frontend.articles.show', [
+            'category' => $this->category->slug,
+            'article' => $this->slug
+        ]);
     }
 
     public function getDateAttribute()

@@ -3,7 +3,7 @@
     "alias": "admin",
     "description": "",
     "keywords": [],
-    "order": 0,
+    "order": 1,
     "providers": [
         "Modules\\Admin\\Providers\\AdminServiceProvider"
     ],

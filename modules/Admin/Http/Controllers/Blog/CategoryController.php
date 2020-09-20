@@ -25,7 +25,7 @@ class CategoryController extends Controller
         $categories = Category::ordered()->withCount('articles')->get();
         share(compact('categories'));
 
-        return view('admin::crud.index', ['resource' => 'article-categories']);
+      return $this->listing();
     }
 
     public function create()

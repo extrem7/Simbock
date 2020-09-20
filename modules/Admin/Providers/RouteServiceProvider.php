@@ -21,7 +21,7 @@ class RouteServiceProvider extends ServiceProvider
 
     protected function mapWebRoutes(): void
     {
-        Route::domain(config('admin.domain'))
+        Route::domain(env('ADMIN_DOMAIN'))
             ->middleware('web')
             ->namespace($this->moduleNamespace)
             ->as('admin.')
