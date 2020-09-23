@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "65d4eed604ad7edf794ebdc48809e575",
+    "content-hash": "a530a6be9e97c92337c3641aac05995e",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -5852,12 +5852,12 @@
             "version": "0.9.4",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tightenco/ziggy.git",
+                "url": "https://github.com/tighten/ziggy.git",
                 "reference": "82ea6ec6cb6ab3545b0245310b2a424316fe48d8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tightenco/ziggy/zipball/82ea6ec6cb6ab3545b0245310b2a424316fe48d8",
+                "url": "https://api.github.com/repos/tighten/ziggy/zipball/82ea6ec6cb6ab3545b0245310b2a424316fe48d8",
                 "reference": "82ea6ec6cb6ab3545b0245310b2a424316fe48d8",
                 "shasum": ""
             },
@@ -9381,7 +9381,8 @@
     "prefer-lowest": false,
     "platform": {
         "php": "^7.4",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-mbstring": "*"
     },
     "platform-dev": [],
     "plugin-api-version": "1.1.0"

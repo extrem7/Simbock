@@ -6,23 +6,15 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
+    public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
-        //
+        \Validator::extend('string255', function ($attribute, $value, $parameters, $validator) {
+            return is_string($value) && mb_strlen($value) <= 255;
+        });
     }
 }
