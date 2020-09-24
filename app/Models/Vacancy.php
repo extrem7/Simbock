@@ -42,11 +42,6 @@ class Vacancy extends Model
         parent::boot();
     }
 
-    public function getDuplicateOptions(): DuplicateOptions
-    {
-        return DuplicateOptions::instance();
-    }
-
     public function company()
     {
         return $this->belongsTo(Company::class);

@@ -39,8 +39,6 @@ class CreateVolunteersTable extends Migration
 
             $table->boolean('has_driver_license')->default(false);
             $table->boolean('has_car')->default(false);
-
-            $table->timestamps();
         });
     }
 
