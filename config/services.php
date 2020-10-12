@@ -13,7 +13,16 @@ return [
     | a conventional file to locate the various service credentials.
     |
     */
-
+    'google' => [
+        'client_id' => env('GOOGLE_ID'),
+        'client_secret' => env('GOOGLE_SECRET'),
+        'redirect' => env('APP_URL') . '/social/google/callback/'
+    ],
+    'facebook' => [
+        'client_id' => env('FACEBOOK_ID'),
+        'client_secret' => env('FACEBOOK_SECRET'),
+        'redirect' => env('APP_URL') . '/social/facebook/callback/'
+    ],
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

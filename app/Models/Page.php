@@ -18,7 +18,7 @@ class Page extends Model
     {
         return [
             'slug' => [
-                'source' => !empty($this->slug) ? 'slug' : 'title',
+                'source' => 'slug',
                 'onUpdate' => true,
             ]
         ];

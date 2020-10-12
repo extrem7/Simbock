@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\SearchTrait;
+use Modules\Frontend\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
@@ -19,7 +20,7 @@ class User extends Authenticatable implements HasMedia
     use SearchTrait;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'provider', 'provider_id', 'password', 'type'
     ];
 
     protected $hidden = [
@@ -28,6 +29,14 @@ class User extends Authenticatable implements HasMedia
 
     protected $search = [
         'email', 'name'
+    ];
+
+    public const VOLUNTEER = 'VOLUNTEER';
+    public const COMPANY = 'COMPANY';
+
+    public static $types = [
+        self::VOLUNTEER => 'Draft',
+        self::COMPANY => 'Company'
     ];
 
     // FUNCTIONS
@@ -56,6 +65,11 @@ class User extends Authenticatable implements HasMedia
         } else {
             return asset_admin('img/no-avatar.png');
         }
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new ResetPasswordNotification($token));
     }
 
     // RELATIONS

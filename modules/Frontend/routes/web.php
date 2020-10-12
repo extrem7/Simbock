@@ -1,5 +1,15 @@
 <?php
 
+Auth::routes();
+
+Route::middleware('guest')->as('auth.')->group(function () {
+    Route::get('social/company/{provider}', 'Auth\SocialController@companyRedirect')->name('provider_company');
+    Route::get('social/company/{provider}/callback', 'Auth\SocialController@companyCallback');
+
+    Route::get('social/{provider}', 'Auth\SocialController@redirect')->name('provider');
+    Route::get('social/{provider}/callback', 'Auth\SocialController@callback');
+});
+
 Route::get('/', 'PageController@home')->name('home');
 
 Route::prefix('/newsroom')->as('articles.')->group(function () {

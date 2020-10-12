@@ -2,7 +2,9 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -50,6 +52,30 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($this->isHttpException($exception) || $exception instanceof ModelNotFoundException) {
+            if ($exception instanceof ModelNotFoundException || $exception->getStatusCode() == 404) {
+                \SEO::setTitle('404');
+                \Route2Class::addClass('bg-linear-gradient-violet');
+                \Route2Class::addClass('page-error');
+
+                if (\Auth::check()) {
+                    $domain = \Str::of($request->getHost());
+                    if (\Auth::getUser()->hasRole('admin') && $domain->contains('admin')) {
+                        return response()->view('admin::errors.404', [], 404);
+                    }
+                }
+                return response()->view('frontend::errors.404', [], 404);
+            }
+        }
+
+        if ($request->ajax()) {
+            if ($exception instanceof ValidationException)
+                return response()->json([
+                    'message' => 'You have validation errors',
+                    'errors' => $exception->validator->messages()->toArray()
+                ], 422);
+        }
+
         return parent::render($request, $exception);
     }
 }

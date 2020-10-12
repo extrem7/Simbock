@@ -1,0 +1,3 @@
+[submodule "modules/Frontend/resources/layout"]
+	path = modules/Frontend/resources/layout
+	url = https://gitlab.com/alex.roox5/simbok.git

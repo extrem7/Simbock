@@ -18,11 +18,15 @@ class PageController extends Controller
             $this->seo()->setDescription($description);
         }
 
+        \Route2Class::addClass('bg-linear-gradient');
+
         return view('frontend::pages.home');
     }
 
-    public function show(Page $page)
+    public function show(Page $pageModel)
     {
+        $page = $pageModel;
+
         $this->seo()->setTitle($page->meta_title ?? $page->title);
         if ($description = $page->meta_description) {
             $this->seo()->setDescription($description);

@@ -15,7 +15,7 @@ class UserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email,' . ($update ? $this->user->id : '')],
             'password' => [$update ? 'nullable' : 'required', 'string', 'min:8'],
-            'role' => ['required', 'numeric', 'exists:roles,id'],
+            'role' => ['required', 'numeric', 'exists:user_roles,id'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,bmp,png'],
         ];
     }

@@ -11,7 +11,7 @@ class DebugBarMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        Debugbar::disable();
+      //  Debugbar::disable();
 
         if (Auth::check() && in_array(Auth::getUser()->email, config('simbok.debugbar_emails'))) {
             Debugbar::enable();

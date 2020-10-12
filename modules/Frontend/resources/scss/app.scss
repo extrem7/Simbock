@@ -1,0 +1,5 @@
+@import "../layout/src/scss/main";
+
+.has-error .invalid-feedback {
+    display: block !important;
+}

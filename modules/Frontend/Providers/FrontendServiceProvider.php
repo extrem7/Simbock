@@ -14,6 +14,7 @@ class FrontendServiceProvider extends ServiceProvider
     {
         $this->registerConfig();
         $this->registerViews();
+        $this->viewComposer();
     }
 
     public function register()
@@ -33,5 +34,13 @@ class FrontendServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'config.php'), $this->moduleNameLower
         );
+    }
+
+    protected function viewComposer()
+    {
+        \View::composer('frontend::layouts.master', function ($view) {
+            $bodyClass = \Route2Class::generateClassString();
+            $view->with('bodyClass', $bodyClass);
+        });
     }
 }
