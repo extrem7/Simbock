@@ -18,6 +18,10 @@ class ArticleController extends Controller
 
     public function index(Category $category = null)
     {
+        $title = 'Newsroom';
+        if ($category) $title = "$category->name | $title";
+        $this->seo()->setTitle($title);
+
         $query = $category ? $category->articles() : Article::query();
 
         $articles = $query->published()
@@ -28,14 +32,20 @@ class ArticleController extends Controller
 
         $articles = ArticleResource::collection($articles);
 
+        if (request()->expectsJson()) return $articles;
+
+        share(compact('articles'));
+
         $categories = $this->repository->getCategories($category);
 
-        return [$articles, $categories];
+        return view('frontend::articles.index', compact('categories', 'category'));
     }
 
     public function show(Category $category, Article $article)
     {
+        $this->seo()->setTitle("$article->title | Newsroom");
+
         $categories = $this->repository->getCategories($category);
-        return [$article, $categories];
+        return view('frontend::articles.show', compact('categories', 'category', 'article'));
     }
 }

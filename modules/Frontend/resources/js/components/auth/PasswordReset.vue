@@ -47,14 +47,13 @@ export default {
                 email: this.shared('email'),
                 password: null,
                 password_confirmation: null
-            },
-            errors: {}
+            }
         }
     },
     methods: {
         async reset() {
             try {
-                const {status, data} = await this.send(this.route('frontend.password.update'), {
+                const {status, data} = await this.send(this.route('password.update'), {
                     ...this.form,
                     token: this.shared('token')
                 })

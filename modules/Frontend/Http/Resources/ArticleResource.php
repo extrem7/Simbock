@@ -15,8 +15,8 @@ class ArticleResource extends JsonResource
         return [
             'data' => $collection,
 
-            'lastPage' => $collection->lastPage(),
-            'currentPage' => $collection->currentPage()
+            'currentPage' => $collection->currentPage(),
+            'lastPage' => $collection->lastPage()
         ];
     }
 
@@ -25,6 +25,7 @@ class ArticleResource extends JsonResource
         /* @var $article Article */
         $article = $this->resource;
         return [
+            'id' => $article->id,
             'title' => $article->title,
             'excerpt' => $article->excerpt,
             'thumbnail' => $article->thumbnail,

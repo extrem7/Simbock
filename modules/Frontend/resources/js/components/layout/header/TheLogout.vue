@@ -8,8 +8,8 @@
 export default {
     methods: {
         async logout() {
-            await this.axios.post(this.route('frontend.logout'))
-            location.href = this.route('frontend.home')
+            await this.axios.post(this.route('logout'))
+            location.href = this.route('home')
         }
     }
 }

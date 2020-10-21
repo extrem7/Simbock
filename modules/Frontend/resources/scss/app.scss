@@ -1,5 +1,17 @@
 @import "../layout/src/scss/main";
+@import '~cropperjs/dist/cropper.css';
 
 .has-error .invalid-feedback {
     display: block !important;
+}
+
+.simbok-company-logo-uploader {
+    input {
+        display: none;
+    }
+
+    .vue-cropper {
+        width: 275px;
+        margin-top: 15px;
+    }
 }

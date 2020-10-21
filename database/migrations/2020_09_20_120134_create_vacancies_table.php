@@ -21,7 +21,7 @@ class CreateVacanciesTable extends Migration
             $table->foreignId('city_id')->constrained('us_cities');
             $table->foreignId('type_id')->constrained('job_types');
             $table->text('description');
-            $table->string('excerpt')();
+            $table->string('excerpt');
 
             $table->boolean('is_relocation')->default(false);
             $table->boolean('is_remote_work')->default(false);

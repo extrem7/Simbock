@@ -98,4 +98,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->id === 1 || $this->email === env('INITIAL_USER_EMAIL');
     }
+
+    public function getIsVolunteerAttribute(): bool
+    {
+        return $this->type === self::VOLUNTEER;
+    }
 }

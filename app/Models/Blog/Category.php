@@ -15,7 +15,7 @@ class Category extends Model implements Sortable
 
     protected $table = 'article_categories';
 
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['name', 'slug', 'is_active'];
 
     // FUNCTIONS
     public function sluggable()
@@ -32,6 +32,12 @@ class Category extends Model implements Sortable
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+    //SCOPES
+    public function scopeActive($query)
+    {
+        return $query->whereIsActive(true);
     }
 
     // ACCESSORS

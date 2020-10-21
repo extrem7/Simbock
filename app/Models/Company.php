@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Map\US\City;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Spatie\MediaLibrary\HasMedia;
@@ -16,7 +17,7 @@ class Company extends Model implements HasMedia
     const UPDATED_AT = null;
 
     protected $fillable = [
-        'title', 'sector_id', 'description', 'size_id',
+        'name', 'title', 'sector_id', 'description', 'size_id',
         'address', 'address_2', 'city_id', 'state_id', 'zip',
         'phone', 'email', 'social'
     ];
@@ -44,12 +45,17 @@ class Company extends Model implements HasMedia
         $this->addMedia($image)->toMediaCollection('logo');
     }
 
+    public function deleteLogo(): bool
+    {
+        return $this->logoMedia->delete();
+    }
+
     public function getLogo(string $size = ''): string
     {
         if ($this->logoMedia !== null) {
             return $this->logoMedia->getUrl($size);
         } else {
-            return asset_admin('img/no-logo.png');
+            return asset('dist/img/avatar.svg');
         }
     }
 
@@ -67,5 +73,16 @@ class Company extends Model implements HasMedia
     public function logoMedia()
     {
         return $this->morphOne(Media::class, 'model')->where('collection_name', 'logo');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    // ACCESSORS
+    public function getLogoAttribute()
+    {
+        return $this->getLogo();
     }
 }

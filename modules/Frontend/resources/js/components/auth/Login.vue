@@ -32,7 +32,7 @@
                 <Invalid name="password"></Invalid>
             </div>
             <div class="text-right">
-                <a :href="route('frontend.password.request')" class="extra-small-size link">Forgot your password?</a>
+                <a :href="route('password.request')" class="extra-small-size link">Forgot your password?</a>
             </div>
             <div class="custom-control custom-checkbox mt-2 mb-2">
                 <input id="remember" v-model="form.remember" class="custom-control-input" type="checkbox">
@@ -41,7 +41,7 @@
             <button class="btn btn-violet w-100 btn-scale-active btn-shadow btn-lg mt-3">Log in</button>
             <div class="extra-small-size text-center mt-3">
                 Don't have an account?
-                <a :href="route('frontend.register')" class="link">Sign up for Simbok</a></div>
+                <a :href="route('register')" class="link">Sign up for Simbok</a></div>
         </form>
     </div>
 </template>
@@ -56,8 +56,7 @@ export default {
             email: null,
             password: null,
             remember: false
-        },
-        errors: {}
+        }
     }),
     methods: {
         async login() {

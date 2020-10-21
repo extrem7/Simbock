@@ -2,7 +2,7 @@
 
     <header class="header header-front">
         <div class="header-wrapper container">
-            <a :href="route('frontend.home')" class="d-block">
+            <a :href="route('home')" class="d-block">
                 <img alt="logo" class="header-logo" src="/dist/img/logo.svg">
             </a>
             <nav class="header-front-navigation">
@@ -33,10 +33,10 @@
                     <a class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140" href="">Post
                         vacancy</a>
                 </div>
-                <a :href="route('frontend.register')"
+                <a :href="route('register')"
                    class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140 hidden-md">Post
                     vacancy</a>
-                <a :href="route('frontend.login')" class="header-link-sign header-link link-inherit small-size">
+                <a :href="route('login')" class="header-link-sign header-link link-inherit small-size">
                     <svg-vue class="mr-1" icon="login"></svg-vue>
                     Sign in</a>
                 <button :class="{'open' : isOpenMenuMobile}" class="mobile-btn"

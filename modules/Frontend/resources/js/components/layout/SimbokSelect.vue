@@ -1,9 +1,19 @@
 <template>
     <div>
-        <v-select :options="optionsSelect" class="simbok-custom-select" @search:blur="isFocus = false"
-                  @search:focus="isFocus = true">
+        <VSelect :filterable="filterable"
+                 :options="options"
+                 :reduce="item => item.value!==undefined?item.value:item"
+                 :value="value"
+                 class="simbok-custom-select"
+                 label="text"
+                 @input="$emit('input',$event)"
+                 @search="(query,loading)=>$emit('search',query,loading)"
+                 @search:blur="isFocus = false"
+                 @search:focus="isFocus = true">
             <template #header>
-                <label :class="{'is-active' : isFocus}" class="control-label-material">{{ placeholder }}</label>
+                <label :class="{'is-active' : isFocus || value}" class="control-label-material">
+                    {{ placeholder }}
+                </label>
             </template>
             <template #open-indicator="{ attributes }">
                 <div class="vs__open-indicator">
@@ -14,7 +24,7 @@
                     </svg>
                 </div>
             </template>
-        </v-select>
+        </VSelect>
     </div>
 </template>
 
@@ -23,11 +33,13 @@ import inputMixin from "../../mixins/inputMixin";
 
 export default {
     mixins: [inputMixin],
-    data() {
-        return {
-            optionsSelect: ['Choose your sector', 'Account manager', 'Apprenticeships', 'Admin', 'Education', 'Energy', 'Banking', 'Simbok', 'Fifa', 'Raxkor', 'Iphone', ' Admin, Secretarial & PA',
-                'Customer Service', 'Construction & Property', ' Charity & Voluntary']
-        }
-    },
+    props: {
+        options: Array,
+        filterable: {
+            type: Boolean,
+            default: true
+        },
+        value: null
+    }
 }
 </script>

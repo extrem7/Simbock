@@ -15,7 +15,11 @@
 <body class="{{ $bodyClass }}">
 <div id="app">
     @auth
-        <header-volunteer></header-volunteer>
+        @if(Auth::getUser()->is_volunteer)
+            <header-volunteer></header-volunteer>
+        @else
+            <header-company></header-company>
+        @endif
     @else
         <header-guest></header-guest>
     @endauth

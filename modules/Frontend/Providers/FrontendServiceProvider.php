@@ -39,7 +39,7 @@ class FrontendServiceProvider extends ServiceProvider
     protected function viewComposer()
     {
         \View::composer('frontend::layouts.master', function ($view) {
-            $bodyClass = \Route2Class::generateClassString();
+            $bodyClass = \Route2Class::getClasses()->join(' ');
             $view->with('bodyClass', $bodyClass);
         });
     }

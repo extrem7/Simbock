@@ -16,20 +16,17 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->string('title')->nullable();
             $table->foreignId('sector_id')->constrained();
-            $table->string('description')->nullable();//todo maybe longer
+            $table->text('description')->nullable();
             $table->foreignId('size_id')->constrained('job_company_sizes');
 
             $table->string('address');
             $table->string('address_2')->nullable();
             $table->foreignId('city_id')->constrained('us_cities');
-            $table->char('state_id', 2);
             $table->char('zip', 5);
 
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->json('social')->nullable();
-
-            $table->foreign('state_id')->references('id')->on('us_states');
         });
     }
 

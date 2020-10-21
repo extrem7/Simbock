@@ -4,7 +4,6 @@ namespace Modules\App\Http\Controllers\Company;
 
 use App\Models\Company;
 use Illuminate\Routing\Controller;
-use Modules\App\Http\Requests\Company\CompanyRequest;
 
 class CompanyController extends Controller
 {
@@ -13,7 +12,7 @@ class CompanyController extends Controller
         return $company;
     }
 
-    public function update(CompanyRequest $request)
+    public function update()
     {
         $user = \Auth::getUser();
         $user->update($request->only('name'));

@@ -1,11 +1,12 @@
 <template>
     <div class="form-group-material">
-        <label :class="{'is-active' : isFocus}" class="control-label-material" for="name">{{ placeholder }}</label>
-        <select id="name" class="form-control form-control-material custom-select" name="" @blur="isFocus = false"
-                @focus="isFocus = true">
-            <option></option>
-            <option>value 1</option>
-        </select>
+        <label :class="{'is-active' : isFocus || value}" class="control-label-material">{{ placeholder }}</label>
+        <BFormSelect :options="options"
+                     :value="value"
+                     class="form-control form-control-material"
+                     @blur="isFocus = false"
+                     @change="$emit('input',$event)"
+                     @focus="isFocus = true"/>
     </div>
 </template>
 
@@ -14,8 +15,9 @@ import inputMixin from "../../mixins/inputMixin";
 
 export default {
     mixins: [inputMixin],
-    data() {
-        return {}
-    },
+    props: {
+        options: Array,
+        value: null
+    }
 }
 </script>

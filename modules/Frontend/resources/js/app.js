@@ -45,7 +45,9 @@ const app = new Vue({
                 let scrollTo = document.getElementById(href).getBoundingClientRect().top - 100;
                 window.scrollTo({top: scrollTo, behavior: 'smooth'});
             });
-        });
+        })
+
+        this.socialPopups()
     },
     destroyed() {
         window.removeEventListener('scroll', this.handleScroll);
@@ -75,6 +77,31 @@ const app = new Vue({
             this.isLargeGrid = window.innerWidth < 1200;
             this.isMobileGrid = window.innerWidth < 768;
         },
+        socialPopups() {
+            const popupSize = {
+                width: 780,
+                height: 550
+            };
+
+            const links = document.querySelectorAll('.article-share-item')
+
+            links.forEach((link) => {
+                link.addEventListener('click', (e) => {
+                    const verticalPos = Math.floor((innerWidth - popupSize.width) / 2),
+                        horisontalPos = Math.floor((innerHeight - popupSize.height) / 2)
+
+                    const popup = window.open(link.getAttribute('href'), 'social',
+                        'width=' + popupSize.width + ',height=' + popupSize.height +
+                        ',left=' + verticalPos + ',top=' + horisontalPos +
+                        ',location=0,menubar=0,toolbar=0,status=0,scrollbars=1,resizable=1')
+
+                    if (popup) {
+                        popup.focus()
+                        e.preventDefault()
+                    }
+                });
+            })
+        }
     },
     beforeMount() {
         window.addEventListener("resize", this.isCheckGrid, false);

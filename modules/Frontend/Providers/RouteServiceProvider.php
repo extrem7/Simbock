@@ -4,6 +4,7 @@ namespace Modules\Frontend\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
+use Modules\Frontend\Http\Middleware\CompleteRegistration;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -17,14 +18,14 @@ class RouteServiceProvider extends ServiceProvider
 
     public function map()
     {
-        // $this->mapApiRoutes();
+        $this->mapApiRoutes();
         $this->mapWebRoutes();
     }
 
     protected function mapWebRoutes()
     {
         Route::domain(env('APP_DOMAIN'))
-            ->middleware('web')
+            ->middleware(['web', CompleteRegistration::class])
             ->namespace($this->moduleNamespace)
             ->as('frontend.')
             ->group(module_path('Frontend', 'routes/web.php'));
@@ -34,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider
     {
         Route::prefix('api')
             ->middleware('api')
-            ->namespace($this->moduleNamespace)
+            ->namespace($this->moduleNamespace . '\Api')
             ->group(module_path('Frontend', '/Routes/api.php'));
     }
 }

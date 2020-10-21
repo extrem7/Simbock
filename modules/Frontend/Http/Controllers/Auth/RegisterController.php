@@ -38,14 +38,12 @@ class RegisterController extends Controller
 
         $this->guard()->login($user);
 
-        if ($response = $this->registered($request, $user)) {
-            return $response;
-        }
+        if ($response = $this->registered($request, $user)) return $response;
 
-        return response()->json(['redirect' => $this->redirectPath()]);
+        return response()->json(['redirect' => $this->redirectPath($user)]);
     }
 
-    public function redirectPath()
+    public function redirectPath(User $user)
     {
         return '/';
     }
@@ -55,7 +53,7 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'is_volunteer' => ['required', 'boolean']
+            'is_company' => ['required', 'boolean']
             //recaptchaFieldName() => recaptchaRuleName()
         ]);
     }
@@ -65,7 +63,7 @@ class RegisterController extends Controller
         $user = User::create([
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'type' => $data['is_volunteer'] ? User::VOLUNTEER : User::COMPANY
+            'type' => $data['is_company'] ? User::COMPANY : User::VOLUNTEER
         ]);
 
         return $user;

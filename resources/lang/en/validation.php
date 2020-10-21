@@ -118,6 +118,9 @@ return [
     'url' => 'The :attribute format is invalid.',
     'uuid' => 'The :attribute must be a valid UUID.',
 
+    // custom rules
+    'string255' => 'The :attribute may not be greater than 255 characters.',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

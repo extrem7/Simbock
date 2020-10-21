@@ -6,15 +6,16 @@ import HeaderGuest from "./layout/header/HeaderGuest"
 import HeaderVolunteer from "./layout/header/HeaderVolunteer"
 import HeaderCompany from "./layout/header/HeaderCompany"
 
+import ArticlesList from "./articles/ArticlesList"
+
+import CompanyInfoForm from "~/components/company/InfoForm"
+
+import VacancyForm from "~/components/company/vacancies/Form"
+
 import VacancyCard from "./layout/VacancyCard"
 import VolunteerCard from "./layout/VolunteerCard"
 import CompanyCard from "./layout/CompanyCard"
-import SelectMaterial from "./layout/SelectMaterial"
-import SimbokSelect from "./layout/SimbokSelect"
-import InputMaterial from "./layout/InputMaterial"
-import InputTypeahead from "./layout/InputTypeahead"
 import InputSearch from "./layout/InputSearch"
-import InputTag from "./layout/InputTag"
 import TheBottomMenuCompany from "./layout/TheBottomMenuCompany"
 import TheBottomMenuVolunteer from "./layout/TheBottomMenuVolunteer"
 import TheInnerFooter from "./layout/TheInnerFooter"
@@ -34,7 +35,6 @@ export default {
     SimbokSelect,
     VacancySettings,
     SelectMaterial,
-    InputTag,
     AccessBox,
     CompanyCard,
     CompanyCardActions,
@@ -45,6 +45,12 @@ export default {
     HeaderVolunteer,
     HeaderCompany,
     TheFooter,
+
+    ArticlesList,
+
+    CompanyInfoForm,
+
+    VacancyForm,
 
     TheBottomMenuVolunteer,
     TheBottomMenuCompany,
@@ -60,15 +66,27 @@ export default {
     PasswordResetForm: PasswordReset
 }
 
+import SelectMaterial from "./layout/SelectMaterial"
+import SimbokSelect from "./layout/SimbokSelect"
+import InputMaterial from "./layout/InputMaterial"
+import InputTypeahead from "./layout/InputTypeahead"
+import InputTag from "./layout/InputTag"
+
+Vue.component('SelectMaterial', SelectMaterial)
+Vue.component('SimbokSelect', SimbokSelect)
+Vue.component('InputMaterial', InputMaterial)
+Vue.component('InputTypeahead', InputTypeahead)
+Vue.component('InputTag', InputTag)
+
 import vSelect from 'vue-select'
 import VueTypeaheadBootstrap from 'vue-typeahead-bootstrap';
 import VueTagsInput from '@johmun/vue-tags-input';
 import RadialProgressBar from 'vue-radial-progress'
 
-Vue.component('v-select', vSelect)
-Vue.component('vue-typeahead-bootstrap', VueTypeaheadBootstrap)
-Vue.component('vue-tags-input', VueTagsInput)
-Vue.component('radial-progress-bar', RadialProgressBar)
+Vue.component('VSelect', vSelect)
+Vue.component('VueTypeaheadBootstrap', VueTypeaheadBootstrap)
+Vue.component('VueTagsInput', VueTagsInput)
+Vue.component('RadialProgressBar', RadialProgressBar)
 
 Vue.component('InputMaterial', InputMaterial)
 

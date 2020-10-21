@@ -22,16 +22,19 @@ class Vacancy extends Model
     public const PUBLISHED = 'PUBLISHED';
     public const STOPPED = 'STOPPED';
     public const CLOSED = 'CLOSED';
+
     public static $statuses = [
         self::DRAFT => 'Draft',
         self::PUBLISHED => 'Published',
         self::STOPPED => 'Stopped',
         self::CLOSED => 'Closed'
     ];
+
     protected $fillable = [
         'title', 'sector_id', 'city_id', 'type_id', 'description', 'is_relocation', 'is_remote_work',
         'address', 'company_title', 'company_description', 'status'
     ];
+
     protected array $search = ['title'];
 
     //FUNCTIONS

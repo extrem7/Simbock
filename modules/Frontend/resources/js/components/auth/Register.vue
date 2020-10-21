@@ -43,7 +43,7 @@
             </div>
             <button class="btn btn-violet w-100 btn-scale-active btn-shadow btn-lg mt-3">Sign up</button>
             <div class="extra-small-size text-center mt-3">Already have an account?
-                <a :href="route('frontend.login')" class="link">Log in</a>
+                <a :href="route('login')" class="link">Log in</a>
             </div>
         </form>
     </b-tab>
@@ -56,7 +56,7 @@ export default {
     mixins: [validation],
     props: {
         title: String,
-        isVolunteer: {
+        isCompany: {
             type: Boolean,
             default: false
         },
@@ -67,12 +67,11 @@ export default {
             email: null,
             password: null,
             password_confirmation: null
-        },
-        errors: {}
+        }
     }),
     computed: {
         google() {
-            return this.route('frontend.auth.' + (this.isVolunteer ? 'provider' : 'provider_company'), 'google')
+            return this.route('auth.' + (this.isVolunteer ? 'provider' : 'provider_company'), 'google')
         }
     },
     methods: {
@@ -80,7 +79,7 @@ export default {
             try {
                 const {status, data} = await this.send('', {
                     ...this.form,
-                    is_volunteer: this.isVolunteer
+                    is_company: this.isCompany
                 })
                 if (status === 200) {
                     location.href = data.redirect

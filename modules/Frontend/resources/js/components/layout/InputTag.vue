@@ -1,17 +1,23 @@
 <template>
-    <div class="form-group-material form-group-tags" @click="isFocus = true">
-        <label :class="{'is-active' : isFocus}" class="control-label-material">{{ placeholder }}</label>
-        <button class="btn btn-add-value">Add</button>
-        <vue-tags-input
+    <div class="form-group-material form-group-tags">
+        <label :class="{'is-active' : isFocus || tag || value.length}" class="control-label-material">
+            {{ placeholder }}
+        </label>
+        <button class="btn btn-add-value" @click.prevent="add">Add</button>
+        <VueTagsInput
+            ref="tags"
             v-model="tag"
+            :add-on-blur="false"
+            :tags="value"
             :autocomplete-items="filteredItems"
-            :tags="tags"
+            :validation="validation"
             placeholder=""
-            @tags-changed="newTags => tags = newTags"
-        />
+            @blur="isFocus=false"
+            @focus="isFocus=true"
+            @tags-changed="newTags => $emit('input',newTags)"/>
         <div class="tag-list">
-            <div v-for="tag in tags" class="tag-item">{{ tag.text }}
-                <button class="btn btn-clear-input btn-clear-input-sm ti-icon-close">
+            <div v-for="(tag,i) in value" class="tag-item">{{ tag.text }}
+                <button class="btn btn-clear-input btn-clear-input-sm ti-icon-close" @click="remove(i)">
                     <svg-vue icon="close"></svg-vue>
                 </button>
             </div>
@@ -20,100 +26,46 @@
 </template>
 
 <script>
-import inputMixin from "../../mixins/inputMixin";
+import inputMixin from "../../mixins/inputMixin"
+import vClickOutside from 'v-click-outside'
+
+import {createTag} from '@johmun/vue-tags-input';
 
 export default {
+    mixins: [inputMixin],
+    directives: {
+        clickOutside: vClickOutside.directive
+    },
+    props: {
+        value: Array,
+        options: Array
+    },
     data() {
         return {
             tag: '',
-            tags: [],
-            autocompleteItems: [{
-                text: 'Spain',
-            }, {
-                text: 'France',
-            }, {
-                text: 'USA',
-            }, {
-                text: 'Germany',
-            }, {
-                text: 'China',
-            }],
-        };
+            validation: [{
+                classes: 'min-length',
+                rule: tag => tag.text.length < 3,
+                disableAdd: true
+            }]
+        }
     },
     methods: {
-        cancel() {
-            // for some reason we need nextTick here
-            this.$nextTick(() => this.handlers = []);
-            this.tag = '';
-        },
         add() {
-            this.handlers.forEach(h => h());
-            this.$nextTick(() => this.handlers = []);
+            const tag = createTag(this.tag, [this.tag], this.validation)
+            this.$refs.tags.addTag(tag)
         },
+        remove(i) {
+            const tags = this.value
+            tags.splice(i, 1)
+            this.$emit('input', tags)
+        },
+        disableFocus() {
+            this.isFocus = false
+        }
     },
-    mixins: [inputMixin],
     computed: {
-        filteredItems() {
-            return this.autocompleteItems.filter(i => {
-                return i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1;
-            });
-        },
-    },
-};
-</script>
-
-<style lang="scss">
-.vue-tags-input {
-    max-width: 100% !important;
-    border-radius: 3px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-    border: 2px solid #fff;
-    transition: border .2s ease-in-out;
-    overflow: hidden;
-
-    &.ti-focus {
-        border-color: #5CEDAA;
-    }
-
-    .ti-item > div {
-        font-size: 16px;
-        color: #767676;
-        font-weight: normal;
-        padding: 3px 12px;
-
-        &:hover {
-            background-color: #5CEDAA;
-        }
-    }
-
-    .ti-new-tag-input-wrapper {
-        padding: 0;
-        margin: 0;
-
-        .ti-new-tag-input {
-            width: 100%;
-            background-color: #fff;
-            border-radius: 3px;
-            padding: 23px 65px 5px 12px;
-            box-shadow: none !important;
-            height: 46px;
-            font-size: 14px;
-            color: #000;
-
-            &:focus {
-                //border-color: #5CEDAA;
-                ///box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-            }
-        }
-    }
-
-    .ti-tag {
-        display: none;
-    }
-
-    .ti-input {
-        padding: 0;
-        border: 0;
+        filteredItems: () => this.options.filter(i => i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1)
     }
 }
-</style>
+</script>

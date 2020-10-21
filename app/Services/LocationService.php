@@ -58,8 +58,21 @@ class LocationService
         return [];
     }
 
-    protected function mapCity(City $c)
+    public function searchCity(string $query): array
     {
-        return "$c->name, $c->county $c->state_id";
+        return City::where('name', $query)
+            ->orWhere('name', 'like', "$query%")
+            ->biggest()
+            ->limit($this->resultsLimit)
+            ->get($this->cityFields)
+            ->map(fn(City $c) => ['text' => $this->mapCity($c), 'value' => $c->id, 'zips' => $c->zips])
+            ->toArray();
+    }
+
+    public function mapCity(City $c)
+    {
+        $name = $c->name;
+        if ($c->name !== $c->county) $name .= ", $c->county";
+        return "$name $c->state_id";
     }
 }

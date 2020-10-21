@@ -32,13 +32,12 @@ export default {
         doneMessage: '',
         form: {
             email: null
-        },
-        errors: {}
+        }
     }),
     methods: {
         async login() {
             try {
-                const {status, data} = await this.send(this.route('frontend.password.email'), this.form)
+                const {status, data} = await this.send(this.route('password.email'), this.form)
                 if (status === 200) {
                     this.done = true
                     this.doneMessage = data.message

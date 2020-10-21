@@ -26,8 +26,11 @@ Vue.use(VueObserveVisibility)
 
 Vue.mixin({
     methods: {
-        route: (name, params, absolute) => route(name, params, absolute, Ziggy),
-        shared: (key) => shared()[key]
+        route: (name, params, absolute) => route('frontend.' + name, params, absolute, Ziggy),
+        shared: (key) => shared()[key],
+        notify(text, variant = 'success', position = 'top', delay = 5) {
+            this.$bus.emit('alert', {variant, text, position, delay})
+        }
     }
 })
 
