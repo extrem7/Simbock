@@ -65,7 +65,9 @@ export default {
         }
     },
     computed: {
-        filteredItems: () => this.options.filter(i => i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1)
+        filteredItems() {
+            return this.options.filter(i => i.text.toLowerCase().indexOf(this.tag.toLowerCase()) !== -1)
+        }
     }
 }
 </script>

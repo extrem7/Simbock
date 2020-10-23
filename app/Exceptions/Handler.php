@@ -52,6 +52,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+
         if ($this->isHttpException($exception) || $exception instanceof ModelNotFoundException) {
             if ($exception instanceof ModelNotFoundException || $exception->getStatusCode() == 404) {
                 \SEO::setTitle('404');
@@ -64,7 +65,22 @@ class Handler extends ExceptionHandler
                         return response()->view('admin::errors.404', [], 404);
                     }
                 }
-                return response()->view('frontend::errors.404', [], 404);
+
+                return response()->view('frontend::errors.404', [
+                    'code' => '404',
+                    'title' => 'Oops! Page not found',
+                    'message' => 'We couldn\'t find the page you were looking for. Maybe our FAQ or Community can help?'
+                ], 404);
+            } else if ($exception->getStatusCode() == 403) {
+                \SEO::setTitle('Forbidden');
+                \Route2Class::addClass('bg-linear-gradient-violet');
+                \Route2Class::addClass('page-error');
+
+                return response()->view('frontend::errors.404', [
+                    'code' => '403',
+                    'title' => 'Your haven\'t permission to do it.',
+                    'message' => ''
+                ], 403);
             }
         }
 

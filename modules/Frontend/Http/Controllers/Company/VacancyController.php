@@ -2,62 +2,66 @@
 
 namespace Modules\Frontend\Http\Controllers\Company;
 
-use App\Models\Jobs\Benefit;
-use App\Models\Jobs\Hour;
-use App\Models\Jobs\Incentive;
-use App\Models\Jobs\Sector;
-use App\Models\Jobs\Skill;
-use App\Models\Jobs\Type;
 use App\Models\Vacancy;
 use Modules\Frontend\Http\Controllers\Controller;
 use Modules\Frontend\Http\Requests\Company\VacancyRequest;
+use Modules\Frontend\Repositories\VacancyRepository;
 
 class VacancyController extends Controller
 {
+    protected VacancyRepository $repository;
+
     protected array $fillable = [
         'title', 'sector_id', 'city_id', 'address', 'type_id', 'description', 'is_relocation', 'is_remote_work',
         'company_title', 'company_description'
     ];
 
-    public function index()
+    public function __construct()
+    {
+        $this->repository = app(VacancyRepository::class);
+    }
+
+    public function index(string $status = null)
     {
         $this->seo()->setTitle('Volunteering Vacancies');
 
-        $company = \Auth::getUser()->company;
+        $company = \Auth::getUser()->company->append('logo');
 
-        $vacancies = \Auth::getUser()->company->vacancies()
+        $vacancies = $company->vacancies()
+            ->when($status, fn($q) => $q->where('status', $status))
             ->with(['city', 'type', 'hours'])
-            ->get(['company_id', 'title', 'city_id', 'type_id', 'excerpt', 'company_title', 'status'])
+            ->latest()
+            ->get(['id', 'company_id', 'title', 'city_id', 'type_id', 'excerpt', 'company_title', 'status', 'created_at'])
             ->map(function (Vacancy $vacancy) use ($company) {
                 $vacancy->setRelation('company', $company);
+                $vacancy->append(['employment', 'date', 'location']);
+
+                $vacancy->company_title = $vacancy->company_title ?? $company->name;
+                $vacancy->days = $vacancy->created_at->diffInDays();
+
+                return $vacancy;
             });
 
         share(compact('vacancies'));
 
-        return view('frontend::company.vacancies.index');
-    }
+        $all = $company->vacancies()->count();
+        $active = $company->vacancies()->active()->count();
+        $draft = $company->vacancies()->draft()->count();
+        $closed = $company->vacancies()->closed()->count();
 
-    public function show(Vacancy $vacancy)
-    {
-        $vacancy->load('company');
-        return $vacancy;
+        return view('frontend::company.vacancies.index', [
+            'counts' => compact('all', 'active', 'draft', 'closed')
+        ]);
     }
 
     public function create()
     {
-        $this->seo()->setTitle('Post vacancy');
+        $title = 'Post vacancy';
+        $this->seo()->setTitle($title);
 
-        $sectors = Sector::all('name', 'id')->map(fn(Sector $s) => ['text' => $s->name, 'value' => $s->id]);
-        $types = Type::all('name', 'id')->map(fn(Type $t) => ['text' => $t->name, 'value' => $t->id]);
-        $hours = Hour::all('name', 'id')->map(fn(Hour $h) => ['text' => $h->name, 'value' => $h->id]);
-        $benefits = Benefit::all('name', 'id')->map(fn(Benefit $b) => ['text' => $b->name, 'value' => $b->id]);
+        $this->repository->sharedData();
 
-        $incentives = Incentive::all(['name', 'id'])->map(fn(Incentive $i) => ['text' => $i->name]);
-        $skills = Skill::all(['name', 'id'])->map(fn(Skill $s) => ['text' => $s->name]);
-
-        share(compact('sectors', 'types', 'hours', 'benefits', 'incentives', 'skills'));
-
-        return view('frontend::company.vacancies.create');
+        return view('frontend::company.vacancies.form', compact('title'));
     }
 
     public function store(VacancyRequest $request)
@@ -72,14 +76,19 @@ class VacancyController extends Controller
         $request->syncIncentives();
         $request->syncSkills();
 
-        $vacancy->load('hours', 'benefits', 'incentives', 'skills');
-        $vacancy = $vacancy->toArray();
-        $vacancy['hours'] = collect($vacancy['hours'])->map(fn(array $h) => $h['id']);
-        $vacancy['benefits'] = collect($vacancy['benefits'])->map(fn(array $b) => $b['id']);
-        $vacancy['incentives'] = collect($vacancy['incentives'])->map(fn(array $i) => ['text' => $i['name']]);
-        $vacancy['skills'] = collect($vacancy['skills'])->map(fn(array $s) => ['text' => $s['name']]);
+        return response()->json(['message' => 'Vacancy has been created.']);
+    }
 
-        return response()->json(['message' => 'Vacancy has been created.', 'vacancy' => $vacancy]);
+    public function edit(Vacancy $vacancy)
+    {
+        $title = 'Edit vacancy';
+        $this->seo()->setTitle('Edit vacancy');
+
+        $this->repository->sharedData();
+        $vacancy = $this->repository->transformForEdit($vacancy);
+        share(compact('vacancy'));
+
+        return view('frontend::company.vacancies.form', compact('title'));
     }
 
     public function update(VacancyRequest $request, Vacancy $vacancy)
@@ -88,40 +97,52 @@ class VacancyController extends Controller
         $request->setVacancy($vacancy);
         $request->syncHours();
         $request->syncBenefits();
-        //todo incentives and skills
-        return $vacancy;
+        $request->syncIncentives();
+        $request->syncSkills();
+
+        return response()->json(['message' => 'Vacancy has been updated.']);
+    }
+
+    public function destroy(Vacancy $vacancy)
+    {
+        $vacancy->delete();
+        return response()->json(['message' => 'The vacancy has been deleted.']);
     }
 
     public function post(Vacancy $vacancy)
     {
         //todo check subscription
-        $vacancy->status = Vacancy::PUBLISHED;
+        if (!in_array($vacancy->status, [Vacancy::DRAFT])) abort(403);
+        $vacancy->status = Vacancy::ACTIVE;
         $vacancy->save();
-        return response()->json(['The vacancy has been published.']);
+        return response()->json(['message' => 'The vacancy has been published.']);
     }
 
     public function stop(Vacancy $vacancy)
     {
-        $vacancy->status = Vacancy::STOPPED;
+        $vacancy->status = Vacancy::DRAFT;
         $vacancy->save();
-        return response()->json(['The vacancy has been stopped.']);
+        return response()->json(['message' => 'The vacancy has been stopped.']);
     }
 
     public function close(Vacancy $vacancy)
     {
+        if (!in_array($vacancy->status, [Vacancy::DRAFT, Vacancy::ACTIVE])) abort(403);
         $vacancy->status = Vacancy::CLOSED;
         $vacancy->save();
-        return response()->json(['The vacancy has been closed.']);
+        return response()->json(['message' => 'The vacancy has been closed.']);
     }
 
     public function duplicate(Vacancy $vacancy)
     {
-        $vacancy->status = Vacancy::DRAFT;
-    }
+        $title = 'Duplicate vacancy';
+        $this->seo()->setTitle($title);
 
-    public function delete(Vacancy $vacancy)
-    {
-        $vacancy->delete();
-        return response()->json(['The vacancy has been deleted.']);
+        $this->repository->sharedData();
+
+        $vacancy = $this->repository->transformForEdit($vacancy);
+        share(compact('vacancy'));
+
+        return view('frontend::company.vacancies.form', compact('title'));
     }
 }

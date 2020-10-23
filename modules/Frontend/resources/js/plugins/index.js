@@ -1,5 +1,14 @@
 import Vue from 'vue'
 
+Vue.mixin({
+    methods: {
+        shared: (key) => shared()[key],
+        notify(text, variant = 'success', position = 'top', delay = 5) {
+            this.$bus.emit('alert', {variant, text, position, delay})
+        }
+    }
+})
+
 import './axios'
 
 import VueBus from 'vue-bus'
@@ -11,8 +20,8 @@ import route, {Ziggy} from 'ziggy'
 import VueMoment from "vue-moment"
 import VueLazyload from 'vue-lazyload'
 import VueScrollTo from 'vue-scrollto'
+import VueSimpleAlert from "vue-simple-alert"
 import VueObserveVisibility from 'vue-observe-visibility'
-//import VueYoutube from 'vue-youtube'
 
 Vue.use(VueBus)
 Vue.use(SvgVue)
@@ -21,16 +30,13 @@ Vue.use(VueLazyload, {
     error: '/dist/img/no-image.jpg',
 })
 Vue.use(VueScrollTo)
+Vue.use(VueSimpleAlert)
 Vue.use(VueObserveVisibility)
-//Vue.use(VueYoutube)
 
 Vue.mixin({
     methods: {
         route: (name, params, absolute) => route('frontend.' + name, params, absolute, Ziggy),
-        shared: (key) => shared()[key],
-        notify(text, variant = 'success', position = 'top', delay = 5) {
-            this.$bus.emit('alert', {variant, text, position, delay})
-        }
+        isRoute: (name) => route(null, {}, null, Ziggy).current('frontend.' + name)
     }
 })
 

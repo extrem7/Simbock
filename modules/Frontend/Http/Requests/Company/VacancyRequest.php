@@ -8,7 +8,6 @@ use App\Models\Jobs\Incentive;
 use App\Models\Jobs\Skill;
 use App\Models\Vacancy;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Collection;
 
 class VacancyRequest extends FormRequest
 {
@@ -38,30 +37,30 @@ class VacancyRequest extends FormRequest
         ];
     }
 
-    public function syncHours(): Collection
+    public function syncHours(): array
     {
-        return $this->vacancy->hours()->saveMany(Hour::findMany($this->hours));
+        return $this->vacancy->hours()->sync(Hour::findMany($this->hours));
     }
 
-    public function syncBenefits(): Collection
+    public function syncBenefits(): array
     {
-        return $this->vacancy->benefits()->saveMany(Benefit::findMany($this->benefits));
+        return $this->vacancy->benefits()->sync(Benefit::findMany($this->benefits));
     }
 
     public function syncIncentives(): array
     {
-        if (($incentives = $this->incentives) && !empty($incentives)) {
+        if ($incentives = $this->incentives) {
             $incentives = Incentive::findOrCreate($incentives);
-            $this->vacancy->incentives()->syncWithoutDetaching($incentives->pluck('id')->toArray());
+            $this->vacancy->incentives()->sync($incentives->pluck('id')->toArray());
         }
         return [];
     }
 
     public function syncSkills(): array
     {
-        if (($skills = $this->skills) && !empty($skills)) {
+        if ($skills = $this->skills) {
             $skills = Skill::findOrCreate($skills);
-            $this->vacancy->skills()->syncWithoutDetaching($skills->pluck('id')->toArray());
+            $this->vacancy->skills()->sync($skills->pluck('id')->toArray());
         }
         return [];
     }

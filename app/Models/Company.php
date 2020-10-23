@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Jobs\Size;
 use App\Models\Map\US\City;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Http\UploadedFile;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -65,6 +67,7 @@ class Company extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
+    /* @return Vacancy|HasMany */
     public function vacancies()
     {
         return $this->hasMany(Vacancy::class);
@@ -80,9 +83,27 @@ class Company extends Model implements HasMedia
         return $this->belongsTo(City::class);
     }
 
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
+    }
+
     // ACCESSORS
     public function getLogoAttribute()
     {
         return $this->getLogo();
+    }
+
+    public function getEmploymentAttribute()
+    {
+        return ($this->title ? "$this->title , " : '') . $this->size->name;
+    }
+
+    public function getLocationAttribute()
+    {
+        $c = $this->city;
+        $name = $c->name;
+        if ($c->name !== $c->county) $name .= ", $c->county";
+        return "$name $c->state_id";
     }
 }

@@ -1,6 +1,5 @@
 <template>
-    <form class="post-vacancy-wrapper"
-          @submit.prevent>
+    <form class="post-vacancy-wrapper" @submit.prevent>
         <div :class="[invalid('title')]" class="form-group">
             <InputMaterial v-model="form.title"
                            placeholder="Volunteer job title*"/>
@@ -41,7 +40,7 @@
             <Invalid name="type_id"/>
         </div>
         <div :class="[invalid('hours')]" class="form-group">
-            <div class="control-label">Job type</div>
+            <div class="control-label">Hours</div>
             <div class="inline-custom-control">
                 <div v-for="{value,text} in hours"
                      class="custom-control custom-checkbox">
@@ -125,7 +124,7 @@
         </div>
         <div :class="[invalid('company_title')]" class="form-group">
             <InputMaterial v-model="form.company_title"
-                           placeholder="Hiring Company*"/>
+                           placeholder="Hiring Company"/>
             <Invalid name="company_title"/>
         </div>
         <div :class="[invalid('company_description')]" class="form-group">
@@ -138,9 +137,14 @@
         </div>
         <div class="d-inline-flex align-items-center btn-group-save-form mt-3">
             <button class="btn btn-green btn-shadow btn-save-form btn-scale-active"
-                    @click.prevent="submit">Save & Post Now
+                    @click.prevent="submit">
+                Save
+                <b-spinner v-show="isLoading" small></b-spinner>
             </button>
-            <button class="btn btn-outline-silver min-width-100 btn-shadow btn-scale-active">Cancel</button>
+            <button class="btn btn-outline-silver min-width-100 btn-shadow btn-scale-active"
+                    @click="cancel">
+                Cancel
+            </button>
         </div>
     </form>
 </template>
@@ -154,6 +158,7 @@ export default {
     mixins: [validation],
     data() {
         return {
+            id: null,
             form: {
                 title: '',
                 sector_id: null,
@@ -183,8 +188,10 @@ export default {
     created() {
         const vacancy = this.shared('vacancy')
         if (vacancy) {
-            this.isEdit = true
-            if (vacancy.logo) this.logo = vacancy.logo
+            if (!this.isRoute('company.vacancies.duplicate')) {
+                this.isEdit = true
+                this.id = vacancy.id
+            }
             this.cities = [vacancy.city]
 
             for (let field in this.form) {
@@ -206,19 +213,26 @@ export default {
             const form = {...this.form}
             form.incentives = form.incentives.map(item => item.text)
             form.skills = form.skills.map(item => item.text)
-
             try {
-                const {status, data} = await this.send(this.route('company.vacancies.store'), form)
-                if (status === 200) {
-                    this.isEdit = true
-                    this.notify(data.message)
+                if (this.isEdit) {
+                    const {status, data} = await this.send(this.route('company.vacancies.update', this.id), form)
+                    if (status === 200) this.notify(data.message)
+                } else {
+                    const {status, data} = await this.send(this.route('company.vacancies.store'), form)
+                    if (status === 200) {
+                        this.isEdit = true
+                        this.notify(data.message)
+                        setTimeout(() => {
+                            location.href = this.route('company.vacancies.index')
+                        }, 2500)
+                    }
                 }
             } catch (e) {
                 console.log(e)
             }
         },
         cancel() {
-            location.href = ''
+            location.href = this.isEdit ? this.route('company.vacancies.index') : ''
         },
         async searchCity(query, loading) {
             if (query.length) this.cities = await locationService.searchCity(query, loading)

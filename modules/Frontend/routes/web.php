@@ -1,6 +1,8 @@
 <?php
 
 use Modules\Frontend\Http\Middleware\Company;
+use Modules\Frontend\Http\Middleware\VacancyNotClosed;
+use Modules\Frontend\Http\Middleware\VacancyOwner;
 
 Auth::routes();
 
@@ -24,6 +26,26 @@ Route::prefix('/newsroom')->as('articles.')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::prefix('account/change-password')
+        ->namespace('Auth')
+        ->as('auth.change_password.')
+        ->group(function () {
+            Route::get('', 'ChangePasswordController@form')->name('form');
+            Route::post('', 'ChangePasswordController@update')->name('update');
+        });
+
+    Route::prefix('vacancies')->as('vacancies.')->group(function () {
+        Route::prefix('{vacancy}')->group(function () {
+            Route::get('', 'VacancyController@show')->name('show');
+        });
+    });
+    Route::prefix('companies')->as('companies.')->group(function () {
+        Route::get('self', 'CompanyController@self')->name('self');
+        Route::prefix('{company}')->group(function () {
+            Route::get('', 'CompanyController@show')->name('show');
+        });
+    });
+
     Route::prefix('company')
         ->middleware(Company::class)
         ->as('company.')
@@ -39,11 +61,27 @@ Route::middleware('auth')->group(function () {
                 });
             });
             Route::prefix('vacancies')->as('vacancies.')->group(function () {
-                Route::get('', 'VacancyController@index')->name('index');
+                Route::get('{status?}', 'VacancyController@index')
+                    ->name('index')
+                    ->where('status', '(active|draft|closed)');
                 Route::get('create', 'VacancyController@create')->name('create');
                 Route::post('', 'VacancyController@store')->name('store');
-            });
 
+                Route::prefix('{vacancy}')->middleware(VacancyOwner::class)->group(function () {
+                    Route::middleware(VacancyNotClosed::class)->group(function () {
+                        Route::get('edit', 'VacancyController@edit')->name('edit');
+                        Route::post('', 'VacancyController@update')->name('update');
+                    });
+
+                    Route::post('post', 'VacancyController@post')->name('post');
+                    Route::post('stop', 'VacancyController@stop')->name('stop');
+                    Route::post('close', 'VacancyController@close')->name('close');
+
+                    Route::get('duplicate', 'VacancyController@duplicate')->name('duplicate');
+
+                    Route::delete('', 'VacancyController@destroy')->name('destroy');
+                });
+            });
         });
 });
 

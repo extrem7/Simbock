@@ -9,7 +9,7 @@ import SvgVue from 'svg-vue'
 import VueMoment from 'vue-moment'
 import VueCookies from 'vue-cookies'
 import VueSuperMethod from 'vue-super-call'
-import VueSimpleAlert from "vue-simple-alert";
+import VueSimpleAlert from "vue-simple-alert"
 import route, {Ziggy} from 'ziggy'
 
 Vue.use(VueBus)

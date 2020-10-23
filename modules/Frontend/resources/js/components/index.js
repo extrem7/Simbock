@@ -9,18 +9,21 @@ import HeaderCompany from "./layout/header/HeaderCompany"
 import ArticlesList from "./articles/ArticlesList"
 
 import CompanyInfoForm from "~/components/company/InfoForm"
+import CompanyShow from "~/components/companies/Show"
 
 import VacancyForm from "~/components/company/vacancies/Form"
+import CompanyVacanciesList from "~/components/company/vacancies/List"
+import VacancyShow from "~/components/vacancies/Show"
 
-import VacancyCard from "./layout/VacancyCard"
+import VacancyCard from "./vacancies/VacancyCard"
 import VolunteerCard from "./layout/VolunteerCard"
 import CompanyCard from "./layout/CompanyCard"
 import InputSearch from "./layout/InputSearch"
-import TheBottomMenuCompany from "./layout/TheBottomMenuCompany"
-import TheBottomMenuVolunteer from "./layout/TheBottomMenuVolunteer"
+import CompanyMenu from "./layout/header/CompanyMenu"
+import TheBottomMenuVolunteer from "./layout/header/TheBottomMenuVolunteer"
 import TheInnerFooter from "./layout/TheInnerFooter"
 import TheFooter from "./layout/TheFooter"
-import VacancySettings from "./layout/VacancySettings"
+import VacancySettings from "./vacancies/VacancySettings"
 import AccessBox from "./layout/AccessBox"
 import CompanyCardActions from "./layout/CompanyCardActions"
 import TheMainSearch from "./layout/TheMainSearch"
@@ -29,6 +32,7 @@ import Register from "./auth/Register"
 import Login from './auth/Login'
 import EmailReset from "./auth/EmailReset"
 import PasswordReset from "./auth/PasswordReset"
+import PasswordChange from "./auth/PasswordChange"
 
 export default {
     AlertNotification,
@@ -49,11 +53,14 @@ export default {
     ArticlesList,
 
     CompanyInfoForm,
+    CompanyShow,
 
     VacancyForm,
+    CompanyVacanciesList,
+    VacancyShow,
 
     TheBottomMenuVolunteer,
-    TheBottomMenuCompany,
+    CompanyMenu,
     VolunteerCard,
     InputSearch,
     InputTypeahead,
@@ -63,7 +70,8 @@ export default {
     RegisterForm: Register,
     LoginForm: Login,
     EmailResetForm: EmailReset,
-    PasswordResetForm: PasswordReset
+    PasswordResetForm: PasswordReset,
+    PasswordChangeForm: PasswordChange
 }
 
 import SelectMaterial from "./layout/SelectMaterial"

@@ -10,6 +10,7 @@ use App\Models\Jobs\Skill;
 use App\Models\Jobs\Type;
 use App\Models\Map\US\City;
 use App\Models\Traits\SearchTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -19,14 +20,12 @@ class Vacancy extends Model
     use SearchTrait;
 
     public const DRAFT = 'DRAFT';
-    public const PUBLISHED = 'PUBLISHED';
-    public const STOPPED = 'STOPPED';
+    public const ACTIVE = 'ACTIVE';
     public const CLOSED = 'CLOSED';
 
     public static $statuses = [
         self::DRAFT => 'Draft',
-        self::PUBLISHED => 'Published',
-        self::STOPPED => 'Stopped',
+        self::ACTIVE => 'Published',
         self::CLOSED => 'Closed'
     ];
 
@@ -41,7 +40,7 @@ class Vacancy extends Model
 
     public static function boot()
     {
-        foreach (['creating', 'updating', 'saving'] as $event) static::$event(fn(self $a) => $a->generateExcerpt());
+        foreach (['creating', 'updating'] as $event) static::$event(fn(self $a) => $a->generateExcerpt());
         parent::boot();
     }
 
@@ -51,7 +50,6 @@ class Vacancy extends Model
     }
 
     // RELATIONS
-
     public function sector()
     {
         return $this->belongsTo(Sector::class);
@@ -87,27 +85,39 @@ class Vacancy extends Model
         return $this->belongsToMany(Skill::class, 'vacancy_has_skills');
     }
 
-    public function getLocationAttribute()
+    // SCOPES
+    public function scopeActive(Builder $query)
     {
-        $city = $this->city;
-        return "$city->name, {$city->state_id}";
+        return $query->where('status', self::ACTIVE);
+    }
+
+    public function scopeDraft(Builder $query)
+    {
+        return $query->where('status', self::DRAFT);
+    }
+
+    public function scopeClosed(Builder $query)
+    {
+        return $query->where('status', self::CLOSED);
     }
 
     // ACCESSORS
-
     public function getEmploymentAttribute()
     {
-        return $this->type->name . ', ' . $this->hours->join(', ');
+        return $this->type->name . ', ' . $this->hours->implode('name', ', ');
     }
 
-    public function getCompanyTitleAttribute(string $company_title = null)
+    public function getDateAttribute()
     {
-        return $company_title ?? $this->company->title;
+        return $this->created_at->diffForHumans();
     }
 
-    public function getCompanyDescriptionAttribute(string $company_description = null)
+    public function getLocationAttribute()
     {
-        return $company_description ?? $this->company->description;
+        $c = $this->city;
+        $name = $c->name;
+        if ($c->name !== $c->county) $name .= ", $c->county";
+        return "$name $c->state_id";
     }
 
     protected function generateExcerpt(): void

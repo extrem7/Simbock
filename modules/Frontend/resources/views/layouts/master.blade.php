@@ -24,6 +24,12 @@
         <header-guest></header-guest>
     @endauth
     @yield('content')
+    @auth
+        @if(Auth::getUser()->is_volunteer)
+        @else
+            <company-menu class="menu-account-fixed"></company-menu>
+        @endif
+    @endauth
     <the-footer class="footer-front-light"></the-footer>
     <button class="btn btn-up btn-scale-active" :class="{'active' : scrolled}" @click="scrollToHeader">
         <svg-vue icon="arrow-solid"></svg-vue>

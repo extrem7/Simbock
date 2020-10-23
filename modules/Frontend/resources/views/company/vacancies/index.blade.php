@@ -6,24 +6,33 @@
         <div class="row">
             <div class="offset-xl-1 col-xl-11">
                 <ul class="tabs-wrapper horizontal-scroll">
-                    <li class="tab-item btn-scale-active"><a href="" class="job-status job-status-all">All</a></li>
-                    <li class="tab-item btn-scale-active"><a href="" class="job-status job-status-active">Active (0)</a>
+                    <li class="tab-item btn-scale-active">
+                        <a href="{{route('frontend.company.vacancies.index')}}" class="job-status job-status-all">
+                            All ({{$counts['all']}})
+                        </a>
                     </li>
-                    <li class="tab-item btn-scale-active"><a href="" class="job-status job-status-draft">Draft (0)</a>
+                    <li class="tab-item btn-scale-active">
+                        <a href="{{route('frontend.company.vacancies.index',$counts['active']?'active':null)}}"
+                           class="job-status job-status-active">
+                            Active ({{$counts['active']}})
+                        </a>
                     </li>
-                    <li class="tab-item btn-scale-active"><a href="" class="job-status job-status-closed">Closed (0)</a>
+                    <li class="tab-item btn-scale-active">
+                        <a href="{{route('frontend.company.vacancies.index',$counts['draft']?'draft':null)}}"
+                           class="job-status job-status-draft">
+                            Draft ({{$counts['draft']}})
+                        </a>
+                    </li>
+                    <li class="tab-item btn-scale-active">
+                        <a href="{{route('frontend.company.vacancies.index',$counts['closed']?'closed':null)}}"
+                           class="job-status job-status-closed">
+                            Closed ({{$counts['closed']}})
+                        </a>
                     </li>
                 </ul>
-                <div class="card-list">
-                    <div class="job-settings-wrapper">
-                        <vacancy-card :is-actions="false" is-completed></vacancy-card>
-                        <vacancy-settings></vacancy-settings>
-                    </div>
-                    <div class="job-settings-wrapper">
-                        <vacancy-card :is-actions="false"></vacancy-card>
-                        <vacancy-settings></vacancy-settings>
-                    </div>
-                </div>
+
+                <company-vacancies-list></company-vacancies-list>
+
                 <div class="text-center text-xl-left">
                     <a href="{{route('frontend.company.vacancies.create')}}"
                        class="btn btn-violet btn-flex btn-add-vacancy btn-sm">

@@ -43,7 +43,8 @@
                     <simbok-select v-model="form.city_id"
                                    :filterable="false"
                                    :options="cities"
-                                   placeholder="City*" @search="searchCity"></simbok-select>
+                                   placeholder="City*"
+                                   @search="searchCity"></simbok-select>
                     <Invalid name="city_id"></Invalid>
                 </div>
                 <div :class="[invalid('zip')]" class="address-column address-zip">
@@ -103,7 +104,10 @@
             </div>
 
             <div class="d-inline-flex align-items-center btn-group-save-form mt-3">
-                <button class="btn btn-green btn-shadow btn-save-form btn-scale-active">Save Company</button>
+                <button class="btn btn-green btn-shadow btn-save-form btn-scale-active">
+                    Save
+                    <b-spinner v-show="isLoading" small></b-spinner>
+                </button>
                 <button v-if="isEdit"
                         class="btn btn-outline-silver min-width-100 btn-shadow btn-scale-active"
                         @click.prevent="cancel">
@@ -198,15 +202,21 @@ export default {
                     ...this.form
                 })
                 if (status === 200) {
-                    this.isEdit = true
                     this.notify(data.message)
+                    setTimeout(() => {
+                        if (!this.isEdit) location.href = this.route('companies.self')
+                    }, 2500)
                 }
             } catch (e) {
                 console.log(e)
             }
         },
         cancel() {
-            window.location.reload()
+            if (this.isEdit) {
+                location.href = this.route('companies.self')
+            } else {
+                location.reload()
+            }
         },
         async searchCity(query, loading) {
             if (query.length) this.cities = await locationService.searchCity(query, loading)

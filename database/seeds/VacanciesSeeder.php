@@ -11,7 +11,7 @@ class VacanciesSeeder extends Seeder
 {
     public function run()
     {
-        factory(Vacancy::class, 2)->create()->each(function (Vacancy $vacancy) {
+        factory(Vacancy::class, 10)->create()->each(function (Vacancy $vacancy) {
             $vacancy->hours()->saveMany(Hour::inRandomOrder()->limit(rand(1, 2))->get());
             $vacancy->benefits()->saveMany(Benefit::inRandomOrder()->limit(2)->get());
             $vacancy->incentives()->saveMany(Incentive::inRandomOrder()->limit(2)->get());

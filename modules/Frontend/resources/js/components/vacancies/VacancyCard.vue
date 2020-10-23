@@ -1,23 +1,22 @@
 <template>
     <div :class="{'completed-account' : isCompleted}" class="card-work card-work-vacancy">
-        <div v-if="isLogoAndName" class="card-work-company">
-            <div class="card-work-company-name">Approved Cash Advance</div>
-            <img alt="" class="card-work-company-logo" src="dist/img/logo-company.jpg">
+        <div v-if="hasLogoAndName" class="card-work-company">
+            <div class="card-work-company-name">{{ company_title }}</div>
+            <img :alt="company_title" :src="company.logo" class="card-work-company-logo">
         </div>
-        <div class="card-work-title">General Manager</div>
+        <div class="card-work-title">{{ title }}</div>
         <div class="card-work-info">
-            <div class="card-work-place">Torrance, CA</div>
+            <div class="card-work-place">{{ location }}</div>
             <span class="vertical-divider"></span>
-            <div class="card-work-posted flex-shrink-0">Posted 4 days ago</div>
+            <div class="card-work-posted flex-shrink-0">{{ date }}</div>
         </div>
-        <div class="card-work-time">Permanent, full-time</div>
-        <div v-if="isDescription" class="card-work-text">
-            ManagementCome Join Panera Bread! - an award winning leader in the restaurant industry. We are a top
-            franchise group with great growth potential, looking for excellent people to join our team!
-            <a class="link link-border semi-bold-weight" href="">See more</a>
+        <div class="card-work-time">{{ employment }}</div>
+        <div v-if="hasDescription" class="card-work-text">
+            {{ excerpt }}
+            <a :href="route('vacancies.show',this.id)" class="link link-border semi-bold-weight">See more</a>
         </div>
-        <div v-if="isActions" class="card-work-actions justify-content-end">
-            <a :class="{'was-apply disabled' : isApply}" class="btn btn-outline-violet min-width-100" href=""> Apply</a>
+        <div v-if="hasActions" class="card-work-actions justify-content-end">
+            <a :class="{'was-apply disabled' : isApply}" class="btn btn-outline-violet min-width-100" href="">Apply</a>
             <button :class="{'active' : isBookmark}" class="btn btn-bookmark btn-scale-active"
                     @click="isBookmark = !isBookmark">
                 <svg-vue icon="bookmark"></svg-vue>
@@ -29,6 +28,15 @@
 <script>
 export default {
     props: {
+        id: Number,
+        title: String,
+        location: String,
+        employment: String,
+        date: String,
+        excerpt: String,
+        company: Object,
+        company_title: String,
+
         //если заполнен профиль или чет такое- помнишь боковой бордер
         isCompleted: {
             type: Boolean,
@@ -39,17 +47,17 @@ export default {
             default: false
         },
         //есть карточки где не надо описания
-        isDescription: {
+        hasDescription: {
             type: Boolean,
             default: true
         },
         //есть карточки где не надо кнопок
-        isActions: {
+        hasActions: {
             type: Boolean,
             default: true
         },
         //есть карточки где не надо лого и имени компании
-        isLogoAndName: {
+        hasLogoAndName: {
             type: Boolean,
             default: true
         },

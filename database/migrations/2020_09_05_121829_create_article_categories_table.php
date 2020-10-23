@@ -15,6 +15,7 @@ class CreateArticleCategoriesTable extends Migration
             $table->string('slug')->unique();
             $table->string('name');
 
+            $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('order');
 
             $table->timestamps();
