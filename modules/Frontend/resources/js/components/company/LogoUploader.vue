@@ -1,5 +1,5 @@
 <template>
-    <div :class="[invalid('logo')]" class="simbok-company-logo-uploader form-group">
+    <div :class="[invalid('logo')]" class="simbok-image-uploader form-group">
         <input ref="input" accept="image/*" name="image" type="file" @change="setImage">
 
         <div class="company-info-logo">

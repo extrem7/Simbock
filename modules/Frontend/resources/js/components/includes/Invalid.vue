@@ -13,7 +13,11 @@ export default {
             type: Boolean,
             default: false
         },
-        deep: Boolean
+        deep: Boolean,
+        vuex: {
+            type: Boolean,
+            default: false
+        }
     },
     inject: ['errorsInject']
 }

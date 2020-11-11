@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\SearchTrait;
+use App\Models\Volunteers\Volunteer;
 use Modules\Frontend\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\UploadedFile;
@@ -78,22 +79,12 @@ class User extends Authenticatable implements HasMedia
         return $this->hasOne(Company::class);
     }
 
-    public function avatarMedia()
+    public function volunteer()
     {
-        return $this->morphOne(Media::class, 'model')->where('collection_name', 'avatar');
+        return $this->hasOne(Volunteer::class);
     }
 
     // ACCESSORS
-    public function getAvatarAttribute()
-    {
-        return $this->getAvatar();
-    }
-
-    public function getIconAttribute()
-    {
-        return $this->getAvatar('icon');
-    }
-
     public function getIsSuperAdminAttribute(): bool
     {
         return $this->id === 1 || $this->email === env('INITIAL_USER_EMAIL');

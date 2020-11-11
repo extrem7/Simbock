@@ -83,6 +83,22 @@ Route::middleware('auth')->group(function () {
                 });
             });
         });
+
+    Route::prefix('volunteer')
+        //->middleware(Company::class)
+        ->as('volunteer.')
+        ->namespace('Volunteer')
+        ->group(function () {
+            Route::prefix('account')->as('account.')->group(function () {
+                Route::get('', 'AccountController@page')->name('form');
+                Route::post('', 'AccountController@update')->name('update');
+
+                Route::prefix('avatar')->as('avatar.')->group(function () {
+                    Route::post('', 'AccountController@uploadAvatar')->name('update');
+                    Route::delete('', 'AccountController@destroyAvatar')->name('destroy');
+                });
+            });
+        });
 });
 
 Route::get('/{pageModel:slug}', 'PageController@show')->name('pages.show');

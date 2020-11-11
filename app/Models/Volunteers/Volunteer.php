@@ -5,6 +5,7 @@ namespace App\Models\Volunteers;
 use App\Models\Jobs\Job;
 use App\Models\Jobs\Skill;
 use App\Models\Language;
+use App\Models\Map\US\City;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
@@ -18,10 +19,14 @@ class Volunteer extends Model implements HasMedia
 
     const CREATED_AT = null;
     const UPDATED_AT = null;
+
     protected $fillable = [
         'phone', 'email', 'social', 'headline', 'city_id', 'zip', 'is_relocating', 'is_working_remotely',
-        'years_of_experience_id', 'level_of_education_id', 'veteran_status_id', 'has_driver_license', 'has_car'
+        'job_title', 'executive_summary', 'objective', 'achievements', 'associations', 'years_of_experience_id',
+        'level_of_education_id', 'veteran_status_id', 'cover_letter', 'personal_statement',
+        'has_driver_license', 'has_car'
     ];
+
     protected $casts = [
         'social' => 'array',
         'is_relocating' => 'boolean',
@@ -31,7 +36,6 @@ class Volunteer extends Model implements HasMedia
     ];
 
     // FUNCTIONS
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('avatar')->singleFile()
@@ -50,12 +54,17 @@ class Volunteer extends Model implements HasMedia
         $this->addMedia($image)->toMediaCollection('avatar');
     }
 
+    public function deleteAvatar(): bool
+    {
+        return $this->avatarMedia->delete();
+    }
+
     public function getAvatar(string $size = ''): string
     {
         if ($this->avatarMedia !== null) {
             return $this->avatarMedia->getUrl($size);
         } else {
-            return asset_admin('img/no-avatar.png');
+            return asset('dist/img/avatar.svg');
         }
     }
 
@@ -65,9 +74,9 @@ class Volunteer extends Model implements HasMedia
         return $this->belongsTo(User::class);
     }
 
-    public function jobs()
+    public function city()
     {
-        return $this->hasMany(Job::class);
+        return $this->belongsTo(City::class);
     }
 
     public function workExperiences()
@@ -103,5 +112,26 @@ class Volunteer extends Model implements HasMedia
     public function avatarMedia()
     {
         return $this->morphOne(Media::class, 'model')->where('collection_name', 'avatar');
+    }
+
+    // ACCESSORS
+    public function getAvatarAttribute(): string
+    {
+        return $this->getAvatar();
+    }
+
+    public function getIconAttribute(): string
+    {
+        return $this->getAvatar('icon');
+    }
+
+    public function getNameAttribute(): ?string
+    {
+        return $this->user->name;
+    }
+
+    public function getEmailAttribute(string $email = null): string
+    {
+        return $email ?: $this->user->email;
     }
 }

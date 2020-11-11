@@ -19,7 +19,7 @@ axios.interceptors.response.use(function (response) {
     } else if (status === 403) {
         Vue.bus.emit('alert', {text: 'Your haven\'t permission to do it.', variant: 'danger'})
     } else if (status === 422) {
-        Vue.bus.emit('alert', {text: 'Validation error. Please check your input data.', variant: 'warning'})
+        //Vue.bus.emit('alert', {text: 'Validation error. Please check your input data.', variant: 'warning'})
     } else if ((status % 500) < 100) {
         Vue.bus.emit('alert', {
             text: 'Internal Server Error. The server encountered an internal error or misconfiguration and was unable to complete your request.',

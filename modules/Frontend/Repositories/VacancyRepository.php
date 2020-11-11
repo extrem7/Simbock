@@ -13,7 +13,7 @@ use App\Services\LocationService;
 
 class VacancyRepository
 {
-    public function sharedData()
+    public function sharedData(): void
     {
         $sectors = Sector::all('name', 'id')->map(fn(Sector $s) => ['text' => $s->name, 'value' => $s->id]);
         $types = Type::all('name', 'id')->map(fn(Type $t) => ['text' => $t->name, 'value' => $t->id]);

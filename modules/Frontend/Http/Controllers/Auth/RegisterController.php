@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Route2Class;
 
 class RegisterController extends Controller
 {
@@ -23,7 +24,7 @@ class RegisterController extends Controller
     {
         $this->seo()->setTitle('Register');
 
-        \Route2Class::addClass('bg-decorative');
+        Route2Class::addClass('bg-decorative');
 
         return view('frontend::auth.register');
     }
@@ -65,6 +66,10 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'type' => $data['is_company'] ? User::COMPANY : User::VOLUNTEER
         ]);
+
+        if (!$data['is_company']) {
+            $user->volunteer()->create();
+        }
 
         return $user;
     }

@@ -15,6 +15,8 @@ import VacancyForm from "~/components/company/vacancies/Form"
 import CompanyVacanciesList from "~/components/company/vacancies/List"
 import VacancyShow from "~/components/vacancies/Show"
 
+import VolunteerAccountPage from "~/components/volunteer/account/AccountPage"
+
 import VacancyCard from "./vacancies/VacancyCard"
 import VolunteerCard from "./layout/VolunteerCard"
 import CompanyCard from "./layout/CompanyCard"
@@ -58,6 +60,8 @@ export default {
     VacancyForm,
     CompanyVacanciesList,
     VacancyShow,
+
+    VolunteerAccountPage,
 
     TheBottomMenuVolunteer,
     CompanyMenu,

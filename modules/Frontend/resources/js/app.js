@@ -4,9 +4,12 @@ import './plugins'
 import './filters'
 
 import components from './components'
+import store from './store'
 
 const app = new Vue({
+    components,
     el: '#app',
+    store,
     data() {
         return {
             // на пк версиях где поиск, при скролле добавляется к шапке чтоб скрыть шапку и оставить строку поиска
@@ -32,6 +35,10 @@ const app = new Vue({
     },
     created() {
         window.addEventListener("scroll", this.handleScroll);
+    },
+    beforeMount() {
+        window.addEventListener("resize", this.isCheckGrid, false);
+        window.addEventListener("load", this.isCheckGrid, false);
     },
     mounted() {
         let links = document.querySelectorAll(".navigate-by-page-link");
@@ -103,9 +110,6 @@ const app = new Vue({
             })
         }
     },
-    beforeMount() {
-        window.addEventListener("resize", this.isCheckGrid, false);
-        window.addEventListener("load", this.isCheckGrid, false);
-    },
-    components,
 })
+
+store.app = app

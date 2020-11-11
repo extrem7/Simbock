@@ -37,8 +37,14 @@ export default {
         clickOutside: vClickOutside.directive
     },
     props: {
-        value: Array,
-        options: Array
+        value: {
+            type: Array,
+            default: () => []
+        },
+        options: {
+            type: Array,
+            default: () => []
+        }
     },
     data() {
         return {
