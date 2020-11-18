@@ -2,13 +2,22 @@
 
 namespace App\Models\Volunteers;
 
+use App\Models\Jobs\Hour;
 use App\Models\Jobs\Job;
+use App\Models\Jobs\Role;
 use App\Models\Jobs\Skill;
+use App\Models\Jobs\Type;
 use App\Models\Language;
 use App\Models\Map\US\City;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -17,11 +26,11 @@ class Volunteer extends Model implements HasMedia
 {
     use InteractsWithMedia;
 
-    const CREATED_AT = null;
-    const UPDATED_AT = null;
+    public const CREATED_AT = null;
+    public const UPDATED_AT = null;
 
     protected $fillable = [
-        'phone', 'email', 'social', 'headline', 'city_id', 'zip', 'is_relocating', 'is_working_remotely',
+        'is_private', 'phone', 'email', 'social', 'headline', 'city_id', 'zip', 'is_relocating', 'is_working_remotely',
         'job_title', 'executive_summary', 'objective', 'achievements', 'associations', 'years_of_experience_id',
         'level_of_education_id', 'veteran_status_id', 'cover_letter', 'personal_statement',
         'has_driver_license', 'has_car'
@@ -45,9 +54,10 @@ class Volunteer extends Model implements HasMedia
                     ->sharpen(0)
                     ->nonQueued();
             });
+        $this->addMediaCollection('resume')->singleFile();
     }
 
-    public function uploadAvatar(UploadedFile $image = null)
+    public function uploadAvatar(UploadedFile $image = null): void
     {
         if ($this->avatarMedia) $this->deleteMedia($this->avatarMedia);
 
@@ -63,53 +73,76 @@ class Volunteer extends Model implements HasMedia
     {
         if ($this->avatarMedia !== null) {
             return $this->avatarMedia->getUrl($size);
-        } else {
-            return asset('dist/img/avatar.svg');
         }
+
+        return asset('dist/img/avatar.svg');
     }
 
     // RELATIONS
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function city()
+    public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
     }
 
-    public function workExperiences()
+    /* @return City[]|Collection|BelongsToMany */
+    public function locations(): BelongsToMany
+    {
+        return $this->belongsToMany(City::class, 'volunteer_has_locations');
+    }
+
+    /* @return City[]|Collection|BelongsToMany */
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'volunteer_has_sectors_with_roles')->withPivot(['sector_id']);
+    }
+
+    public function types(): BelongsToMany
+    {
+        return $this->belongsToMany(Type::class, 'volunteer_has_types');
+    }
+
+    public function hours(): BelongsToMany
+    {
+        return $this->belongsToMany(Hour::class, 'volunteer_has_hours');
+    }
+
+    public function workExperiences(): HasMany
     {
         return $this->hasMany(WorkExperience::class);
     }
 
-    public function educations()
+    public function educations(): HasMany
     {
         return $this->hasMany(Education::class);
     }
 
-    public function resumes()
+    /* @return Resume|HasOne */
+    public function resume(): HasOne
     {
-        return $this->hasMany(Resume::class);
+        return $this->hasOne(Resume::class);
     }
 
-    public function certificates()
+    public function certificates(): HasMany
     {
         return $this->hasMany(Certificate::class);
     }
 
-    public function skills()
+    public function skills(): BelongsToMany
     {
         return $this->belongsToMany(Skill::class, 'volunteer_has_skills');
     }
 
-    public function languages()
+    public function languages(): BelongsToMany
     {
-        return $this->belongsToMany(Language::class, 'volunteer_has_languages');
+        return $this->belongsToMany(Language::class, 'volunteer_has_languages')->withPivot(['fluency']);
     }
 
-    public function avatarMedia()
+    public function avatarMedia(): MorphOne
     {
         return $this->morphOne(Media::class, 'model')->where('collection_name', 'avatar');
     }

@@ -60,7 +60,7 @@ class VacancyRequest extends FormRequest
     {
         if ($skills = $this->skills) {
             $skills = Skill::findOrCreate($skills);
-            $this->vacancy->skills()->sync($skills->pluck('id')->toArray());
+            return $this->vacancy->skills()->sync($skills->pluck('id')->toArray());
         }
         return [];
     }

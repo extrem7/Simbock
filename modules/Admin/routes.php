@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @routeNamespace("Modules\Admin\Http\Controllers")
+ * @routePrefix("admin.")
+ */
+
 use Modules\Admin\Http\Middleware\Admin;
 
 Route::middleware('guest')->group(function () {

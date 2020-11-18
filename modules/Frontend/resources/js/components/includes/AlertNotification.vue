@@ -28,7 +28,7 @@ export default {
     },
     created() {
         this.$bus.on('alert', ({variant = 'success', text, position = 'top', delay = 5}) => {
-            console.log(text)//todo disable in prod
+            if (process.env.NODE_ENV !== 'production') console.log(text)
             clearTimeout(this.timeout)
             this.variant = variant
             this.text = text

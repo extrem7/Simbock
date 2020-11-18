@@ -2,6 +2,8 @@
 
 namespace Modules\Frontend\Http\Requests\Volunteer;
 
+use App\Models\Jobs\Skill;
+use App\Models\Volunteers\Volunteer;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AccountRequest extends FormRequest
@@ -9,6 +11,7 @@ class AccountRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'is_private' => ['nullable', 'boolean'],
             'name' => ['nullable', 'string255'],
             'headline' => ['nullable', 'string255'],
             'city_id' => ['nullable', 'exists:us_cities,id'],
@@ -35,6 +38,9 @@ class AccountRequest extends FormRequest
             'achievements' => ['nullable', 'string', 'max:512'],
             'associations' => ['nullable', 'string', 'max:512'],
 
+            'skills' => ['nullable', 'array'],
+            'skills.*' => ['string'],
+
             'years_of_experience_id' => ['nullable', 'exists:volunteer_years_of_experience,id'],
             'level_of_education_id' => ['nullable', 'exists:volunteer_levels_of_education,id'],
             'veteran_status_id' => ['nullable', 'exists:volunteer_veteran_statuses,id'],
@@ -45,6 +51,16 @@ class AccountRequest extends FormRequest
             'has_driver_license' => ['nullable', 'boolean'],
             'has_car' => ['nullable', 'boolean'],
         ];
+    }
+
+    public function syncSkills(Volunteer $volunteer): array
+    {
+        if ($this->has('skills')) {
+            $skills = $this->skills;
+            $skills = Skill::findOrCreate($skills);
+            return $volunteer->skills()->sync($skills->pluck('id')->toArray());
+        }
+        return [];
     }
 
     public function authorize(): bool

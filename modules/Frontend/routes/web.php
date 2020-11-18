@@ -1,8 +1,14 @@
 <?php
 
+/**
+ * @routeNamespace("Modules\Frontend\Http\Controllers")
+ * @routePrefix("frontend.")
+ */
+
 use Modules\Frontend\Http\Middleware\Company;
 use Modules\Frontend\Http\Middleware\VacancyNotClosed;
 use Modules\Frontend\Http\Middleware\VacancyOwner;
+use Modules\Frontend\Http\Middleware\Volunteer;
 
 Auth::routes();
 
@@ -85,17 +91,53 @@ Route::middleware('auth')->group(function () {
         });
 
     Route::prefix('volunteer')
-        //->middleware(Company::class)
+        ->middleware(Volunteer::class)
         ->as('volunteer.')
         ->namespace('Volunteer')
         ->group(function () {
-            Route::prefix('account')->as('account.')->group(function () {
+            Route::prefix('account')->as('account.')->namespace('Account')->group(function () {
                 Route::get('', 'AccountController@page')->name('form');
                 Route::post('', 'AccountController@update')->name('update');
 
                 Route::prefix('avatar')->as('avatar.')->group(function () {
-                    Route::post('', 'AccountController@uploadAvatar')->name('update');
-                    Route::delete('', 'AccountController@destroyAvatar')->name('destroy');
+                    Route::post('', 'AvatarController@update')->name('update');
+                    Route::delete('', 'AvatarController@destroy')->name('destroy');
+                });
+                Route::prefix('job')->as('job.')->group(function () {
+                    Route::post('', 'JobController@update')->name('update');
+                    Route::delete('', 'JobController@destroy')->name('destroy');
+                });
+                Route::prefix('work_experience')->as('work_experiences.')->group(function () {
+                    Route::post('', 'AccountController@experienceStore')->name('store');
+                    Route::prefix('{workExperience}')->group(function () {
+                        Route::patch('', 'AccountController@experienceUpdate')->name('update');
+                        Route::delete('', 'AccountController@experienceDestroy')->name('destroy');
+                    });
+                });
+                Route::prefix('education')->as('educations.')->group(function () {
+                    Route::post('', 'EducationController@store')->name('store');
+                    Route::prefix('{education}')->group(function () {
+                        Route::patch('', 'EducationController@update')->name('update');
+                        Route::delete('', 'EducationController@destroy')->name('destroy');
+                    });
+                });
+                Route::prefix('resume')->as('resume.')->group(function () {
+                    Route::post('', 'ResumeController@store')->name('store');
+                    Route::delete('', 'ResumeController@destroy')->name('destroy');
+                });
+                Route::prefix('certificate')->as('certificates.')->group(function () {
+                    Route::post('', 'CertificateController@store')->name('store');
+                    Route::prefix('{certificate}')->group(function () {
+                        Route::patch('', 'CertificateController@update')->name('update');
+                        Route::delete('', 'CertificateController@destroy')->name('destroy');
+                    });
+                });
+                Route::prefix('language')->as('languages.')->group(function () {
+                    Route::post('', 'LanguageController@store')->name('store');
+                    Route::prefix('{language}')->group(function () {
+                        Route::patch('', 'LanguageController@update')->name('update');
+                        Route::delete('', 'LanguageController@destroy')->name('destroy');
+                    });
                 });
             });
         });

@@ -8,9 +8,8 @@ class WorkExperience extends Model
 {
     const CREATED_AT = null;
     const UPDATED_AT = null;
+
     protected $table = 'volunteer_work_experiences';
-    protected $fillable = ['title', 'company', 'is_current', 'start', 'end', 'description'];
-    protected $casts = [
-        'is_current' => 'boolean'
-    ];
+
+    protected $fillable = ['title', 'company', 'start', 'end', 'description'];
 }

@@ -93,12 +93,10 @@ Vue.component('InputTag', InputTag)
 import vSelect from 'vue-select'
 import VueTypeaheadBootstrap from 'vue-typeahead-bootstrap';
 import VueTagsInput from '@johmun/vue-tags-input';
-import RadialProgressBar from 'vue-radial-progress'
 
 Vue.component('VSelect', vSelect)
 Vue.component('VueTypeaheadBootstrap', VueTypeaheadBootstrap)
 Vue.component('VueTagsInput', VueTagsInput)
-Vue.component('RadialProgressBar', RadialProgressBar)
 
 Vue.component('InputMaterial', InputMaterial)
 

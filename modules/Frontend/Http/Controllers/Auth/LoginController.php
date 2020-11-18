@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Route2Class;
 
 class LoginController extends Controller
 {
@@ -21,14 +22,14 @@ class LoginController extends Controller
     {
         $this->seo()->setTitle('Login');
 
-        \Route2Class::addClass('bg-decorative');
+        Route2Class::addClass('bg-decorative');
 
         return view('frontend::auth.login');
     }
 
     public function redirectPath()
     {
-        return '/asd1';
+        return '/';
     }
 
     protected function sendLoginResponse(Request $request)

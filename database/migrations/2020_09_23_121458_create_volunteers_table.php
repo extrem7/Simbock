@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateVolunteersTable extends Migration
 {
+    /* php artisan migrate:refresh --path=/database/migrations/2020_09_23_121458_create_volunteers_table.php */
     public function up()
     {
         Schema::create('volunteers', function (Blueprint $table) {
@@ -19,11 +20,13 @@ class CreateVolunteersTable extends Migration
             $table->json('social')->nullable();
 
             $table->string('headline')->nullable();
-            $table->foreignId('city_id')->constrained('us_cities');
+            $table->foreignId('city_id')->nullable()->constrained('us_cities');
             $table->char('zip', 5)->nullable();
 
             $table->boolean('is_relocating')->default(false);
             $table->boolean('is_working_remotely')->default(false);
+
+            $table->string('job_title')->nullable();
 
             $table->text('executive_summary')->nullable();
             $table->string('objective')->nullable();

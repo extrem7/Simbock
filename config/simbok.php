@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'debugbar_emails' => parse_emails(env('DEBUGBAR_EMAILS'))
+    'debugbar_emails' => [env('DEBUGBAR_EMAIL')]
 ];

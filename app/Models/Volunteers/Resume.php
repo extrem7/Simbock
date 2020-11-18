@@ -7,12 +7,21 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Resume extends Model
 {
-    const UPDATED_AT = null;
+    public const UPDATED_AT = null;
+
     protected $table = 'volunteer_resumes';
+
     protected $fillable = ['title', 'file_id'];
 
-    public function file()
+    protected $appends = ['url'];
+
+    public function file(): Media
     {
-        return $this->morphOne(Media::class, 'model')->where('collection_name', 'resume');
+        return Media::find($this->file_id);
+    }
+
+    public function getUrlAttribute(): string
+    {
+        return $this->file()->getFullUrl();
     }
 }

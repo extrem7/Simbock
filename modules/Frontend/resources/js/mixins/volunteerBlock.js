@@ -1,10 +1,14 @@
 import {mapState} from "vuex"
 import {ReactiveProvideMixin} from 'vue-reactive-provide'
 import Invalid from "~/components/includes/Invalid"
+import ModalHeader from "~/components/volunteer/account/components/ModalHeader"
+import ModalActions from "~/components/volunteer/account/components/ModalActions"
 
 export default {
     components: {
-        Invalid
+        Invalid,
+        ModalHeader,
+        ModalActions
     },
     mixins: [
         ReactiveProvideMixin({
@@ -44,9 +48,15 @@ export default {
         showModal() {
             this.$refs.modal.show()
         },
+        hideModal() {
+            this.$refs.modal.hide()
+        },
         cancel() {
             this.$refs.modal.hide()
             this.fill()
+        },
+        clear() {
+            for (let field in this.form) this.form[field] = null
         }
     }
 }

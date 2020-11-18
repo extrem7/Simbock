@@ -26,7 +26,7 @@ import input from "~/mixins/inputMixin"
 export default {
     mixins: [input],
     props: {
-        value: String,
+        value: String | Number,
         type: {
             type: String,
             default: 'text'

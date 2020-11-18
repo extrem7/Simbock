@@ -57,7 +57,7 @@
                 </div>
             </div>
         </div>
-        <BModal ref="modal" hide-footer>
+        <BModal id="about-modal" ref="modal" hide-footer>
             <template v-slot:modal-header="{ close }">
                 <button aria-label="Close" class="close" type="button" @click="close()">
                     <svg-vue icon="close"></svg-vue>

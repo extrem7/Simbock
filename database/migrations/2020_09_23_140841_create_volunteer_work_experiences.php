@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateVolunteerWorkExperiences extends Migration
 {
+    /* php artisan migrate:refresh --path=/database/migrations/2020_09_23_140841_create_volunteer_work_experiences.php */
     public function up()
     {
         Schema::create('volunteer_work_experiences', function (Blueprint $table) {
@@ -14,7 +15,6 @@ class CreateVolunteerWorkExperiences extends Migration
 
             $table->string('title');
             $table->string('company');
-            $table->boolean('is_current')->default(false);
             $table->date('start');
             $table->date('end')->nullable();
             $table->string('description')->nullable();

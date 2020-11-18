@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import inputMixin from "../../mixins/inputMixin";
+import inputMixin from "../../mixins/inputMixin"
 
 export default {
     mixins: [inputMixin],
