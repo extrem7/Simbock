@@ -2,6 +2,7 @@
 
 namespace Modules\Admin\Repositories;
 
+use App\Models\User;
 use Spatie\Permission\Models\Role;
 
 class UserRepository
@@ -13,9 +14,10 @@ class UserRepository
 
     public function shareForCRUD()
     {
+        $types = User::$types;
         $roles = collect($this->getRoles())
             ->map(fn($val, $key) => ['value' => $key, 'text' => ucfirst($val)])->values();
 
-        share(compact('roles'));
+        share(compact('types', 'roles'));
     }
 }

@@ -7,17 +7,7 @@
             </h1>
             <div class="medium-size text-center mt-2">Any industry. Any location. Any experience level.</div>
             <div class="search-form search-form-main">
-                <div class="search-form-wrapper">
-                    <div class="search-field-group search-form-item search-form-what">
-                        <input-search icon="search" placeholder="Job tittle or keyword"></input-search>
-                    </div>
-                    <div class="search-field-group search-form-item search-form-where">
-                        <input-search icon="map" placeholder="City, state or ZIP"></input-search>
-                    </div>
-                    <div class="search-form-item flex-grow-1 flex-md-grow-0">
-                        <button class="btn btn-violet btn-main-search btn-shadow">Search</button>
-                    </div>
-                </div>
+                <vacancies-home-form></vacancies-home-form>
             </div>
         </div>
     </main>
@@ -45,14 +35,14 @@
                         <div class="about-item">
                             <img src="dist/img/icons/personal-info.svg" alt="personal" class="about-item-icon">
                             <div class="about-item-text">
-                                <div class="about-item-title">756</div>
+                                <div class="about-item-title">{{$vacancies}}</div>
                                 <div class="mt-1">Vacancies</div>
                             </div>
                         </div>
                         <div class="about-item">
                             <img src="dist/img/icons/resume.svg" alt="resume" class="about-item-icon">
                             <div class="about-item-text">
-                                <div class="about-item-title">1 035</div>
+                                <div class="about-item-title">{{$resumes}}</div>
                                 <div class="mt-1">Resume</div>
                             </div>
                         </div>

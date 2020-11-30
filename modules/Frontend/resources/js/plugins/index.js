@@ -36,7 +36,10 @@ Vue.use(VueObserveVisibility)
 Vue.mixin({
     methods: {
         route: (name, params, absolute) => route('frontend.' + name, params, absolute, Ziggy),
-        isRoute: (name) => route(null, {}, null, Ziggy).current('frontend.' + name)
+        isRoute: (name) => route(null, {}, null, Ziggy).current('frontend.' + name),
+        routeIncludes: (fragments) => route(null, {}, null, Ziggy)
+            .current()
+            .match(new RegExp(`(${fragments.join('|')})`))
     }
 })
 

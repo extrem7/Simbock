@@ -36,38 +36,11 @@ class User extends Authenticatable implements HasMedia
     public const COMPANY = 'COMPANY';
 
     public static $types = [
-        self::VOLUNTEER => 'Draft',
+        self::VOLUNTEER => 'Volunteer',
         self::COMPANY => 'Company'
     ];
 
     // FUNCTIONS
-    public function registerMediaCollections(): void
-    {
-        $this->addMediaCollection('avatar')->singleFile()
-            ->registerMediaConversions(function (Media $media) {
-                $this->addMediaConversion('icon')
-                    ->crop('crop-center', 100, 100)
-                    ->sharpen(0)
-                    ->nonQueued();
-            });
-    }
-
-    public function uploadAvatar(UploadedFile $image = null)
-    {
-        if ($this->avatarMedia) $this->deleteMedia($this->avatarMedia);
-
-        $this->addMedia($image)->toMediaCollection('avatar');
-    }
-
-    public function getAvatar(string $size = ''): string
-    {
-        if ($this->avatarMedia !== null) {
-            return $this->avatarMedia->getUrl($size);
-        } else {
-            return asset_admin('img/no-avatar.png');
-        }
-    }
-
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
@@ -85,6 +58,13 @@ class User extends Authenticatable implements HasMedia
     }
 
     // ACCESSORS
+    public function getAvatarAttribute(): string
+    {
+        return $this->type === self::VOLUNTEER
+            ? $this->volunteer->avatar
+            : $this->company->logo;
+    }
+
     public function getIsSuperAdminAttribute(): bool
     {
         return $this->id === 1 || $this->email === env('INITIAL_USER_EMAIL');

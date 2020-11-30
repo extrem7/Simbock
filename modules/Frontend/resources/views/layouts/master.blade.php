@@ -20,17 +20,19 @@
         @else
             <header-company></header-company>
         @endif
+            <the-main-search></the-main-search>
     @else
         <header-guest></header-guest>
     @endauth
     @yield('content')
     @auth
         @if(Auth::getUser()->is_volunteer)
+            <volunteer-menu class="menu-account-fixed"></volunteer-menu>
         @else
             <company-menu class="menu-account-fixed"></company-menu>
         @endif
     @endauth
-    <the-footer class="footer-front-light"></the-footer>
+    <the-footer></the-footer>
     <button class="btn btn-up btn-scale-active" :class="{'active' : scrolled}" @click="scrollToHeader">
         <svg-vue icon="arrow-solid"></svg-vue>
     </button>

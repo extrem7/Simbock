@@ -64,8 +64,11 @@ export default {
             for (let field in state.form) {
                 if (volunteer.hasOwnProperty(field)) {
                     if (field === 'social') {
-                        for (let field in state.form.social) {
-                            state.form.social[field] = volunteer.social[field]
+                        if (volunteer.social !== null) {
+                            for (let field in state.form.social) {
+                                if (volunteer.social.hasOwnProperty(field))
+                                    state.form.social[field] = volunteer.social[field]
+                            }
                         }
                     } else {
                         state.form[field] = volunteer[field]

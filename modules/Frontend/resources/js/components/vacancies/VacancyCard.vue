@@ -16,9 +16,12 @@
             <a :href="route('vacancies.show',this.id)" class="link link-border semi-bold-weight">See more</a>
         </div>
         <div v-if="hasActions" class="card-work-actions justify-content-end">
-            <a :class="{'was-apply disabled' : isApply}" class="btn btn-outline-violet min-width-100" href="">Apply</a>
-            <button :class="{'active' : isBookmark}" class="btn btn-bookmark btn-scale-active"
-                    @click="isBookmark = !isBookmark">
+            <a :class="{'was-apply disabled' : isApplied}"
+               class="btn btn-outline-violet min-width-100"
+               href="" @click.prevent="apply">Apply</a>
+            <button :class="{active : inBookmarks}"
+                    class="btn btn-bookmark btn-scale-active"
+                    @click.prevent="bookmark">
                 <svg-vue icon="bookmark"></svg-vue>
             </button>
         </div>
@@ -37,40 +40,46 @@ export default {
         company: Object,
         company_title: String,
 
-        //если заполнен профиль или чет такое- помнишь боковой бордер
         isCompleted: {
             type: Boolean,
             default: false
         },
-        isBookmark: {
+        inBookmarks: {
             type: Boolean,
             default: false
         },
-        //есть карточки где не надо описания
         hasDescription: {
             type: Boolean,
             default: true
         },
-        //есть карточки где не надо кнопок
         hasActions: {
             type: Boolean,
             default: true
         },
-        //есть карточки где не надо лого и имени компании
         hasLogoAndName: {
             type: Boolean,
             default: true
         },
-        //когда был аплай
-        isApply: {
+        isApplied: {
             type: Boolean,
             default: false
         }
     },
-    data() {
-        return {
-            isActive: false,
-        }
+    methods: {
+        async apply() {
+            const {status, data} = await this.axios.post(this.route('vacancies.actions.apply', this.id))
+            if (status === 200) {
+                this.$emit('update:applied')
+                this.notify(data.message)
+            }
+        },
+        async bookmark() {
+            const {status, data} = await this.axios.post(this.route('vacancies.actions.bookmark', this.id))
+            if (status === 200) {
+                this.$emit('update:bookmarked', data.inBookmarks)
+                this.notify(data.message)
+            }
+        },
     }
 }
 </script>

@@ -46,7 +46,7 @@
 
 <script>
 import RadialProgressBar from 'vue-radial-progress'
-import {mapState} from "vuex";
+import {mapState} from "vuex"
 
 export default {
     components: {

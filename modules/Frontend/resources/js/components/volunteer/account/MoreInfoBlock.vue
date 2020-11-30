@@ -30,7 +30,7 @@
                             @click="showModal">
                         Add Veteran Status
                     </button>
-                    <div v-if="veteran_status_id || level_of_education_id || veteran_status_id"
+                    <div v-if="years_of_experience_id || level_of_education_id || veteran_status_id"
                          class="mt-2">
                         <div v-if="years_of_experience_id" class="more-information-item">
                             <div class="sector-name small-size">Years of Experience</div>

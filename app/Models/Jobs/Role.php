@@ -2,12 +2,14 @@
 
 namespace App\Models\Jobs;
 
+use App\Models\Traits\IsTag;
 use App\Models\Traits\SortableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\EloquentSortable\Sortable;
 
 class Role extends Model implements Sortable
 {
+    use IsTag;
     use SortableTrait;
 
     const CREATED_AT = null;

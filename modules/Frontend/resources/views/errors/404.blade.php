@@ -8,8 +8,9 @@
             @if($message)
                 <div class="medium-size mb-4">{{$message}}</div>
             @endif
-            <a href="{{route('frontend.home')}}" class="btn btn-green btn-shadow btn-scale-active min-width-170 btn-lg">Back
-                to Home</a>
+            <a href="{{url('/')}}" class="btn btn-green btn-shadow btn-scale-active min-width-170 btn-lg">
+                Back to Home
+            </a>
         </div>
     </main>
 @endsection

@@ -10,6 +10,7 @@ use App\Models\Jobs\Type;
 use App\Models\Language;
 use App\Models\Map\US\City;
 use App\Models\User;
+use App\Models\Vacancy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -82,6 +83,16 @@ class Volunteer extends Model implements HasMedia
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function applies(): BelongsToMany
+    {
+        return $this->belongsToMany(Vacancy::class, 'volunteer_has_applies')->distinct();
+    }
+
+    public function bookmarks(): BelongsToMany
+    {
+        return $this->belongsToMany(Vacancy::class, 'volunteer_has_bookmarks');
     }
 
     public function city(): BelongsTo

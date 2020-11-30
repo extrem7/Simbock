@@ -15,18 +15,10 @@ class UserRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email,' . ($update ? $this->user->id : '')],
             'password' => [$update ? 'nullable' : 'required', 'string', 'min:8'],
+            'type' => ['required', 'in:' . implode(',', array_keys(User::$types))],
             'role' => ['required', 'numeric', 'exists:user_roles,id'],
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,bmp,png'],
         ];
-    }
-
-    public function uploadAvatar(User $user)
-    {
-        if ($this->hasFile('avatar')) {
-            $user->uploadAvatar($this->file('avatar'));
-            $user->load('avatarMedia');
-            $user->append('avatar');
-        }
     }
 
     public function authorize()

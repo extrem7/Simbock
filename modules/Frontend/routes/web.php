@@ -20,16 +20,33 @@ Route::middleware('guest')->as('auth.')->group(function () {
     Route::get('social/{provider}/callback', 'Auth\SocialController@callback');
 });
 
-Route::get('/', 'PageController@home')->name('home');
+Route::get('', 'PageController@home')->name('home');
 
-Route::prefix('/newsroom')->as('articles.')->group(function () {
-    Route::get('/', 'ArticleController@index')->name('index');
+Route::prefix('newsroom')->as('articles.')->group(function () {
+    Route::get('', 'ArticleController@index')->name('index');
 
-    Route::prefix('/{category:slug}')->group(function () {
-        Route::get('/', 'ArticleController@index')->name('category');
-        Route::get('/{article:slug}', 'ArticleController@show')->name('show');
+    Route::prefix('{category:slug}')->group(function () {
+        Route::get('', 'ArticleController@index')->name('category');
+        Route::get('{article:slug}', 'ArticleController@show')->name('show');
     });
 });
+
+Route::prefix('vacancies')
+    ->as('vacancies.')
+    ->group(function () {
+        Route::get('{vacancy}', 'VacancyController@show')
+            ->name('show')
+            ->where('vacancy', '[0-9]+');
+        Route::get('{query?}/{location?}', 'VacancyController@index')
+            ->name('index');
+        Route::prefix('{vacancy}')
+            ->middleware(['auth', Volunteer::class])
+            ->as('actions.')
+            ->group(function () {
+                Route::post('apply', 'VacancyController@apply')->name('apply');
+                Route::post('bookmark', 'VacancyController@bookmark')->name('bookmark');
+            });
+    });
 
 Route::middleware('auth')->group(function () {
     Route::prefix('account/change-password')
@@ -40,11 +57,11 @@ Route::middleware('auth')->group(function () {
             Route::post('', 'ChangePasswordController@update')->name('update');
         });
 
-    Route::prefix('vacancies')->as('vacancies.')->group(function () {
+    /*Route::prefix('vacancies')->as('vacancies.')->group(function () {
         Route::prefix('{vacancy}')->group(function () {
             Route::get('', 'VacancyController@show')->name('show');
         });
-    });
+    });*/
     Route::prefix('companies')->as('companies.')->group(function () {
         Route::get('self', 'CompanyController@self')->name('self');
         Route::prefix('{company}')->group(function () {
@@ -108,10 +125,10 @@ Route::middleware('auth')->group(function () {
                     Route::delete('', 'JobController@destroy')->name('destroy');
                 });
                 Route::prefix('work_experience')->as('work_experiences.')->group(function () {
-                    Route::post('', 'AccountController@experienceStore')->name('store');
+                    Route::post('', 'WorkExperienceController@store')->name('store');
                     Route::prefix('{workExperience}')->group(function () {
-                        Route::patch('', 'AccountController@experienceUpdate')->name('update');
-                        Route::delete('', 'AccountController@experienceDestroy')->name('destroy');
+                        Route::patch('', 'WorkExperienceController@update')->name('update');
+                        Route::delete('', 'WorkExperienceController@destroy')->name('destroy');
                     });
                 });
                 Route::prefix('education')->as('educations.')->group(function () {

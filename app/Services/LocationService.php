@@ -34,7 +34,7 @@ class LocationService
                 return $mapped;
             })->toArray();
         } else {
-            if (strlen($query) == 2) {
+            if (strlen($query) === 2) {
                 $state = State::find($query);
                 if ($state) {
                     /* @var $cities City */
@@ -58,6 +58,52 @@ class LocationService
         return [];
     }
 
+    public function parseLocation(string $query): array
+    {
+        $cityName = '';
+        $countyName = '';
+        $state = null;
+        $locations = [];
+
+        $parts = explode('--', $query);
+        if (count($parts) > 1) {
+            [$cityName, $countyState] = $parts;
+            $cityName = implode(' ', explode('-', $cityName));
+            $words = collect(explode('-', $countyState));
+            $countyName = $words->reverse()->splice(1, 1)->first();
+        } else {
+            $words = collect(explode('-', $parts[0]));
+            $cityName = $words->reverse()
+                ->slice(strlen($words->last()) === 2 ? 1 : 0)
+                ->reverse()
+                ->join(' ');
+        }
+
+        if (strlen($words->last()) === 2) {
+            $state = State::find($words->last());
+            if ($county = \DB::table('us_cities')
+                ->select('county')
+                ->where('state_id', '=', $state->id)
+                ->where('county', '=', $countyName)
+                ->distinct()
+                ->exists()
+            ) {
+                $locations = City::where('state_id', '=', $state->id)
+                    ->where('county', '=', $countyName)
+                    ->where('name', '=', $cityName)
+                    ->pluck('id');
+            } else {
+                $locations = City::where('state_id', '=', $state->id)
+                    ->where('name', '=', $cityName)
+                    ->pluck('id');
+            }
+        } else {
+            $locations = collect($this->searchCity($words->join(' ')))
+                ->map(fn($c) => $c['value']);
+        }
+        return $locations->toArray();
+    }
+
     public function searchCity(string $query): array
     {
         return City::where('name', $query)
@@ -69,10 +115,18 @@ class LocationService
             ->toArray();
     }
 
-    public function mapCity(City $c)
+    public function mapCity(City $c): string
     {
         $name = $c->name;
-        if ($c->name !== $c->county) $name .= ", $c->county";
+        if (
+            ($c->name !== $c->county)
+            &&
+            City::where('name', '=', $c->name)
+                ->where('state_id', '=', $c->state_id)
+                ->count() > 1
+        ) {
+            $name .= ", $c->county";
+        }
         return "$name $c->state_id";
     }
 }

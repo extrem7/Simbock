@@ -34,7 +34,7 @@
                 <h5 class="title medium-size semi-bold-weight">Websites</h5>
             </template>
             <div v-for="(link,name) in form"
-                 :class="[invalid('social.website')]"
+                 :class="[invalid(`social.${name}`)]"
                  class="form-group">
                 <InputMaterial
                     v-model="form[name]"
@@ -87,7 +87,7 @@ export default {
         },
         fill() {
             for (let field in this.form) {
-                if (this.form.hasOwnProperty(field) && this.$store.state.volunteer.form.social.hasOwnProperty(field))
+                if (this.form.hasOwnProperty(field) && this.social.hasOwnProperty(field))
                     this.form[field] = this.$store.state.volunteer.form.social[field]
             }
         }

@@ -1,10 +1,10 @@
 <template>
-    <footer class="footer footer-front">
+    <footer :class="[isAccount?'footer-inner':'footer-front',{'footer-front-light':isHome}]" class="footer">
         <div class="container">
-            <div class="text-center">
+            <div v-if="!isAccount" class="text-center">
                 <img alt="logo-footer" class="footer-logo" src="/dist/img/logo.svg">
             </div>
-            <div class="row mt-4">
+            <div v-if="!isAccount" class="row mt-4">
                 <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">For Job Seekers</div>
                     <nav class="footer-nav">
@@ -71,6 +71,33 @@
                     </div>
                 </div>
             </div>
+            <div v-else class="row">
+                <div class="col-md-3 text-center text-md-left">
+                    <img alt="logo-footer" class="footer-logo" src="/dist/img/logo.svg">
+                </div>
+                <div class="col-md-9 text-md-right text-center">
+                    <div class="media-wrapper">
+                        <a class="media-link" href="">
+                            <svg-vue class="media-icon" icon="media-news"></svg-vue>
+                        </a>
+                        <a class="media-link" href="">
+                            <svg-vue class="media-icon" icon="media-youtube"></svg-vue>
+                        </a>
+                        <a class="media-link" href="">
+                            <svg-vue class="media-icon" icon="media-facebook"></svg-vue>
+                        </a>
+                        <a class="media-link" href="">
+                            <svg-vue class="media-icon" icon="media-twitter"></svg-vue>
+                        </a>
+                        <a class="media-link" href="">
+                            <svg-vue class="media-icon" icon="media-instagramm"></svg-vue>
+                        </a>
+                        <a class="media-link" href="">
+                            <svg-vue class="media-icon" icon="media-linkedin"></svg-vue>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="row extra-small-size mt-4 footer-bottom-link">
                 <nav class="col-md-6 text-uppercase text-center text-md-left">
                     <a class="text-uppercase" href="">SECURITY</a>,
@@ -78,7 +105,7 @@
                     <a class="text-uppercase" href="">COOKIES</a>,
                     <a class="text-uppercase" href="">TERMS & CONDITIONS</a>
                 </nav>
-                <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">COPYRIGHT © Simbok.com 2020</div>
+                <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">COPYRIGHT © Simbok.com {{ year }}</div>
             </div>
         </div>
     </footer>
@@ -87,7 +114,17 @@
 <script>
 export default {
     data() {
-        return {}
+        return {
+            year: new Date().getFullYear()
+        }
+    },
+    computed: {
+        isHome() {
+            return this.isRoute('home')
+        },
+        isAccount() {
+            return !!this.routeIncludes(['company', 'volunteer'])
+        }
     }
 }
 </script>

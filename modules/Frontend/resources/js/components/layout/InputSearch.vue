@@ -1,30 +1,39 @@
 <template>
     <div :class="{'is-focused' : isFocus}" class="form-group-typeahead form-group-search" @click="isFocus = !isFocus">
-        <button class="btn btn-clear-input">
+        <div class="btn btn-clear-input" @click.prevent="input('')">
             <svg-vue icon="close"></svg-vue>
-        </button>
-        <vue-typeahead-bootstrap :data="options" :placeholder="placeholder"
-        />
+        </div>
+        <VueTypeaheadBootstrap
+            :data="options"
+            :placeholder="placeholder"
+            :showAllResults="true"
+            :value="value"
+            @input="input"/>
         <svg-vue :icon="icon" class="form-search-icon"></svg-vue>
     </div>
 </template>
 
 <script>
-import inputMixin from "../../mixins/inputMixin";
+import inputMixin from "../../mixins/inputMixin"
 
 export default {
+    mixins: [inputMixin],
     props: {
+        value: String | Number,
+        options: Array,
         icon: {
             type: String
         }
     },
-    mixins: [inputMixin],
-    data() {
-        return {
-            options: ['Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada',
-                'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'Canada', 'CaUnited States', 'CaMexico'],
-
+    data: () => ({timeout: null}),
+    methods: {
+        input(e) {
+            this.$emit('input', e)
+            clearTimeout(this.timeout)
+            this.timeout = setTimeout(() => {
+                this.$emit('change', e)
+            }, 750)
         }
-    },
+    }
 }
 </script>

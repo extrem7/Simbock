@@ -3,6 +3,8 @@
 namespace Modules\Frontend\Http\Controllers;
 
 use App\Models\Page;
+use App\Models\Vacancy;
+use App\Models\Volunteers\Volunteer;
 use Modules\Frontend\Http\Requests\ContactFormRequest;
 use Modules\Frontend\Mail\ContactForm;
 
@@ -20,7 +22,10 @@ class PageController extends Controller
 
         \Route2Class::addClass('bg-linear-gradient');
 
-        return view('frontend::pages.home');
+        $vacancies = Vacancy::count();
+        $resumes = Volunteer::count();
+
+        return view('frontend::pages.home', compact('vacancies', 'resumes'));
     }
 
     public function show(Page $pageModel)

@@ -1,8 +1,8 @@
 import Vue from 'vue'
 
 export default {
-    async searchCity(query, loading) {
-        loading(true)
+    async searchCity(query, loading = null) {
+        if (loading) loading(true)
         try {
             const {data} = await Vue.axios.get(`/api/cities/${query}`)
             return data
@@ -10,7 +10,7 @@ export default {
             console.log(e)
             return []
         } finally {
-            loading(false)
+            if (loading) loading(true)
         }
     }
 }

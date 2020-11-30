@@ -63,10 +63,9 @@ class UserController extends Controller
 
         $password = Hash::make($request->input('password'));
 
-        $user = User::create(array_merge($request->only('email', 'name'), compact('password')));
+        $user = User::create(array_merge($request->only('email', 'name', 'type'), compact('password')));
 
         $user->assignRole($request->input('role'));
-        $request->uploadAvatar($user);
 
         return response()->json([
             'status' => 'User has been created',
@@ -81,9 +80,6 @@ class UserController extends Controller
 
         $this->userService->shareForCRUD();
 
-        $user->load('avatarMedia');
-        $user->append('avatar');
-
         $user->role = $user->roles()->first()->id ?? null;
 
         share(compact('user'));
@@ -93,14 +89,13 @@ class UserController extends Controller
 
     public function update(UserRequest $request, User $user)
     {
-        $data = $request->only('email', 'name');
+        $data = $request->only('email', 'name', 'type');
         if ($password = $request->input('password')) {
             $data['password'] = Hash::make($password);
         }
         $user->update($data);
 
         $user->syncRoles($request->input('role'));
-        $request->uploadAvatar($user);
 
         return response()->json(['status' => 'User has been updated', 'user' => $user]);
     }

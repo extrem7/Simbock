@@ -34,22 +34,33 @@ class Vacancy extends Model
         'address', 'company_title', 'company_description', 'status'
     ];
 
+    protected $casts = [
+        'is_applied' => 'bool',
+        'is_bookmarked' => 'bool'
+    ];
+
     protected array $search = ['title'];
 
-    //FUNCTIONS
-
+    // FUNCTIONS
     public static function boot()
     {
         foreach (['creating', 'updating'] as $event) static::$event(fn(self $a) => $a->generateExcerpt());
         parent::boot();
     }
 
+    protected function generateExcerpt(): void
+    {
+        $excerpt = mb_substr($this->description, 0, 190);
+        $excerpt = preg_replace('/\W\w+\s*(\W*)$/', '$1', $excerpt);
+        $this->excerpt = $excerpt;
+    }
+
+    // RELATIONS
     public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
-    // RELATIONS
     public function sector()
     {
         return $this->belongsTo(Sector::class);
@@ -102,28 +113,37 @@ class Vacancy extends Model
     }
 
     // ACCESSORS
-    public function getEmploymentAttribute()
+    public function getIsAppliedAttribute(): bool
+    {
+        if ($user = \Auth::getUser()) {
+            return $user->volunteer->applies()->where('vacancy_id', $this->id)->exists();
+        }
+        return false;
+    }
+
+    public function getInBookmarksAttribute(): bool
+    {
+        if ($user = \Auth::getUser()) {
+            return $user->volunteer->bookmarks()->where('vacancy_id', $this->id)->exists();
+        }
+        return false;
+    }
+
+    public function getEmploymentAttribute(): string
     {
         return $this->type->name . ', ' . $this->hours->implode('name', ', ');
     }
 
-    public function getDateAttribute()
+    public function getDateAttribute(): string
     {
         return $this->created_at->diffForHumans();
     }
 
-    public function getLocationAttribute()
+    public function getLocationAttribute(): string
     {
         $c = $this->city;
         $name = $c->name;
         if ($c->name !== $c->county) $name .= ", $c->county";
         return "$name $c->state_id";
-    }
-
-    protected function generateExcerpt(): void
-    {
-        $excerpt = mb_substr($this->description, 0, 190);
-        $excerpt = preg_replace('/\W\w+\s*(\W*)$/', '$1', $excerpt);
-        $this->excerpt = $excerpt;
     }
 }

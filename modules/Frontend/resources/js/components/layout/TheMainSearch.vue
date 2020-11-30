@@ -2,14 +2,24 @@
 
     <div :class="{'is-search-fixed' : isMobileSearchFixed}" class="search-form search-form-header">
         <div class="container">
-            <div class="search-form-wrapper">
+            <form class="search-form-wrapper" @submit.prevent="submit">
                 <div class="search-field-group search-form-item search-form-what">
                     <div class="search-group-box">What</div>
-                    <input-search icon="search" placeholder="Job tittle or keyword"></input-search>
+                    <InputSearch
+                        :options="jobs"
+                        :value="query"
+                        icon="search"
+                        placeholder="Job tittle or keyword"
+                        @change="query = $event.trim()"/>
                 </div>
                 <div class="search-field-group search-form-item search-form-where">
-                    <div class="search-group-box">What</div>
-                    <input-search icon="map" placeholder="City, state or ZIP"></input-search>
+                    <div class="search-group-box">Where</div>
+                    <InputSearch
+                        :options="cities"
+                        :value="cityQuery"
+                        icon="map"
+                        placeholder="City, state or ZIP"
+                        @change="cityQuery = $event.trim()"/>
                 </div>
                 <div class="search-form-item order-mobile-1">
                     <a v-b-tooltip.hover class="btn btn-filter btn-rotate-icon btn-scale-active" href=""
@@ -18,29 +28,35 @@
                     </a>
                 </div>
                 <div class="search-form-item flex-grow-1 flex-md-grow-0">
-                    <button class="btn btn-violet btn-main-search btn-shadow">Search</button>
+                    <button class="btn btn-violet btn-main-search btn-shadow">
+                        Search
+                    </button>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </template>
 
 <script>
-import InputSearch from "./InputSearch"
+import vacanciesSearch from "~/mixins/vacancies-search";
 
 export default {
+
     data() {
+        let location = this.shared('location')
+        if (location) location = location.split('--').join(',').split('-').join(' ')
         return {
+            query: this.shared('query'),
+            cityQuery: location,
+
             isMobileSearchFixed: false
         }
     },
+    mixins: [vacanciesSearch],
     created() {
         this.$bus.on('search-toggle', () => {
             this.isMobileSearchFixed = !this.isMobileSearchFixed;
         })
-    },
-    components: {
-        InputSearch,
     }
 }
 </script>

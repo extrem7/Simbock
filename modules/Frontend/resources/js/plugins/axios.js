@@ -18,6 +18,9 @@ axios.interceptors.response.use(function (response) {
         Vue.bus.emit('alert', {text: 'Your are not unauthenticated.', variant: 'danger'})
     } else if (status === 403) {
         Vue.bus.emit('alert', {text: 'Your haven\'t permission to do it.', variant: 'danger'})
+    } else if (status === 419) {
+        Vue.bus.emit('alert', {text: status, variant: 'danger'})
+        location.reload()
     } else if (status === 422) {
         //Vue.bus.emit('alert', {text: 'Validation error. Please check your input data.', variant: 'warning'})
     } else if ((status % 500) < 100) {

@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/frontend', function (Request $request) {
 });
 
 Route::get('cities/{query}', 'LocationController@cities')->name('search');
+
+Route::get('vacancies/{query}', 'VacancyController@search')->name('search');

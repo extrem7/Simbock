@@ -10,19 +10,18 @@
                 </button>
             </div>
             <div v-if="languages.length" class="sector-body">
-                <div class="sector-actions sector-actions-absolute">
-                    <button class="btn btn-sector-action btn-sector-edit">
-                        <svg-vue icon="settings"></svg-vue>
-                    </button>
-                    <button class="btn btn-sector-action btn-sector-delete">
-                        <svg-vue icon="close"></svg-vue>
-                    </button>
-                </div>
                 <div class="sector-body-inner sector-body-inner-divider">
                     <div v-for="({id,name,fluency},i) in languages"
                          :class="{'mt-3':i>0}">
-                        <div class="sector-name">{{ name }}</div>
-                        <div class="sector-text small-size mt-1">
+                        <div class="sector-text-between">
+                            <div class="sector-name">{{ name }}</div>
+                            <div class="sector-actions">
+                                <button class="btn btn-sector-action btn-sector-delete" @click="destroy(id)">
+                                    <svg-vue icon="close"></svg-vue>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="sector-text small-size">
                             ({{ fluency }})
                         </div>
                     </div>

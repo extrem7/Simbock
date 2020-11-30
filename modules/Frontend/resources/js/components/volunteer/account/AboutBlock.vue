@@ -175,11 +175,11 @@ export default {
             is_working_remotely: state => state.form.is_working_remotely,
         }),
         city() {
-            const city = this.cities.filter(({value}) => value === this.city_id)
-            return city.length ? city[0] : null
+            return this.cities.find(({value}) => value === this.city_id)
         },
         zips() {
-            return this.city ? this.city.zips.split(' ') : []
+            const city = this.cities.find(({value}) => value === this.form.city_id)
+            return city ? city.zips.split(' ') : []
         }
     },
     methods: {
