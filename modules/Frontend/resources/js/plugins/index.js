@@ -33,6 +33,11 @@ Vue.use(VueScrollTo)
 Vue.use(VueSimpleAlert)
 Vue.use(VueObserveVisibility)
 
+import VueLodash from 'vue-lodash'
+import lodash from 'lodash'
+
+Vue.use(VueLodash, {lodash})
+
 Vue.mixin({
     methods: {
         route: (name, params, absolute) => route('frontend.' + name, params, absolute, Ziggy),

@@ -1,11 +1,6 @@
 import Vue from 'vue'
 
-import AlertNotification from "./includes/AlertNotification"
-
-import HeaderGuest from "./layout/header/HeaderGuest"
-import HeaderVolunteer from "./layout/header/HeaderVolunteer"
-import HeaderCompany from "./layout/header/HeaderCompany"
-import VolunteerMenu from './layout/header/VolunteerMenu'
+import App from './App'
 
 import ArticlesList from "./articles/ArticlesList"
 
@@ -21,18 +16,6 @@ import VacancyShow from "~/components/vacancies/Show"
 
 import VolunteerAccountPage from "~/components/volunteer/account/AccountPage"
 
-import VacancyCard from "./vacancies/VacancyCard"
-import VolunteerCard from "./layout/VolunteerCard"
-import CompanyCard from "./layout/CompanyCard"
-import CompanyMenu from "./layout/header/CompanyMenu"
-import TheBottomMenuVolunteer from "./layout/header/TheBottomMenuVolunteer"
-import TheInnerFooter from "./layout/TheInnerFooter"
-import TheFooter from "./layout/TheFooter"
-import VacancySettings from "./vacancies/VacancySettings"
-import AccessBox from "./layout/AccessBox"
-import CompanyCardActions from "./layout/CompanyCardActions"
-import TheMainSearch from "./layout/TheMainSearch"
-
 import Register from "./auth/Register"
 import Login from './auth/Login'
 import EmailReset from "./auth/EmailReset"
@@ -40,20 +23,7 @@ import PasswordReset from "./auth/PasswordReset"
 import PasswordChange from "./auth/PasswordChange"
 
 export default {
-    AlertNotification,
-    SimbokSelect,
-    VacancySettings,
-    SelectMaterial,
-    AccessBox,
-    CompanyCard,
-    CompanyCardActions,
-    TheInnerFooter,
-    TheMainSearch,
-
-    HeaderGuest,
-    HeaderVolunteer,
-    HeaderCompany,
-    TheFooter,
+    App,
 
     ArticlesList,
 
@@ -67,15 +37,7 @@ export default {
     VacanciesIndex,
     VacancyShow,
 
-    VolunteerMenu,
     VolunteerAccountPage,
-
-    TheBottomMenuVolunteer,
-    CompanyMenu,
-    VolunteerCard,
-    InputTypeahead,
-    VacancyCard,
-    InputMaterial,
 
     RegisterForm: Register,
     LoginForm: Login,

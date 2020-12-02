@@ -2,7 +2,7 @@
 
     <div :class="{'is-search-fixed' : isMobileSearchFixed}" class="search-form search-form-header">
         <div class="container">
-            <form class="search-form-wrapper" @submit.prevent="submit">
+            <form class="search-form-wrapper" @submit.prevent="submit()">
                 <div class="search-field-group search-form-item search-form-what">
                     <div class="search-group-box">What</div>
                     <InputSearch
@@ -22,8 +22,12 @@
                         @change="cityQuery = $event.trim()"/>
                 </div>
                 <div class="search-form-item order-mobile-1">
-                    <a v-b-tooltip.hover class="btn btn-filter btn-rotate-icon btn-scale-active" href=""
-                       title="Tooltip directive content">
+                    <a
+                        v-b-tooltip.hover
+                        class="btn btn-filter btn-rotate-icon btn-scale-active"
+                        href="#"
+                        title="Filter results"
+                        @click.prevent="filter">
                         <svg-vue icon="filter"></svg-vue>
                     </a>
                 </div>
@@ -41,7 +45,7 @@
 import vacanciesSearch from "~/mixins/vacancies-search";
 
 export default {
-
+    mixins: [vacanciesSearch],
     data() {
         let location = this.shared('location')
         if (location) location = location.split('--').join(',').split('-').join(' ')
@@ -52,11 +56,18 @@ export default {
             isMobileSearchFixed: false
         }
     },
-    mixins: [vacanciesSearch],
     created() {
+        this.$bus.on('filter', filters => {
+            this.submit(filters)
+        })
         this.$bus.on('search-toggle', () => {
             this.isMobileSearchFixed = !this.isMobileSearchFixed;
         })
+    },
+    methods: {
+        filter() {
+            this.$bus.emit('toggle-filter')
+        }
     }
 }
 </script>

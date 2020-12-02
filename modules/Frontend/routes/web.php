@@ -22,6 +22,7 @@ Route::middleware('guest')->as('auth.')->group(function () {
 
 Route::get('', 'PageController@home')->name('home');
 
+
 Route::prefix('newsroom')->as('articles.')->group(function () {
     Route::get('', 'ArticleController@index')->name('index');
 
@@ -31,15 +32,19 @@ Route::prefix('newsroom')->as('articles.')->group(function () {
     });
 });
 
-Route::prefix('vacancies')
-    ->as('vacancies.')
-    ->group(function () {
-        Route::get('{vacancy}', 'VacancyController@show')
+Route::as('vacancies.')->group(function () {
+    Route::prefix('vacancies/{query?}')
+        ->as('index')
+        ->group(function () {
+            Route::get('', 'VacancyController@index');
+            Route::get('{location?}', 'VacancyController@index')->name('.location');
+        });
+
+    Route::prefix('vacancy/{vacancy}')->group(function () {
+        Route::get('', 'VacancyController@show')
             ->name('show')
             ->where('vacancy', '[0-9]+');
-        Route::get('{query?}/{location?}', 'VacancyController@index')
-            ->name('index');
-        Route::prefix('{vacancy}')
+        Route::prefix('')
             ->middleware(['auth', Volunteer::class])
             ->as('actions.')
             ->group(function () {
@@ -47,6 +52,7 @@ Route::prefix('vacancies')
                 Route::post('bookmark', 'VacancyController@bookmark')->name('bookmark');
             });
     });
+});
 
 Route::middleware('auth')->group(function () {
     Route::prefix('account/change-password')
@@ -160,4 +166,5 @@ Route::middleware('auth')->group(function () {
         });
 });
 
+Route::post('/contact-form', 'PageController@contactForm')->name('contact-form');
 Route::get('/{pageModel:slug}', 'PageController@show')->name('pages.show');

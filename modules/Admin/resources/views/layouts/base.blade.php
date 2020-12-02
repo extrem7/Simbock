@@ -8,7 +8,7 @@
                     <menu-toggle></menu-toggle>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="{--{route('frontend.home')}--}" class="nav-link" target="_blank">Go to Simbok</a>
+                    <a href="{{route('frontend.home')}}" class="nav-link" target="_blank">Go to Simbok</a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
@@ -17,7 +17,7 @@
         </nav>
 
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <a href="{--{route('frontend.home')}--}" class="brand-link" target="_blank">
+            <a href="{{route('frontend.home')}}" class="brand-link" target="_blank">
                 <img src="{{asset_admin('img/logo.svg')}}" alt="logo" class="">
             </a>
             @include('admin::includes.sidebar')

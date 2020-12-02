@@ -9,9 +9,13 @@ import modules from './modules'
 
 export default new Vuex.Store({
     state: {
+        user: null,
         errors: {}
     },
     mutations: {
+        setUser(state, user) {
+            state.user = user
+        },
         setErrors(state, errors) {
             state.errors = errors
         }

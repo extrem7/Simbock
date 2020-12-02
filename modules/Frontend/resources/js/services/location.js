@@ -10,7 +10,7 @@ export default {
             console.log(e)
             return []
         } finally {
-            if (loading) loading(true)
+            if (loading) loading(false)
         }
     }
 }

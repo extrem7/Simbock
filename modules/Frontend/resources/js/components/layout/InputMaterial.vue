@@ -16,6 +16,7 @@
             class="form-control form-control-material"
             @blur="isFocus = false"
             @focus="isFocus = true"
+            :required="required"
             @input="$emit('input',$event.target.value)">
     </div>
 </template>
@@ -50,7 +51,11 @@ export default {
         material: {
             type: Boolean,
             default: false
-        }
+        },
+        required: {
+            type: Boolean,
+            default: false
+        },
     },
     data() {
         return {

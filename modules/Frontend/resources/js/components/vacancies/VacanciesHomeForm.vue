@@ -1,5 +1,5 @@
 <template>
-    <form class="search-form-wrapper" @submit.prevent="submit">
+    <form class="search-form-wrapper" @submit.prevent="submit()">
         <div class="search-field-group search-form-item search-form-what">
             <InputSearch
                 :options="jobs"
@@ -17,8 +17,7 @@
                 @change="cityQuery = $event.trim()"/>
         </div>
         <div class="search-form-item flex-grow-1 flex-md-grow-0">
-            <button class="btn btn-violet btn-main-search btn-shadow"
-                    @click="submit">
+            <button class="btn btn-violet btn-main-search btn-shadow">
                 Search
             </button>
         </div>
