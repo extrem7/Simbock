@@ -54,27 +54,40 @@ export default {
     },
     computed: {
         ...mapState('volunteer', {
+            name: state => state.form.name,
             headline: state => state.form.headline,
+            city_id: state => state.form.city_id,
+
+            sectors: state => state.sectors,
+            work_experiences: state => state.work_experiences,
+
+            email: state => state.form.email,
             phone: state => state.form.phone,
-            resume: state => state.resume,
+            social: state => state.form.social,
+
             skills: state => state.form.skills,
         }),
         steps() {
             return [
                 {
-                    text: 'Add Headline',
+                    text: 'Add About Me Info',
                     modal: 'about-modal',
-                    value: this.headline
+                    value: this.name && this.headline && this.city_id
                 },
                 {
-                    text: 'Add Phone Number',
-                    modal: 'contact-modal',
-                    value: this.phone
+                    text: 'Add Looking To Volunteer',
+                    modal: 'job-modal',
+                    value: Object.values(this.sectors).length
                 },
                 {
-                    text: 'Add Resume',
-                    modal: 'resume-modal',
-                    value: this.resume
+                    text: 'Add Work Experience',
+                    modal: 'work-experience-modal',
+                    value: this.work_experiences.length
+                },
+                {
+                    text: 'Add Contact and Website Info',
+                    modal: this.email && this.phone ? 'social-modal' : 'contact-modal',
+                    value: this.email && this.phone && Object.values(this.social).filter(i => i !== null).length
                 },
                 {
                     text: 'Add Skills',

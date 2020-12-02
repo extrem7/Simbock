@@ -86,16 +86,6 @@ class VolunteerRepository
 
     public function shareForView(): void
     {
-        $languages = Language::all(['name', 'id'])->map(fn(Language $l) => ['text' => $l->name, 'value' => $l->id]);
-        $fluencies = collect(Language::$fluencies)->map(
-            fn($label, $fluency) => ['text' => $label, 'value' => $fluency]
-        )->values();
-
-        share(compact('languages', 'fluencies'));
-    }
-
-    public function shareForEdit(): void
-    {
         $types = Type::all('name', 'id')->map(fn(Type $t) => ['text' => $t->name, 'value' => $t->id]);
         $sectors = Sector::with('roles')
             ->get(['name', 'id'])
@@ -104,7 +94,7 @@ class VolunteerRepository
                 'value' => $s->id,
                 'roles' => $s->roles->chunk(ceil($s->roles->count() / 2))]);
         $hours = Hour::all('name', 'id')->map(fn(Hour $h) => ['text' => $h->name, 'value' => $h->id]);
-        $skills = Skill::all(['name', 'id'])->map(fn(Skill $s) => ['text' => $s->name]);
+
         $yearsOfExperience = YearOfExperience::all(['name', 'id'])
             ->map(fn(YearOfExperience $y) => ['text' => $y->name, 'value' => $y->id]);
         $degrees = Degree::all(['name', 'id'])
@@ -112,8 +102,20 @@ class VolunteerRepository
         $veteranStatuses = VeteranStatus::all(['name', 'id'])
             ->map(fn(VeteranStatus $s) => ['text' => $s->name, 'value' => $s->id]);
 
+        $languages = Language::all(['name', 'id'])->map(fn(Language $l) => ['text' => $l->name, 'value' => $l->id]);
+        $fluencies = collect(Language::$fluencies)->map(
+            fn($label, $fluency) => ['text' => $label, 'value' => $fluency]
+        )->values();
+
+        share(compact('types', 'sectors', 'hours', 'yearsOfExperience', 'degrees', 'veteranStatuses', 'languages', 'fluencies'));
+    }
+
+    public function shareForEdit(): void
+    {
+        $skills = Skill::all(['name', 'id'])->map(fn(Skill $s) => ['text' => $s->name]);
+
         share(
-            compact('types', 'sectors', 'hours', 'skills', 'yearsOfExperience', 'degrees', 'veteranStatuses')
+            compact('skills')
         );
     }
 }

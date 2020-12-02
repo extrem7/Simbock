@@ -11,6 +11,7 @@ use App\Models\Jobs\Skill;
 use App\Models\Jobs\Type;
 use App\Models\Vacancy;
 use App\Services\LocationService;
+use Illuminate\Support\Collection;
 
 class VacancyRepository
 {
@@ -39,6 +40,18 @@ class VacancyRepository
         $sizes = Size::all('name', 'id')->map(fn(Size $s) => ['text' => $s->name, 'value' => $s->id]);
 
         share(compact('sectors', 'types', 'hours', 'sizes'));
+    }
+
+    public function transformForIndex(Vacancy $vacancy): Vacancy
+    {
+        $vacancy->append(['employment', 'date', 'location', 'is_applied', 'in_bookmarks']);
+
+        $vacancy->company_title = $vacancy->company_title ?? $vacancy->company->name;
+        $vacancy->days = $vacancy->created_at->diffInDays();
+
+        $vacancy->company->append('logo');
+
+        return $vacancy;
     }
 
     public function transformForEdit(Vacancy $vacancy): array

@@ -21,9 +21,7 @@ const app = new Vue({
             isMobileGrid: false,
             isOpenMessage: false,
             //изначальный скролл = 0
-            scroll: 0,
-            //открывает cover letter
-            isOpenText: false
+            scroll: 0
         }
     },
     created() {

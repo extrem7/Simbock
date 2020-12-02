@@ -4,7 +4,7 @@
             <div class="card-work-company-name">{{ company_title }}</div>
             <img :alt="company_title" :src="company.logo" class="card-work-company-logo">
         </div>
-        <div class="card-work-title">{{ title }}</div>
+        <a :href="link" class="card-work-title">{{ title }}</a>
         <div class="card-work-info">
             <div class="card-work-place">{{ location }}</div>
             <span class="vertical-divider"></span>
@@ -13,7 +13,8 @@
         <div class="card-work-time">{{ employment }}</div>
         <div v-if="hasDescription" class="card-work-text">
             {{ excerpt }}
-            <a :href="route('vacancies.show',this.id)" class="link link-border semi-bold-weight">See more</a>
+            <a :href="link"
+               class="link link-border semi-bold-weight">See more</a>
         </div>
         <div v-if="hasActions" class="card-work-actions justify-content-end">
             <a :class="{'was-apply disabled' : isApplied}"
@@ -22,7 +23,7 @@
             <button :class="{active : inBookmarks}"
                     class="btn btn-bookmark btn-scale-active"
                     @click.prevent="bookmark">
-                <svg-vue icon="bookmark"></svg-vue>
+                <SvgVue icon="bookmark"/>
             </button>
         </div>
     </div>
@@ -64,6 +65,11 @@ export default {
             type: Boolean,
             default: false
         }
+    },
+    computed: {
+        link() {
+            return this.$store.state.user ? this.route('vacancies.show', this.id) : this.route('register')
+        },
     },
     methods: {
         async apply() {

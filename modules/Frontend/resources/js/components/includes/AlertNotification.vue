@@ -1,20 +1,22 @@
 <template>
-    <b-alert
+    <BAlert
         v-model="showAlert"
         :class="`fixed-${position}`"
         :variant="variant"
         class="position-fixed m-0 rounded-0 text-center"
         dismissible
         fade
-        style="z-index: 2000;">
-        {{ text }}
-    </b-alert>
+        style="z-index: 2000;"
+        v-html="text"/>
 </template>
 
 <script>
 import {BAlert} from 'bootstrap-vue'
 
 export default {
+    components: {
+        BAlert
+    },
     data() {
         return {
             showAlert: false,
@@ -39,9 +41,6 @@ export default {
                 this.showAlert = false
             }, delay * 1000)
         })
-    },
-    components: {
-        BAlert
     }
 }
 </script>

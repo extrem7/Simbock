@@ -1,5 +1,4 @@
 <template>
-
     <header class="header header-front">
         <div class="header-wrapper container">
             <a :href="route('home')" class="d-block">

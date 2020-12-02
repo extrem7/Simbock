@@ -1,26 +1,28 @@
 <template>
     <TheHeader>
         <CompanyMenu class="hidden-sm"/>
-        <b-dropdown class="drop-account-wrapper" no-caret variant="dropdown-account">
+        <BDropdown class="drop-account-wrapper" no-caret variant="dropdown-account">
             <template v-slot:button-content>
                 <img alt="dots" class="dropdown-item-icon" src="/dist/img/icons/dots.svg">
             </template>
-            <b-dropdown-item v-b-tooltip.hover.left :href="route('companies.self')" title="Company info">
+            <BDropdownItem v-b-tooltip.hover.left :href="route('companies.self')" title="Company info">
                 <img alt="company" class="dropdown-item-icon" src="/dist/img/icons/company-profile.svg">
-            </b-dropdown-item>
+            </BDropdownItem>
             <BDropdownItem v-b-tooltip.hover.left
                            :href="route('auth.change_password.form')"
                            title="Change password">
                 <img alt="settings" class="dropdown-item-icon" src="/dist/img/icons/settings.svg">
             </BDropdownItem>
-            <b-dropdown-item v-b-tooltip.hover.left title="Tooltip directive content">
+            <BDropdownItem v-b-tooltip.hover.left
+                           href="/help"
+                           title="Help and support">
                 <img alt="support" class="dropdown-item-icon" src="/dist/img/icons/support.svg">
-            </b-dropdown-item>
-            <b-dropdown-item v-b-tooltip.hover.left title="Tooltip directive content">
+            </BDropdownItem>
+            <BDropdownItem v-b-tooltip.hover.left title="Tooltip directive content">
                 <img alt="support" class="dropdown-item-icon" src="/dist/img/icons/upgrade.svg">
-            </b-dropdown-item>
+            </BDropdownItem>
             <TheLogout/>
-        </b-dropdown>
+        </BDropdown>
     </TheHeader>
 </template>
 

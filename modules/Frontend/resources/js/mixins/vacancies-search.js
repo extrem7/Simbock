@@ -1,4 +1,4 @@
-import locationService from "~/services/location";
+import locationService from "~/services/location"
 
 export default {
     data() {
@@ -33,9 +33,9 @@ export default {
             if (this.cityQuery) {
                 params.location = this.cityQuery.replace(',', '-').split(' ').join('-')
             }
-            return this.route('vacancies.index', params)
+            return this.route(`vacancies.${this.cityQuery ? 'index.location' : 'index'}`, params)
                 +
-                (filters !== null ? (!this._.isEmpty(filters) ? `?${filters}` : '') : location.search)
+                (filters !== null ? (!this._.isEmpty(filters) ? ` ?${filters}` : '') : location.search)
         }
     }
 }

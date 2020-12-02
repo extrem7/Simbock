@@ -12,10 +12,14 @@ axios.interceptors.response.use(function (response) {
     return response
 }, function (error) {
     console.log(error)
-    const status = error.response.status
+    const {status, data} = error.response
 
     if (status === 401) {
-        Vue.bus.emit('alert', {text: 'Your are not unauthenticated.', variant: 'danger'})
+        const login = Vue.options.methods.route('login')
+        Vue.bus.emit('alert', {
+            text: `Your are not unauthenticated. Please <a href="${login}">Sing In.</a>`,
+            variant: 'warning'
+        })
     } else if (status === 403) {
         Vue.bus.emit('alert', {text: 'Your haven\'t permission to do it.', variant: 'danger'})
     } else if (status === 419) {
@@ -30,6 +34,8 @@ axios.interceptors.response.use(function (response) {
             position: 'top',
             delay: 12
         })
+    } else {
+        Vue.options.methods.notify(data.message, 'warning')
     }
     throw error
 })

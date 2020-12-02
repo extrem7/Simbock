@@ -28,7 +28,7 @@
                     <a :href="resume.url"
                        class="sector-text extra-small-size mt-1"
                        target="_blank">
-                        Added 01.01.2020, 13:56 {{ resume.created_at | moment('d.m.YYYY, hh:ss') }}
+                        Added {{ resume.created_at | moment('d.m.YYYY, hh:ss') }}
                     </a>
                 </div>
             </div>

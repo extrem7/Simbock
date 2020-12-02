@@ -1,12 +1,13 @@
 <template>
-    <div>
+    <div :class="{'page-filtered':isFilterOpen}"
+         class="simbok-app">
         <div :class="headerClasses">
             <div v-if="user">
                 <HeaderVolunteer v-if="user.type==='VOLUNTEER'"/>
                 <HeaderCompany v-else/>
             </div>
             <HeaderGuest v-else/>
-            <TheMainSearch v-if="isSearch"/>
+            <TheMainSearch v-if="isSearch" :enable-filter="enableFilter"/>
         </div>
         <slot/>
         <div v-if="user">
@@ -53,7 +54,9 @@ export default {
         return {
             isScrolledSearch: false,
             scrolled: false,
-            isSearch: this.routeIncludes(['vacancies.index'])
+            enableFilter: false,
+            isFilterOpen: false,
+            isSearch: this.routeIncludes(['vacancies.index', 'vacancies.saved', 'vacancies.history'])
         }
     },
     computed: {
@@ -69,6 +72,17 @@ export default {
     },
     created() {
         window.addEventListener("scroll", this.handleScroll)
+
+        this.$bus.on('toggle-filter', () => {
+            this.isFilterOpen = !this.isFilterOpen
+        })
+
+        this.$bus.on('enable-filter', () => {
+            this.isFilterOpen = true
+        })
+        this.$bus.on('disable-filter', () => {
+            this.isFilterOpen = false
+        })
     },
     destroyed() {
         window.removeEventListener("scroll", this.handleScroll);

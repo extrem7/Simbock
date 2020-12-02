@@ -113,12 +113,23 @@ Route::middleware('auth')->group(function () {
             });
         });
 
+    Route::prefix('volunteers')->as('volunteers.')->group(function () {
+        Route::get('self', 'VolunteerController@self')->name('self');
+        Route::prefix('{volunteer}')->group(function () {
+            Route::get('', 'VolunteerController@show')->name('show');
+        });
+    });
+
     Route::prefix('volunteer')
         ->middleware(Volunteer::class)
         ->as('volunteer.')
         ->namespace('Volunteer')
         ->group(function () {
+            Route::get('saved', 'VacancyController@saved')->name('vacancies.saved');
+            Route::get('history', 'VacancyController@history')->name('vacancies.history');
+
             Route::prefix('account')->as('account.')->namespace('Account')->group(function () {
+
                 Route::get('', 'AccountController@page')->name('form');
                 Route::post('', 'AccountController@update')->name('update');
 
@@ -167,4 +178,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::post('/contact-form', 'PageController@contactForm')->name('contact-form');
+
 Route::get('/{pageModel:slug}', 'PageController@show')->name('pages.show');

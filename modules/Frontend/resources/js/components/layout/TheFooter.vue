@@ -126,6 +126,8 @@ export default {
         },
         isAccount() {
             return !!this.routeIncludes(['company', 'volunteer'])
+                ||
+                (this.routeIncludes(['vacancies']) && this.$store.state.user)
         }
     }
 }

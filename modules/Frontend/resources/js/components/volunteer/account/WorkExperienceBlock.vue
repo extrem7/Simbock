@@ -40,7 +40,11 @@
                 </div>
             </div>
         </div>
-        <BModal ref="modal" hide-footer @hidden="clear">
+        <BModal
+            id="work-experience-modal"
+            ref="modal"
+            hide-footer
+            @hidden="clear">
             <template v-slot:modal-header="{ close }">
                 <ModalHeader :close="close" title="Work Experience"/>
             </template>

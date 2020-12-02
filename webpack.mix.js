@@ -17,7 +17,7 @@ mix.copy('modules/Frontend/resources/layout/src/img', 'public/dist/img')
 
 mix.copy('modules/Frontend/resources/layout/src/fonts', 'public/dist/fonts')
 
-mix.js('modules/Frontend/resources/js/app.js', 'public/dist/js/').svgVue({
+mix.ts('modules/Frontend/resources/js/app.js', 'public/dist/js/').svgVue({
     svgPath: 'modules/Frontend/resources/layout/src/svg',
 }).sourceMaps().version()
 

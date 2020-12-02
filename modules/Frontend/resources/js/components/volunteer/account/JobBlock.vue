@@ -32,7 +32,10 @@
                 </div>
             </div>
         </div>
-        <BModal ref="modal" hide-footer>
+        <BModal
+            id="job-modal"
+            ref="modal"
+            hide-footer>
             <template v-slot:modal-header="{ close }">
                 <ModalHeader :close="close" title="Looking to volunteer"/>
             </template>

@@ -11,6 +11,7 @@ use Illuminate\Support\Collection;
 use Modules\Frontend\Http\Controllers\Volunteer\Account\HasVolunteer;
 use Modules\Frontend\Http\Requests\VacanciesRequest;
 use Modules\Frontend\Repositories\VacancyRepository;
+use Route2Class;
 
 class VacancyController extends Controller
 {
@@ -65,16 +66,7 @@ class VacancyController extends Controller
             );
 
         /* @var $vacancies Collection<Vacancy> */
-        $vacancies->transform(function (Vacancy $vacancy) {
-            $vacancy->append(['employment', 'date', 'location', 'is_applied', 'in_bookmarks']);
-
-            $vacancy->company_title = $vacancy->company_title ?? $vacancy->company->name;
-            $vacancy->days = $vacancy->created_at->diffInDays();
-
-            $vacancy->company->append('logo');
-
-            return $vacancy;
-        });
+        $vacancies->transform([$this->repository, 'transformForIndex']);
 
         if (request()->expectsJson()) {
             return $vacancies;
@@ -84,7 +76,7 @@ class VacancyController extends Controller
 
         share(compact('vacancies', 'query', 'location'));
 
-        \Route2Class::addClass('page-with-search');
+        Route2Class::addClass('page-with-search');
 
         return view('frontend::vacancies.index');
     }

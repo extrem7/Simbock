@@ -1,10 +1,15 @@
 <template>
     <main class="container content-inner">
+        <h1 v-if="title"
+            class="title title-page title-line line-large">{{ title }}</h1>
         <Transition
             mode="out-in"
             name="fade">
-            <VacanciesFilter v-if="isFilterOpen" key="filter"/>
-            <div v-else key="list" class="row card-list mt-0">
+            <VacanciesFilter v-if="enableFilter && isFilterOpen" key="filter"/>
+            <div v-else
+                 key="list"
+                 :class="{'mt-0':!title}"
+                 class="row card-list">
                 <div v-if="vacancies.length" class="col-xl-8">
                     <VacancyCard
                         v-for="(vacancy,i) in vacancies"
@@ -12,7 +17,7 @@
                         v-bind="vacancyProps(vacancy)"
                         :in-bookmarks="vacancy.in_bookmarks"
                         :is-applied="vacancy.is_applied"
-                        is-bookmarked
+                        :has-actions="enableActions"
                         is-completed
                         @update:applied="updateVacancyApplied(i)"
                         @update:bookmarked="updateVacancyBookmarked(i,$event)"/>
@@ -49,13 +54,24 @@
 <script>
 import Vue from 'vue'
 import VacancyCard from "./VacancyCard"
-import VacanciesFilter from "./VacanciesFilter";
+import VacanciesFilter from "./VacanciesFilter"
 
 export default {
     name: 'VacanciesIndex',
     components: {
         VacanciesFilter,
         VacancyCard
+    },
+    props: {
+        title: String,
+        enableActions: {
+            type: Boolean,
+            default: true
+        },
+        enableFilter: {
+            type: Boolean,
+            default: true
+        },
     },
     data() {
         const data = this.shared('vacancies')
@@ -71,6 +87,7 @@ export default {
         this.$bus.on('toggle-filter', () => {
             this.isFilterOpen = !this.isFilterOpen
         })
+        if (this.enableFilter) this.$bus.emit('enable-filter')
     },
     methods: {
         async loadMore() {
