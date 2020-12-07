@@ -4,6 +4,7 @@ namespace Modules\Frontend\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Vacancy;
+use Auth;
 
 class CompanyController extends Controller
 {
@@ -12,7 +13,7 @@ class CompanyController extends Controller
         $this->seo()->setTitle("$company->name | Companies");
 
         $company->load('logoMedia', 'city', 'size', 'vacancies');
-        $company->append('logo', 'employment', 'location');
+        $company->append(['logo', 'employment', 'location']);
         $company->vacancies->transform(fn(Vacancy $v) => $v->append(['employment', 'date', 'location']));
 
         share(compact('company'));
@@ -22,6 +23,6 @@ class CompanyController extends Controller
 
     public function self()
     {
-        return $this->show(\Auth::getUser()->company);
+        return $this->show(Auth::getUser()->company);
     }
 }

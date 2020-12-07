@@ -3,7 +3,9 @@
 namespace App\Helpers;
 
 use App\Models\Blog\Article;
+use App\Models\Company;
 use App\Models\User;
+use App\Models\Volunteers\Volunteer;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\PathGenerator\PathGenerator;
 
@@ -34,8 +36,11 @@ class SimbokPathGenerator implements PathGenerator
             case Article::class:
                 return "articles/" . $media->model_id . "/$collection";
                 break;
-            case User::class:
-                return "users/" . $media->model_id . "/$collection";
+            case Volunteer::class:
+                return "volunteers/" . $media->model_id . "/$collection";
+                break;
+            case Company::class:
+                return "companies/" . $media->model_id . "/$collection";
                 break;
         }
 

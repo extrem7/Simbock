@@ -114,6 +114,11 @@ class Company extends Model implements HasMedia
         return $this->getLogo();
     }
 
+    public function getEmailAttribute(string $email = null): string
+    {
+        return $email ?: $this->user->email;
+    }
+
     public function getEmploymentAttribute(): string
     {
         return ($this->title ? "$this->title , " : '') . $this->size->name;

@@ -28,7 +28,8 @@
                         <div class="sector-text small-size flex-shrink-0">
                             {{ education.start | moment('MMM YYYY') }}
                             -
-                            {{ education.end ? education.end : 'Current' }}
+                            <span v-if="education.end">{{ education.end | moment('MMM YYYY') }}</span>
+                            <span v-else>Current</span>
                         </div>
                     </div>
                     <div class="mt-3">

@@ -35,7 +35,7 @@
                             @click="showModal">
                         Add Headline
                     </button>
-                    <div v-if="city_id"
+                    <div v-if="city_id && city"
                          class="sector-text text-center extra-small-size mt-1">{{ city.text }}
                     </div>
                     <button v-else
@@ -162,6 +162,7 @@ export default {
                 is_working_remotely: false,
             },
             avatar: volunteer.avatar,
+            //todo restore cities
             cities: volunteer.city ? [volunteer.city] : [],
         }
     },

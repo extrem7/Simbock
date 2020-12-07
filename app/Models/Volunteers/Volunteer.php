@@ -223,9 +223,14 @@ class Volunteer extends Model implements HasMedia
     public function getLocationAttribute(): string
     {
         $c = $this->city;
-        $name = $c->name;
-        if ($c->name !== $c->county) $name .= ", $c->county";
-        return "$name $c->state_id";
+        if ($c) {
+            $name = $c->name;
+            if ($c->name !== $c->county) {
+                $name .= ", $c->county";
+            }
+            return "$name $c->state_id";
+        }
+        return "";
     }
 
     //todo refactor to trait HasEmployment

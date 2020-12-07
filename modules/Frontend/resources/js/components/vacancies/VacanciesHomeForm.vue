@@ -2,6 +2,7 @@
     <form class="search-form-wrapper" @submit.prevent="submit()">
         <div class="search-field-group search-form-item search-form-what">
             <InputSearch
+                ref="query"
                 :options="jobs"
                 :value="query"
                 icon="search"
