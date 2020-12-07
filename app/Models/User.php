@@ -6,19 +6,17 @@ use App\Models\Traits\SearchTrait;
 use App\Models\Volunteers\Volunteer;
 use Modules\Frontend\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements HasMedia
 {
-    use HasRoles;
-    use Notifiable;
-    use InteractsWithMedia;
-    use SearchTrait;
+    use HasRoles,
+        Notifiable,
+        InteractsWithMedia,
+        SearchTrait;
 
     protected $fillable = [
         'name', 'email', 'provider', 'provider_id', 'password', 'type'
@@ -63,6 +61,11 @@ class User extends Authenticatable implements HasMedia
         return $this->type === self::VOLUNTEER
             ? $this->volunteer->avatar
             : $this->company->logo;
+    }
+
+    public function getHasPasswordAttribute(): bool
+    {
+        return !empty($this->attributes['password']);
     }
 
     public function getIsSuperAdminAttribute(): bool

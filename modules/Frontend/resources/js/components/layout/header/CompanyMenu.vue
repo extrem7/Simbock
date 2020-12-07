@@ -3,28 +3,38 @@
         <a v-b-tooltip.hover
            :href="route('company.vacancies.create')"
            class="menu-account-link link-stroke"
-           title="Post new vacancy">
-            <svg-vue icon="add"></svg-vue>
+           title="Post a job">
+            <SvgVue icon="add"/>
+        </a>
+        <a v-b-tooltip.hover
+           :href="route('company.board')"
+           class="menu-account-link"
+           title="Board">
+            <SvgVue icon="board"/>
+        </a>
+        <a v-b-tooltip.hover
+           :href="route('company.volunteers.candidates')"
+           class="menu-account-link"
+           title="Candidates">
+            <SvgVue icon="group"/>
         </a>
         <a v-b-tooltip.hover
            :href="route('company.vacancies.index')"
            class="menu-account-link"
-           title="Your company vacancies">
-            <svg-vue icon="board"></svg-vue>
+           title="Jobs">
+            <SvgVue icon="job"/>
         </a>
-        <a v-b-tooltip.hover class="menu-account-link" href="" title="Tooltip directive content">
-            <svg-vue icon="group"></svg-vue>
+        <a v-b-tooltip.hover
+           :href="route('volunteers.search')"
+           class="menu-account-link"
+           title="Messenger">
+            <SvgVue icon="chat"/>
         </a>
-        <a v-b-tooltip.hover class="menu-account-link" href="" title="Tooltip directive content">
-            <svg-vue icon="job"></svg-vue>
-        </a>
-        <a v-b-tooltip.hover class="menu-account-link has-message link-stroke" href=""
-           title="Tooltip directive content">
-            <svg-vue icon="chat"></svg-vue>
-        </a>
-        <a v-b-tooltip.hover class="menu-account-link link-stroke" href=""
-           title="Tooltip directive content">
-            <svg-vue icon="file"></svg-vue>
+        <a v-b-tooltip.hover
+           :href="route('volunteers.search')"
+           class="menu-account-link"
+           title="Search resume">
+            <SvgVue icon="file"/>
         </a>
     </nav>
 </template>

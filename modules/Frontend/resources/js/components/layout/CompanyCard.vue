@@ -1,28 +1,39 @@
 <template>
-    <div :class="{'completed-account' : isCompleted}" class="card-work card-company">
+    <a :class="{'completed-account' : isCompleted}"
+       :href="route('companies.show',id)"
+       class="d-block card-work card-company">
         <div class="card-company-profile">
-            <img alt="" class="card-work-company-logo" src="dist/img/logo-company.jpg">
+            <img :alt="name"
+                 :src="logo"
+                 class="card-work-company-logo">
             <div>
-                <div class="card-company-name">Approved Cash Advance</div>
+                <div class="card-company-name">{{ name }}</div>
                 <div class="mt-2">
-                    <div class="card-company-short-info">Manager, Company (6-10 employees)</div>
-                    <div class="card-company-short-info mt-1">South Boston, Boston MA</div>
+                    <div class="card-company-short-info">{{ employment }}</div>
+                    <div class="card-company-short-info mt-1">{{ location }}</div>
                 </div>
             </div>
         </div>
-    </div>
+    </a>
 </template>
 
 <script>
 export default {
     props: {
+        id: Number,
+        name: String,
+        logo: String,
+        employment: String,
+        location: String,
         isCompleted: {
             type: Boolean,
             default: false
         }
     },
-    data() {
-        return {}
+    computed: {
+        link() {
+            return this.route('')
+        }
     }
 }
 </script>

@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Modules\Frontend\Http\Controllers\Volunteer\Account\HasVolunteer;
 use Modules\Frontend\Http\Requests\VacanciesRequest;
+use Modules\Frontend\Notifications\Company\VacancyApplied;
 use Modules\Frontend\Repositories\VacancyRepository;
 use Route2Class;
 
@@ -60,10 +61,11 @@ class VacancyController extends Controller
                 fn($q) => $q->where('created_at', '>=',
                     Carbon::now()->subDays($filters['time'])->toDateTimeString()))
             ->latest()
-            ->paginate(
-                4,
-                ['id', 'company_id', 'title', 'city_id', 'type_id', 'excerpt', 'company_title', 'status', 'created_at']
-            );
+            ->select([
+                'id', 'company_id', 'title', 'city_id', 'address', 'type_id', 'excerpt', 'company_title', 'status',
+                'created_at'
+            ])
+            ->paginate(4);
 
         /* @var $vacancies Collection<Vacancy> */
         $vacancies->transform([$this->repository, 'transformForIndex']);
@@ -86,7 +88,7 @@ class VacancyController extends Controller
         $this->seo()->setTitle("$vacancy->title | Vacancies");
 
         $vacancy->load('company.logoMedia', 'city', 'hours', 'benefits', 'incentives', 'skills');
-        $vacancy->append(['employment', 'date', 'location']);
+        $vacancy->append(['employment', 'date', 'location', 'is_applied', 'in_bookmarks']);
         $vacancy->company_title ??= $vacancy->company->name;
         $vacancy->company_description ??= $vacancy->company->description;
         $vacancy->company->append('logo');
@@ -98,7 +100,11 @@ class VacancyController extends Controller
 
     public function apply(Vacancy $vacancy): JsonResponse
     {
-        $this->volunteer()->applies()->attach($vacancy->id);
+        $volunteer = $this->volunteer();
+
+        $volunteer->applies()->attach($vacancy->id);
+        $vacancy->company->user->notify(new VacancyApplied($vacancy, $volunteer));
+
         return response()->json(['message' => 'Vacancy has been applied.']);
     }
 
@@ -107,7 +113,9 @@ class VacancyController extends Controller
         $bookmarks = $this->volunteer()->bookmarks()->toggle($vacancy->id);
 
         return response()->json([
-            'message' => 'Vacancy has been saved to bookmarks.',
+            'message' => 'Vacancy has been ' .
+                ($bookmarks['attached'] ? 'saved to' : 'removed from')
+                . ' bookmarks.',
             'inBookmarks' => in_array($vacancy->id, $bookmarks['attached'], true)
         ]);
     }

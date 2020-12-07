@@ -3,6 +3,7 @@
 namespace Modules\Frontend\Http\Controllers\Company;
 
 use App\Models\Vacancy;
+use Auth;
 use Modules\Frontend\Http\Controllers\Controller;
 use Modules\Frontend\Http\Requests\Company\VacancyRequest;
 use Modules\Frontend\Repositories\VacancyRepository;
@@ -25,7 +26,7 @@ class VacancyController extends Controller
     {
         $this->seo()->setTitle('Volunteering Vacancies');
 
-        $company = \Auth::getUser()->company->append('logo');
+        $company = Auth::getUser()->company->append('logo');
 
         $vacancies = $company->vacancies()
             ->when($status, fn($q) => $q->where('status', $status))
@@ -41,6 +42,8 @@ class VacancyController extends Controller
 
                 return $vacancy;
             });
+
+        if ($status && !$vacancies->count()) return redirect()->route('frontend.company.vacancies.index');
 
         share(compact('vacancies'));
 
@@ -66,7 +69,7 @@ class VacancyController extends Controller
 
     public function store(VacancyRequest $request)
     {
-        $company = \Auth::getUser()->company;
+        $company = Auth::getUser()->company;
 
         /* @var $vacancy Vacancy */
         $vacancy = $company->vacancies()->create($request->only($this->fillable));

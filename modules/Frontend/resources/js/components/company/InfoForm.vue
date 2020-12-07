@@ -3,20 +3,20 @@
         <LogoUploader v-if="isEdit" v-model="logo"/>
         <form @submit.prevent="submit">
             <div :class="[invalid('name')]" class="form-group">
-                <input-material v-model="form.name" placeholder="Company Name*"></input-material>
-                <Invalid name="name"></Invalid>
+                <InputMaterial v-model="form.name" placeholder="Company Name*"/>
+                <Invalid name="name"/>
             </div>
             <div :class="[invalid('user_name')]" class="form-group">
-                <input-material v-model="form.user_name" placeholder="Your name*"></input-material>
-                <Invalid name="user_name"></Invalid>
+                <InputMaterial v-model="form.user_name" placeholder="Your name*"/>
+                <Invalid name="user_name"/>
             </div>
             <div :class="[invalid('title')]" class="form-group">
-                <input-material v-model="form.title" placeholder="Your current title"></input-material>
-                <Invalid name="title"></Invalid>
+                <InputMaterial v-model="form.title" placeholder="Your current title"/>
+                <Invalid name="title"/>
             </div>
             <div :class="[invalid('sector_id')]" class="form-group">
-                <simbok-select v-model="form.sector_id" :options="sectors" placeholder="Industry*"></simbok-select>
-                <Invalid name="sector_id"></Invalid>
+                <SimbokSelect v-model="form.sector_id" :options="sectors" placeholder="Industry*"/>
+                <Invalid name="sector_id"/>
             </div>
 
             <div :class="[invalid('description')]" class="form-group">
@@ -24,89 +24,92 @@
                 <textarea v-model="form.description" class="form-control form-control-material"
                           placeholder="Describe your company"
                           rows="4"></textarea>
-                <Invalid name="description"></Invalid>
+                <Invalid name="description"/>
             </div>
             <div :class="[invalid('size_id')]" class="form-group">
-                <select-material v-model="form.size_id" :options="sizes" placeholder="Company Size*"></select-material>
-                <Invalid name="size_id"></Invalid>
+                <SelectMaterial v-model="form.size_id" :options="sizes" placeholder="Company Size*"/>
+                <Invalid name="size_id"/>
             </div>
             <div :class="[invalid('address')]" class="form-group">
-                <input-material v-model="form.address" placeholder="Address*"></input-material>
-                <Invalid name="address"></Invalid>
+                <InputMaterial v-model="form.address" placeholder="Address*"/>
+                <Invalid name="address"/>
             </div>
             <div :class="[invalid('address_2')]" class="form-group">
-                <input-material v-model="form.address_2" placeholder="Address Line 2"></input-material>
-                <Invalid name="address_2"></Invalid>
+                <InputMaterial v-model="form.address_2" placeholder="Address Line 2"/>
+                <Invalid name="address_2"/>
             </div>
             <div class="form-group company-address-column">
                 <div :class="[invalid('city_id')]" class="address-column address-city">
-                    <simbok-select v-model="form.city_id"
-                                   :filterable="false"
-                                   :options="cities"
-                                   placeholder="City*"
-                                   @search="searchCity"></simbok-select>
-                    <Invalid name="city_id"></Invalid>
+                    <SimbokSelect v-model="form.city_id"
+                                  :filterable="false"
+                                  :options="cities"
+                                  placeholder="City*"
+                                  @search="searchCity"/>
+                    <Invalid name="city_id"/>
                 </div>
                 <div :class="[invalid('zip')]" class="address-column address-zip">
-                    <input-typeahead v-model="form.zip"
-                                     :min-matching-chars="0"
-                                     :options="zips"
-                                     :show-on-focus="true"
-                                     placeholder="ZIP Code*"/>
-                    <Invalid name="zip"></Invalid>
+                    <InputTypeahead v-model="form.zip"
+                                    :min-matching-chars="0"
+                                    :options="zips"
+                                    :show-on-focus="true"
+                                    placeholder="ZIP Code*"/>
+                    <Invalid name="zip"/>
                 </div>
             </div>
 
             <div :class="[invalid('phone')]" class="form-group">
-                <input-material v-model="form.phone" placeholder="Phone*"></input-material>
-                <Invalid name="phone"></Invalid>
+                <InputMaterial
+                    v-model="form.phone"
+                    placeholder="Phone*"
+                    type="tel"/>
+                <Invalid name="phone"/>
             </div>
             <div :class="[invalid('email')]" class="form-group">
-                <input-material v-model="form.email" placeholder="Email Address*"></input-material>
-                <Invalid name="email"></Invalid>
+                <InputMaterial v-model="form.email" placeholder="Email Address*"/>
+                <Invalid name="email"/>
             </div>
 
             <div :class="[invalid('social.website')]" class="form-group">
-                <input-material v-model="form.social.website" placeholder="Website URL"></input-material>
-                <Invalid name="social.website"></Invalid>
+                <InputMaterial v-model="form.social.website" placeholder="Website URL"/>
+                <Invalid name="social.website"/>
             </div>
             <div :class="[invalid('social.linkedin')]" class="form-group">
-                <input-material v-model="form.social.linkedin" placeholder="LinkedIn URL"></input-material>
-                <Invalid name="social.linkedin"></Invalid>
+                <InputMaterial v-model="form.social.linkedin" placeholder="LinkedIn URL"/>
+                <Invalid name="social.linkedin"/>
             </div>
             <div :class="[invalid('social.twitter')]" class="form-group">
-                <input-material v-model="form.social.twitter" placeholder="Twitter URL"></input-material>
-                <Invalid name="social.twitter"></Invalid>
+                <InputMaterial v-model="form.social.twitter" placeholder="Twitter URL"/>
+                <Invalid name="social.twitter"/>
             </div>
             <div :class="[invalid('social.facebook')]" class="form-group">
-                <input-material v-model="form.social.facebook" placeholder="Facebook URL"></input-material>
-                <Invalid name="social.facebook"></Invalid>
+                <InputMaterial v-model="form.social.facebook" placeholder="Facebook URL"/>
+                <Invalid name="social.facebook"/>
             </div>
             <div :class="[invalid('social.instagram')]" class="form-group">
-                <input-material v-model="form.social.instagram" placeholder="Instagram URL"></input-material>
-                <Invalid name="social.instagram"></Invalid>
+                <InputMaterial v-model="form.social.instagram" placeholder="Instagram URL"/>
+                <Invalid name="social.instagram"/>
             </div>
             <div :class="[invalid('social.youtube')]" class="form-group">
-                <input-material v-model="form.social.youtube" placeholder="YouTube URL"></input-material>
-                <Invalid name="social.youtube"></Invalid>
+                <InputMaterial v-model="form.social.youtube" placeholder="YouTube URL"/>
+                <Invalid name="social.youtube"/>
             </div>
             <div :class="[invalid('social.reddit')]" class="form-group">
-                <input-material v-model="form.social.reddit" placeholder="Reddit URL"></input-material>
-                <Invalid name="social.reddit"></Invalid>
+                <InputMaterial v-model="form.social.reddit" placeholder="Reddit URL"/>
+                <Invalid name="social.reddit"/>
             </div>
             <div :class="[invalid('social.pinterest')]" class="form-group">
-                <input-material v-model="form.social.pinterest" placeholder="Pinterest URL"></input-material>
-                <Invalid name="social.pinterest"></Invalid>
+                <InputMaterial v-model="form.social.pinterest" placeholder="Pinterest URL"/>
+                <Invalid name="social.pinterest"/>
             </div>
             <div :class="[invalid('social.quora')]" class="form-group">
-                <input-material v-model="form.social.quora" placeholder="Quora URL"></input-material>
-                <Invalid name="social.quora"></Invalid>
+                <InputMaterial v-model="form.social.quora" placeholder="Quora URL"/>
+                <Invalid name="social.quora"/>
             </div>
 
             <div class="d-inline-flex align-items-center btn-group-save-form mt-3">
                 <button class="btn btn-green btn-shadow btn-save-form btn-scale-active">
                     Save
-                    <b-spinner v-show="isLoading" small></b-spinner>
+                    <BSpinner v-show="isLoading" small></BSpinner>
                 </button>
                 <button v-if="isEdit"
                         class="btn btn-outline-silver min-width-100 btn-shadow btn-scale-active"

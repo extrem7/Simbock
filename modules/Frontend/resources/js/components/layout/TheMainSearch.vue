@@ -1,12 +1,15 @@
 <template>
-    <div :class="{'is-search-fixed' : isMobileSearchFixed}"
-         class="search-form search-form-header">
+    <div
+        :class="{'is-search-fixed' : isMobileSearchFixed}"
+        class="search-form search-form-header">
         <div class="container">
-            <form class="search-form-wrapper"
-                  @submit.prevent="submit()">
+            <form
+                class="search-form-wrapper"
+                @submit.prevent="submit()">
                 <div class="search-field-group search-form-item search-form-what">
                     <div class="search-group-box">What</div>
                     <InputSearch
+                        ref="query"
                         :options="jobs"
                         :value="query"
                         icon="search"
@@ -43,7 +46,7 @@
 </template>
 
 <script>
-import vacanciesSearch from "~/mixins/vacancies-search";
+import vacanciesSearch from "~/mixins/vacancies-search"
 
 export default {
     mixins: [vacanciesSearch],

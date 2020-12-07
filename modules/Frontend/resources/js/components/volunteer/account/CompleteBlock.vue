@@ -5,15 +5,16 @@
             <div class="sector-body">
                 <div class="sector-body-inner">
                     <div class="radial-progress-bar-wrapper">
-                        <RadialProgressBar :completed-steps="completedSteps"
-                                           :diameter="72"
-                                           :inner-stroke-width="4"
-                                           :stroke-width="4"
-                                           :total-steps="Object.keys(steps).length"
-                                           inner-stroke-color="#DFDFDF"
-                                           start-color="#5CEDAA"
-                                           stop-color="#5CEDAA"
-                                           stroke-linecap="butt"/>
+                        <RadialProgressBar
+                            :completed-steps="completedSteps"
+                            :diameter="72"
+                            :inner-stroke-width="4"
+                            :stroke-width="4"
+                            :total-steps="Object.keys(steps).length"
+                            inner-stroke-color="#DFDFDF"
+                            start-color="#5CEDAA"
+                            stop-color="#5CEDAA"
+                            stroke-linecap="butt"/>
                         <span class="semi-bold-weight radial-progress-bar-value">
                             {{ (completedSteps / steps.length) * 100 }}%
                         </span>

@@ -1,14 +1,20 @@
 <template>
     <main class="container content-inner">
-        <AccessBox/>
+        <AccessBox
+            :id="vacancy.id"
+            :in-bookmarks="vacancy.in_bookmarks"
+            @update:bookmarked="updateVacancyBookmarked"/>
         <div class="row">
             <HistoryBack/>
             <div class="col-xl-8 col-lg-10">
                 <div class="vacancy-open">
                     <VacancyCard
                         v-bind="vacancyProps(vacancy)"
-                        :has-actions="false"
                         :has-description="false"
+                        :in-bookmarks="vacancy.in_bookmarks"
+                        :is-applied="vacancy.is_applied"
+                        @update:applied="updateVacancyApplied"
+                        @update:bookmarked="updateVacancyBookmarked"
                         class="border-r-10 border-left-0"/>
 
                     <div class="sector sector-vacancy-description">
@@ -82,6 +88,7 @@
 </template>
 
 <script>
+import Vue from "vue"
 import AccessBox from "~/components/layout/AccessBox"
 import HistoryBack from "~/components/layout/HistoryBack"
 import VacancyCard from "./VacancyCard"
@@ -99,9 +106,15 @@ export default {
         }
     },
     methods: {
+        updateVacancyApplied() {
+            Vue.set(this.vacancy, 'is_applied', true)
+        },
+        updateVacancyBookmarked(in_bookmarks) {
+            Vue.set(this.vacancy, 'in_bookmarks', in_bookmarks)
+        },
         vacancyProps(vacancy) {
             const props = {}
-            const fields = ['title', 'location', 'employment', 'date', 'company', 'company_title']
+            const fields = ['id', 'title', 'location', 'employment', 'date', 'company', 'company_title']
             for (let field of fields) props[field] = vacancy[field]
             return props
         }

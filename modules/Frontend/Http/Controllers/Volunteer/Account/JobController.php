@@ -43,6 +43,8 @@ class JobController extends Controller
             $volunteer->roles()->wherePivot('sector_id', $sector['id'])->sync($roles);
         }
 
+        $this->volunteer()->calculateCompleteness();
+
         return response()->json([
             'message' => 'Desired job has been saved.',
         ]);
@@ -57,6 +59,8 @@ class JobController extends Controller
         $volunteer->types()->detach();
         $volunteer->hours()->detach();
         $volunteer->roles()->detach();
+
+        $this->volunteer()->calculateCompleteness();
 
         return response()->json(['message' => 'Desired job has been deleted.']);
     }

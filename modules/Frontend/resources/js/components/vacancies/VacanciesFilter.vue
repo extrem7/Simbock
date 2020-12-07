@@ -140,7 +140,7 @@
                 </div>
             </div>
         </div>
-        <div class="filter">
+        <div v-if="!routeIncludes(['volunteers'])" class="filter">
             <div class="title medium-size filter-title">Choose more Company Sizes:</div>
             <div class="row">
                 <div v-for="{value,text} in sizes"

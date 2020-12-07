@@ -16,10 +16,10 @@
 </template>
 
 <script>
-import inputMixin from "../../mixins/inputMixin";
+import input from "~/mixins/input"
 
 export default {
-    mixins: [inputMixin],
+    mixins: [input],
     props: {
         options: Array,
         minMatchingChars: {

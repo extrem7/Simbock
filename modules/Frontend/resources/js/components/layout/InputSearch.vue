@@ -1,23 +1,29 @@
 <template>
-    <div :class="{'is-focused' : isFocus}" class="form-group-typeahead form-group-search" @click="isFocus = !isFocus">
-        <div class="btn btn-clear-input" @click.prevent="input('')">
-            <svg-vue icon="close"></svg-vue>
+    <div :class="{'is-focused' : isFocus}"
+         class="form-group-typeahead form-group-search">
+        <div class="btn btn-clear-input"
+             @click.prevent="input('')">
+            <SvgVue icon="close"/>
         </div>
         <VueTypeaheadBootstrap
-            :data="options"
-            :placeholder="placeholder"
+            ref="typehead"
             :showAllResults="true"
             :value="value"
+            :data="options"
+            :placeholder="placeholder"
             @input="input"/>
-        <svg-vue :icon="icon" class="form-search-icon"></svg-vue>
+        <SvgVue
+            :icon="icon"
+            class="form-search-icon"/>
     </div>
 </template>
 
 <script>
-import inputMixin from "../../mixins/inputMixin"
+import input from "~/mixins/input"
+import {debounce} from 'lodash'
 
 export default {
-    mixins: [inputMixin],
+    mixins: [input],
     props: {
         value: String | Number,
         options: Array,
@@ -25,14 +31,29 @@ export default {
             type: String
         }
     },
-    data: () => ({timeout: null}),
+    data() {
+        return {
+            current: null,
+            update: debounce(function () {
+                this.$emit('change', this.current)
+            }, 500),
+        }
+    },
+    mounted() {
+        this.$watch(() => {
+            return this.$refs.typehead.isFocused
+        }, (val) => {
+            this.isFocus = val
+        })
+    },
     methods: {
         input(e) {
+            this.current = e
             this.$emit('input', e)
-            clearTimeout(this.timeout)
-            this.timeout = setTimeout(() => {
-                this.$emit('change', e)
-            }, 500)
+            this.update()
+        },
+        disableFocus() {
+            if (this.isFocus) this.isFocus = false
         }
     }
 }

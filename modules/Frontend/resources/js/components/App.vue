@@ -56,7 +56,10 @@ export default {
             scrolled: false,
             enableFilter: false,
             isFilterOpen: false,
-            isSearch: this.routeIncludes(['vacancies.index', 'vacancies.saved', 'vacancies.history'])
+            isSearch: this.routeIncludes([
+                'vacancies.search', 'vacancies.saved', 'vacancies.history', 'vacancies.companies',
+                'volunteers.search', 'volunteers.saved', 'volunteers.candidates'
+            ])
         }
     },
     computed: {
@@ -78,10 +81,10 @@ export default {
         })
 
         this.$bus.on('enable-filter', () => {
-            this.isFilterOpen = true
+            this.enableFilter = true
         })
         this.$bus.on('disable-filter', () => {
-            this.isFilterOpen = false
+            this.enableFilter = false
         })
     },
     destroyed() {

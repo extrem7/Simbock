@@ -10,8 +10,11 @@ use App\Models\Jobs\Skill;
 use App\Models\Jobs\Type;
 use App\Models\Map\US\City;
 use App\Models\Traits\SearchTrait;
+use App\Models\Volunteers\Volunteer;
+use Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Vacancy extends Model
@@ -59,6 +62,11 @@ class Vacancy extends Model
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function applies(): BelongsToMany
+    {
+        return $this->belongsToMany(Volunteer::class, 'volunteer_has_applies')->distinct();
     }
 
     public function sector()
@@ -115,7 +123,7 @@ class Vacancy extends Model
     // ACCESSORS
     public function getIsAppliedAttribute(): bool
     {
-        if ($user = \Auth::getUser()) {
+        if (($user = Auth::getUser()) && $volunteer = $user->volunteer) {
             return $user->volunteer->applies()->where('vacancy_id', $this->id)->exists();
         }
         return false;
@@ -123,7 +131,7 @@ class Vacancy extends Model
 
     public function getInBookmarksAttribute(): bool
     {
-        if ($user = \Auth::getUser()) {
+        if (($user = Auth::getUser()) && $volunteer = $user->volunteer) {
             return $user->volunteer->bookmarks()->where('vacancy_id', $this->id)->exists();
         }
         return false;
@@ -139,11 +147,17 @@ class Vacancy extends Model
         return $this->created_at->diffForHumans();
     }
 
+    //todo refactor to trait HasLocation
     public function getLocationAttribute(): string
     {
         $c = $this->city;
         $name = $c->name;
         if ($c->name !== $c->county) $name .= ", $c->county";
         return "$name $c->state_id";
+    }
+
+    public function getIsCompletedAttribute(): bool
+    {
+        return (bool)$this->address;
     }
 }

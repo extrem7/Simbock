@@ -1,6 +1,6 @@
 <template>
     <TheHeader>
-       <VolunteerMenu class="hidden-sm"/>
+        <VolunteerMenu class="hidden-sm"/>
         <BDropdown class="drop-account-wrapper" no-caret variant="dropdown-account">
             <template v-slot:button-content>
                 <img alt="dots" class="dropdown-item-icon" src="/dist/img/icons/dots.svg">
@@ -10,6 +10,12 @@
                 v-b-tooltip.hover.left
                 title="Your account">
                 <img alt="company" class="dropdown-item-icon" src="/dist/img/icons/volunteer.svg">
+            </BDropdownItem>
+            <BDropdownItem
+                v-b-tooltip.hover.left
+                :href="route('volunteer.vacancies.history')"
+                title="History apply">
+                <img alt="history" class="dropdown-item-icon" src="/dist/img/icons/history-apply.svg">
             </BDropdownItem>
             <BDropdownItem v-b-tooltip.hover.left
                            :href="route('auth.change_password.form')"

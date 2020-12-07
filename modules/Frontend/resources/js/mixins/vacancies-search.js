@@ -12,8 +12,8 @@ export default {
     watch: {
         async query(val) {
             if (this.query.length > 1 && !this.jobs.includes(val)) {
-                const {data} = await this.axios.get(`/api/vacancies/${this.query}`)
-                if (data) this.jobs = data
+                const {data: jobs} = await this.axios.get(`/api/vacancies/${this.query}`)
+                if (jobs) this.jobs = jobs
             }
         },
         async cityQuery(query) {
@@ -24,18 +24,20 @@ export default {
     },
     methods: {
         submit(filters = null) {
-            if (this.query) location.href = this.action(filters)
+            this.$refs.query.update.flush()
+            location.href = this.action(filters)
         },
         action(filters = null) {
-            const params = {
-                query: this.query.split(' ').join('-'),
-            }
-            if (this.cityQuery) {
+            const resource = this.routeIncludes(['volunteers']) ? 'volunteers' : 'vacancies',
+                params = {
+                    query: this.query.split(' ').join('-'),
+                }
+            if (this.query && this.cityQuery) {
                 params.location = this.cityQuery.replace(',', '-').split(' ').join('-')
             }
-            return this.route(`vacancies.${this.cityQuery ? 'index.location' : 'index'}`, params)
+            return this.route(`${resource}.search${this.cityQuery ? '.location' : ''}`, params)
                 +
-                (filters !== null ? (!this._.isEmpty(filters) ? ` ?${filters}` : '') : location.search)
+                (filters !== null ? (!this._.isEmpty(filters) ? `?${filters}` : '') : location.search)
         }
     }
 }

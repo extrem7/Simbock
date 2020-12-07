@@ -86,6 +86,7 @@
                                     <div class="sector-contact-text">
                                         <a v-if="link"
                                            :href="link"
+                                           target="_blank"
                                            class="line-nowrap link d-block">{{ link }}</a>
                                     </div>
                                 </div>

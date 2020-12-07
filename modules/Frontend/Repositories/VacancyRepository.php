@@ -11,7 +11,6 @@ use App\Models\Jobs\Skill;
 use App\Models\Jobs\Type;
 use App\Models\Vacancy;
 use App\Services\LocationService;
-use Illuminate\Support\Collection;
 
 class VacancyRepository
 {
@@ -44,7 +43,7 @@ class VacancyRepository
 
     public function transformForIndex(Vacancy $vacancy): Vacancy
     {
-        $vacancy->append(['employment', 'date', 'location', 'is_applied', 'in_bookmarks']);
+        $vacancy->append(['employment', 'date', 'location', 'is_applied', 'in_bookmarks', 'is_completed']);
 
         $vacancy->company_title = $vacancy->company_title ?? $vacancy->company->name;
         $vacancy->days = $vacancy->created_at->diffInDays();

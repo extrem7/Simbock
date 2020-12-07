@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import input from "~/mixins/inputMixin"
+import input from "~/mixins/input"
 
 export default {
     mixins: [input],

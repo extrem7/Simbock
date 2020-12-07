@@ -3,11 +3,13 @@
         <div class="row">
             <HistoryBack/>
             <div class="col-xl-3 col-lg-4 col-md-5">
-                <CompanyCardActions v-if="$root.isMobileGrid"
-                                    :employment="company.employment"
-                                    :location="company.location"
-                                    :logo="company.logo"
-                                    :name="company.name"/>
+                <CompanyCardActions
+                    v-if="$root.isMobileGrid"
+                    :employment="company.employment"
+                    :location="company.location"
+                    :logo="company.logo"
+                    :name="company.name"
+                    can-edit/>
 
                 <div class="sector sector-sidebar">
                     <div class="sector-label">Contact Information</div>
@@ -28,7 +30,7 @@
                                     <div class="sector-contact-text">
                                         <a :href="`tel:+${company.phone}`"
                                            class="line-nowrap link-inherit d-block">
-                                            +{{ company.phone }}
+                                            {{ company.phone }}
                                         </a>
                                     </div>
                                 </div>
@@ -36,17 +38,24 @@
                         </div>
                     </div>
                 </div>
-                <div class="sector sector-sidebar">
+                <div v-if="Object.values(company.social).filter(i => i !== null).length"
+                     class="sector sector-sidebar">
                     <div class="sector-label">Websites</div>
                     <div class="item-box">
                         <div class="sector-body">
                             <div class="sector-body-inner">
-                                <div v-for="(link,name) in company.social" v-if="link" class="sector-contact-info">
+                                <div v-for="(link,name) in company.social"
+                                     v-if="link"
+                                     class="sector-contact-info">
                                     <div class="sector-contact-icon">
                                         <img :src="`/dist/img/icons/${name}.svg`">
                                     </div>
                                     <div class="sector-contact-text">
-                                        <a :href="link" class="line-nowrap link d-block">{{ link }}</a>
+                                        <a :href="link"
+                                           class="line-nowrap link d-block"
+                                           target="_blank">
+                                            {{ link }}
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -56,12 +65,14 @@
             </div>
             <div class="col-xl-6 col-lg-7 col-md-7">
                 <div class="sector-label invisible">Company info</div>
-                <CompanyCardActions v-if="!$root.isMobileGrid"
-                                    :employment="company.employment"
-                                    :location="company.location"
-                                    :logo="company.logo"
-                                    :name="company.name"/>
-                <div class="sector sector-hiring-company-desc">
+                <CompanyCardActions
+                    v-if="!$root.isMobileGrid"
+                    :employment="company.employment"
+                    :location="company.location"
+                    :logo="company.logo"
+                    :name="company.name"
+                    can-edit/>
+                <div v-if="company.description" class="sector sector-hiring-company-desc">
                     <div class="sector-label">Hiring Company Description</div>
                     <div class="item-box">
                         <div class="sector-body">
@@ -69,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="sector sector-volunteering-vacancies">
+                <div v-if="company.vacancies.length" class="sector sector-volunteering-vacancies">
                     <div class="sector-label">All Volunteering Vacancies</div>
                     <div class="item-box">
                         <VacancyCard v-for="vacancy in company.vacancies"

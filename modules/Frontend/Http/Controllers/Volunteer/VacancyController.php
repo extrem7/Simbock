@@ -28,7 +28,7 @@ class VacancyController extends Controller
     {
         $this->seo()->setTitle("Saved vacancies");
 
-        $vacancies = Vacancy::whereIn('id', $this->volunteer()->bookmarks()->pluck('id'))
+        $vacancies = $this->volunteer()->bookmarks()
             ->with(['company.logoMedia', 'city', 'type', 'hours'])
             ->latest()
             ->paginate(4, $this->fields);
@@ -53,7 +53,7 @@ class VacancyController extends Controller
     {
         $this->seo()->setTitle("History apply");
 
-        $vacancies = Vacancy::whereIn('id', $this->volunteer()->applies()->pluck('id'))
+        $vacancies = $this->volunteer()->applies()
             ->with(['company.logoMedia', 'city', 'type', 'hours'])
             ->latest()
             ->paginate(4, $this->fields);

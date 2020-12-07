@@ -1,10 +1,11 @@
 <template>
     <div class="card-work card-company card-company-actions border-left-0 border-r-10">
         <div class="card-company-profile">
-            <div class="sector-actions sector-actions-absolute">
-                <a v-if="isRoute('companies.self')"
-                   :href="route('company.info.form')" class="btn btn-sector-action btn-sector-edit">
-                    <svg-vue icon="settings"></svg-vue>
+            <div v-if="canEdit"
+                 class="sector-actions sector-actions-absolute">
+                <a
+                    :href="route('company.info.form')" class="btn btn-sector-action btn-sector-edit">
+                    <SvgVue icon="settings"/>
                 </a>
             </div>
             <img :alt="name" :src="logo" class="card-work-company-logo">
@@ -27,6 +28,10 @@ export default {
         employment: String,
         location: String,
         isCompleted: {
+            type: Boolean,
+            default: false
+        },
+        canEdit: {
             type: Boolean,
             default: false
         }

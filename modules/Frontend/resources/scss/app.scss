@@ -19,3 +19,11 @@
 .language-select .vs__dropdown-menu {
     max-height: 125px !important;
 }
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .3s;
+}
+
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}

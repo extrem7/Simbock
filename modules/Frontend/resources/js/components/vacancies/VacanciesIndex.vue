@@ -5,12 +5,15 @@
         <Transition
             mode="out-in"
             name="fade">
-            <VacanciesFilter v-if="enableFilter && isFilterOpen" key="filter"/>
+            <VacanciesFilter
+                v-if="enableFilter && isFilterOpen"
+                key="filter"/>
             <div v-else
                  key="list"
                  :class="{'mt-0':!title}"
                  class="row card-list">
-                <div v-if="vacancies.length" class="col-xl-8">
+                <div v-if="vacancies.length"
+                     class="col-xl-8">
                     <VacancyCard
                         v-for="(vacancy,i) in vacancies"
                         :key="vacancy.id"
@@ -18,7 +21,6 @@
                         :in-bookmarks="vacancy.in_bookmarks"
                         :is-applied="vacancy.is_applied"
                         :has-actions="enableActions"
-                        is-completed
                         @update:applied="updateVacancyApplied(i)"
                         @update:bookmarked="updateVacancyBookmarked(i,$event)"/>
 
@@ -116,18 +118,9 @@ export default {
                 'company', 'company_title'
             ]
             for (let field of fields) props[field] = vacancy[field]
+            props.isCompleted = vacancy.is_completed
             return props
         }
     }
 }
 </script>
-
-<style>
-.fade-enter-active, .fade-leave-active {
-    transition: opacity .3s;
-}
-
-.fade-enter, .fade-leave-to {
-    opacity: 0;
-}
-</style>

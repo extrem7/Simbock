@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class InfoRequest extends FormRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'name' => ['required', 'string255'],
@@ -21,7 +21,7 @@ class InfoRequest extends FormRequest
             'city_id' => ['required', 'exists:us_cities,id'],
             'zip' => ['required', 'string', 'max:5'],
 
-            'phone' => ['required', 'string255'],
+            'phone' => ['required', 'phone:US'],
             'email' => ['nullable', 'email', 'string255'],
 
             'social' => ['nullable', 'array'],
@@ -37,7 +37,7 @@ class InfoRequest extends FormRequest
         ];
     }
 
-    public function authorize()
+    public function authorize(): bool
     {
         return true;
     }

@@ -26,13 +26,13 @@
 </template>
 
 <script>
-import inputMixin from "../../mixins/inputMixin"
+import input from "~/mixins/input"
 import vClickOutside from 'v-click-outside'
 
 import {createTag} from '@johmun/vue-tags-input';
 
 export default {
-    mixins: [inputMixin],
+    mixins: [input],
     directives: {
         clickOutside: vClickOutside.directive
     },

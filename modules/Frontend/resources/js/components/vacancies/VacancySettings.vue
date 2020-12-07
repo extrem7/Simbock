@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import statuses from "./statuses.json"
+
 export default {
     props: {
         id: Number,
@@ -65,11 +67,7 @@ export default {
     data() {
         return {
             isShowInfo: true,
-            statuses: {
-                DRAFT: 'Draft',
-                ACTIVE: 'Published',
-                CLOSED: 'Closed'
-            }
+            statuses
         }
     },
     methods: {

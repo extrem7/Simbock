@@ -38,7 +38,9 @@ class AccountController extends Controller
     {
         $user = Auth::getUser();
         $volunteer = $user->volunteer;
-        $volunteer->update($request->validated());
+        if ($volunteer->update($request->validated())) {
+            $volunteer->calculateCompleteness();
+        }
 
         $request->syncSkills($volunteer);
 

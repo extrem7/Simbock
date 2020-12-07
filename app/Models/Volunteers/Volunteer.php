@@ -3,7 +3,6 @@
 namespace App\Models\Volunteers;
 
 use App\Models\Jobs\Hour;
-use App\Models\Jobs\Job;
 use App\Models\Jobs\Role;
 use App\Models\Jobs\Skill;
 use App\Models\Jobs\Type;
@@ -11,6 +10,7 @@ use App\Models\Language;
 use App\Models\Map\US\City;
 use App\Models\User;
 use App\Models\Vacancy;
+use Auth;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -34,7 +34,7 @@ class Volunteer extends Model implements HasMedia
         'is_private', 'phone', 'email', 'social', 'headline', 'city_id', 'zip', 'is_relocating', 'is_working_remotely',
         'job_title', 'executive_summary', 'objective', 'achievements', 'associations', 'years_of_experience_id',
         'level_of_education_id', 'veteran_status_id', 'cover_letter', 'personal_statement',
-        'has_driver_license', 'has_car'
+        'has_driver_license', 'has_car', 'completeness'
     ];
 
     protected $casts = [
@@ -42,7 +42,8 @@ class Volunteer extends Model implements HasMedia
         'is_relocating' => 'boolean',
         'is_working_remotely' => 'boolean',
         'has_driver_license' => 'boolean',
-        'has_car' => 'boolean'
+        'has_car' => 'boolean',
+        'completeness' => 'float'
     ];
 
     // FUNCTIONS
@@ -77,6 +78,40 @@ class Volunteer extends Model implements HasMedia
         }
 
         return asset('dist/img/avatar.svg');
+    }
+
+    public function calculateCompleteness(): void
+    {
+        $completeness = 0;
+
+        $steps = [
+            'about' => [
+                'value' => ($this->name && $this->headline && $this->city_id),
+                'cost' => 0.2
+            ],
+            'looking' => [
+                'value' => $this->roles()->exists(),
+                'cost' => 0.2
+            ],
+            'work_experience' => [
+                'value' => $this->workExperiences()->exists(),
+                'cost' => 0.2
+            ],
+            'contact_social' => [
+                'value' => ($this->email && $this->phone && !empty(array_filter($this->social, fn($l) => $l !== null))),
+                'cost' => 0.2
+            ],
+            'skills' => [
+                'value' => $this->skills()->exists(),
+                'cost' => 0.2
+            ],
+        ];
+
+        foreach ($steps as $step) {
+            $completeness += $step['value'] ? $step['cost'] : 0;
+        }
+
+        $this->update(['completeness' => $completeness]);
     }
 
     // RELATIONS
@@ -177,5 +212,40 @@ class Volunteer extends Model implements HasMedia
     public function getEmailAttribute(string $email = null): string
     {
         return $email ?: $this->user->email;
+    }
+
+    public function getUpdatedAtAttribute(): string
+    {
+        return $this->user->updated_at->diffForHumans();
+    }
+
+    //todo refactor to trait HasLocation
+    public function getLocationAttribute(): string
+    {
+        $c = $this->city;
+        $name = $c->name;
+        if ($c->name !== $c->county) $name .= ", $c->county";
+        return "$name $c->state_id";
+    }
+
+    //todo refactor to trait HasEmployment
+    public function getEmploymentAttribute(): string
+    {
+        return $this->types->implode('name', ', ')
+            . ', '
+            . $this->hours->implode('name', ', ');
+    }
+
+    public function getInBookmarksAttribute(): bool
+    {
+        if ($user = Auth::user()) {
+            return $user->company->bookmarks()->where('volunteer_id', $this->id)->exists();
+        }
+        return false;
+    }
+
+    public function getIsCompletedAttribute(): bool
+    {
+        return $this->completeness === 1.;
     }
 }

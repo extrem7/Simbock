@@ -22,7 +22,6 @@ Route::middleware('guest')->as('auth.')->group(function () {
 
 Route::get('', 'PageController@home')->name('home');
 
-
 Route::prefix('newsroom')->as('articles.')->group(function () {
     Route::get('', 'ArticleController@index')->name('index');
 
@@ -34,7 +33,7 @@ Route::prefix('newsroom')->as('articles.')->group(function () {
 
 Route::as('vacancies.')->group(function () {
     Route::prefix('vacancies/{query?}')
-        ->as('index')
+        ->as('search')
         ->group(function () {
             Route::get('', 'VacancyController@index');
             Route::get('{location?}', 'VacancyController@index')->name('.location');
@@ -54,6 +53,28 @@ Route::as('vacancies.')->group(function () {
     });
 });
 
+Route::middleware('auth')
+    ->as('volunteers.')
+    ->group(function () {
+        Route::prefix('volunteers/{query?}')
+            ->as('search')
+            ->group(function () {
+                Route::get('', 'VolunteerController@index');
+                Route::get('{location?}', 'VolunteerController@index')->name('.location');
+            });
+
+        Route::prefix('volunteer/{volunteer}')->group(function () {
+            Route::get('', 'VolunteerController@show')
+                ->name('show')
+                ->where('volunteer', '[0-9]+');
+            Route::middleware(Company::class)
+                ->as('actions.')
+                ->group(function () {
+                    Route::post('bookmark', 'VolunteerController@bookmark')->name('bookmark');
+                });
+        });
+    });
+
 Route::middleware('auth')->group(function () {
     Route::prefix('account/change-password')
         ->namespace('Auth')
@@ -68,9 +89,11 @@ Route::middleware('auth')->group(function () {
             Route::get('', 'VacancyController@show')->name('show');
         });
     });*/
-    Route::prefix('companies')->as('companies.')->group(function () {
-        Route::get('self', 'CompanyController@self')->name('self');
-        Route::prefix('{company}')->group(function () {
+    Route::as('companies.')->group(function () {
+        Route::get('company/self', 'CompanyController@self')
+            ->middleware(Company::class)
+            ->name('self');
+        Route::prefix('companies/{company}')->group(function () {
             Route::get('', 'CompanyController@show')->name('show');
         });
     });
@@ -78,58 +101,64 @@ Route::middleware('auth')->group(function () {
     Route::prefix('company')
         ->middleware(Company::class)
         ->as('company.')
-        ->namespace('Company')
         ->group(function () {
-            Route::prefix('info')->as('info.')->group(function () {
-                Route::get('', 'InfoController@showForm')->name('form');
-                Route::post('', 'InfoController@update')->name('update');
-
-                Route::prefix('logo')->as('logo.')->group(function () {
-                    Route::post('', 'InfoController@uploadLogo')->name('update');
-                    Route::delete('', 'InfoController@destroyLogo')->name('destroy');
-                });
+            Route::as('volunteers.')->group(function () {
+                Route::get('saved', 'VolunteerController@saved')->name('saved');
+                Route::get('candidates', 'VolunteerController@candidates')->name('candidates');
             });
-            Route::prefix('vacancies')->as('vacancies.')->group(function () {
-                Route::get('{status?}', 'VacancyController@index')
-                    ->name('index')
-                    ->where('status', '(active|draft|closed)');
-                Route::get('create', 'VacancyController@create')->name('create');
-                Route::post('', 'VacancyController@store')->name('store');
 
-                Route::prefix('{vacancy}')->middleware(VacancyOwner::class)->group(function () {
-                    Route::middleware(VacancyNotClosed::class)->group(function () {
-                        Route::get('edit', 'VacancyController@edit')->name('edit');
-                        Route::post('', 'VacancyController@update')->name('update');
+            Route::namespace('Company')->group(function () {
+                Route::get('board', 'BoardController')->name('board');
+                Route::prefix('info')->as('info.')->group(function () {
+                    Route::get('', 'InfoController@showForm')->name('form');
+                    Route::post('', 'InfoController@update')->name('update');
+
+                    Route::prefix('logo')->as('logo.')->group(function () {
+                        Route::post('', 'InfoController@uploadLogo')->name('update');
+                        Route::delete('', 'InfoController@destroyLogo')->name('destroy');
                     });
+                });
+                Route::prefix('vacancies')->as('vacancies.')->group(function () {
+                    Route::get('{status?}', 'VacancyController@index')
+                        ->name('index')
+                        ->where('status', '(active|draft|closed)');
+                    Route::get('create', 'VacancyController@create')->name('create');
+                    Route::post('', 'VacancyController@store')->name('store');
 
-                    Route::post('post', 'VacancyController@post')->name('post');
-                    Route::post('stop', 'VacancyController@stop')->name('stop');
-                    Route::post('close', 'VacancyController@close')->name('close');
+                    Route::prefix('{vacancy}')->middleware(VacancyOwner::class)->group(function () {
+                        Route::middleware(VacancyNotClosed::class)->group(function () {
+                            Route::get('edit', 'VacancyController@edit')->name('edit');
+                            Route::post('', 'VacancyController@update')->name('update');
+                        });
 
-                    Route::get('duplicate', 'VacancyController@duplicate')->name('duplicate');
+                        Route::post('post', 'VacancyController@post')->name('post');
+                        Route::post('stop', 'VacancyController@stop')->name('stop');
+                        Route::post('close', 'VacancyController@close')->name('close');
 
-                    Route::delete('', 'VacancyController@destroy')->name('destroy');
+                        Route::get('duplicate', 'VacancyController@duplicate')->name('duplicate');
+
+                        Route::delete('', 'VacancyController@destroy')->name('destroy');
+                    });
                 });
             });
         });
 
-    Route::prefix('volunteers')->as('volunteers.')->group(function () {
-        Route::get('self', 'VolunteerController@self')->name('self');
-        Route::prefix('{volunteer}')->group(function () {
-            Route::get('', 'VolunteerController@show')->name('show');
-        });
+    Route::prefix('volunteer')->as('volunteers.')->group(function () {
+        Route::get('self', 'VolunteerController@self')
+            ->middleware(Volunteer::class)
+            ->name('self');
     });
 
-    Route::prefix('volunteer')
+    Route::prefix('account')
         ->middleware(Volunteer::class)
         ->as('volunteer.')
         ->namespace('Volunteer')
         ->group(function () {
+            Route::get('companies', 'CompanyController')->name('vacancies.companies');
             Route::get('saved', 'VacancyController@saved')->name('vacancies.saved');
             Route::get('history', 'VacancyController@history')->name('vacancies.history');
 
-            Route::prefix('account')->as('account.')->namespace('Account')->group(function () {
-
+            Route::prefix('info')->as('account.')->namespace('Account')->group(function () {
                 Route::get('', 'AccountController@page')->name('form');
                 Route::post('', 'AccountController@update')->name('update');
 

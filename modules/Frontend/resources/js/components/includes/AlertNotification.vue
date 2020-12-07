@@ -29,7 +29,7 @@ export default {
         }
     },
     created() {
-        this.$bus.on('alert', ({variant = 'success', text, position = 'top', delay = 5}) => {
+        this.$bus.on('alert', ({variant = 'success', text, position = 'top', delay = 4}) => {
             if (process.env.NODE_ENV !== 'production') console.log(text)
             clearTimeout(this.timeout)
             this.variant = variant

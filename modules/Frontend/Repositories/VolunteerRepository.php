@@ -118,4 +118,16 @@ class VolunteerRepository
             compact('skills')
         );
     }
+
+    public function transformForIndex(Volunteer $volunteer): Volunteer
+    {
+        $volunteer->append([
+            'avatar', 'name', 'location', 'employment', 'updated_at', 'is_completed', 'in_bookmarks'
+        ]);
+        $volunteer->sectors = Sector::findMany(
+            $volunteer->roles->pluck('pivot.sector_id')->unique()
+        )->pluck('name');
+
+        return $volunteer;
+    }
 }
