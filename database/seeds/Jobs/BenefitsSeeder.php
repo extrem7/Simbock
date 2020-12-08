@@ -8,7 +8,7 @@ class BenefitsSeeder extends Seeder
     public function run()
     {
         $benefist = [
-            'Medical Insurance', 'Dental Insurance', 'Vision Insurance', '401K', 'Life Insurance', 'None of These'
+            'Medical Insurance', 'Dental Insurance', 'Vision Insurance', '401K', 'Life Insurance'
         ];
         foreach ($benefist as $name) Benefit::create(compact('name'));
     }

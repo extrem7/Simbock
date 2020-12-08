@@ -4,6 +4,7 @@ namespace Modules\Frontend\Http\Controllers;
 
 use App\Models\Vacancy;
 use App\Services\LocationService;
+use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
@@ -85,6 +86,14 @@ class VacancyController extends Controller
 
     public function show(Vacancy $vacancy)
     {
+        if ($vacancy->status !== Vacancy::ACTIVE) {
+            if (($user = Auth::user()) && !$user->is_volunteer) {
+                abort_if($vacancy->company_id !== $user->company->id, 404);
+            } else {
+                abort(404);
+            }
+        }
+
         $this->seo()->setTitle("$vacancy->title | Vacancies");
 
         $vacancy->load('company.logoMedia', 'city', 'hours', 'benefits', 'incentives', 'skills');
