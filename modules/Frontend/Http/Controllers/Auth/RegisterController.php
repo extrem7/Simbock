@@ -9,7 +9,6 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Route2Class;
 
 class RegisterController extends Controller
 {
@@ -24,7 +23,7 @@ class RegisterController extends Controller
     {
         $this->seo()->setTitle('Register');
 
-        Route2Class::addClass('bg-decorative');
+        \Route2Class::addClass('bg-decorative');
 
         return view('frontend::auth.register');
     }
@@ -39,14 +38,16 @@ class RegisterController extends Controller
 
         $this->guard()->login($user);
 
-        if ($response = $this->registered($request, $user)) return $response;
+        if ($response = $this->registered($request, $user)) {
+            return $response;
+        }
 
         return response()->json(['redirect' => $this->redirectPath($user)]);
     }
 
-    public function redirectPath(User $user)
+    public function redirectPath(User $user): string
     {
-        return '/';
+        return $user->is_volunteer ? route('frontend.volunteer.account.form') : '/';
     }
 
     protected function validator(array $data)

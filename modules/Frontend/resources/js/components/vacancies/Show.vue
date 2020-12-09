@@ -13,6 +13,7 @@
                         :has-description="false"
                         :in-bookmarks="vacancy.in_bookmarks"
                         :is-applied="vacancy.is_applied"
+                        :has-actions="hasActions"
                         @update:applied="updateVacancyApplied"
                         @update:bookmarked="updateVacancyBookmarked"
                         class="border-r-10 border-left-0"/>
@@ -103,6 +104,14 @@ export default {
     data() {
         return {
             vacancy: this.shared('vacancy')
+        }
+    },
+    computed: {
+        user() {
+            return this.$store.state.user
+        },
+        hasActions() {
+            return (this.user === null || this.user.is_volunteer) && this.enableActions
         }
     },
     methods: {

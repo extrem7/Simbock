@@ -65,13 +65,13 @@ class PageController extends Controller
             'content' => $page->body
         ]);
 
-        \Route2Class::addClass('bg-linear-gradient');
-
         $view = 'default';
 
         if ($page->id === 2 || $page->slug === 'our-vacancies') {
             return $this->work($page);
         }
+
+        \Route2Class::addClass('bg-linear-gradient');
 
         if ($page->id === 5 || $page->slug === 'help') {
             return $this->help($page);
@@ -88,6 +88,6 @@ class PageController extends Controller
     {
         \Mail::to(config('frontend.emails_for_contacts'))->send(new ContactForm($request->validated()));
 
-        return response()->json(['message' => 'Your message has been sent']);
+        return response()->json(['message' => 'Your message has been sent.']);
     }
 }

@@ -3,7 +3,7 @@ import Vue from 'vue'
 Vue.mixin({
     methods: {
         shared: (key) => shared()[key],
-        notify(text, variant = 'success', delay = 5, position = 'top') {
+        notify(text, variant = 'success', delay = 3, position = 'top') {
             this.$bus.emit('alert', {variant, text, delay, position})
         }
     }

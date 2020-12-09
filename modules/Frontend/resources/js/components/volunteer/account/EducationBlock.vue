@@ -29,9 +29,9 @@
                         <div class="sector-text small-size flex-shrink-0">{{ education.start }} - {{ education.end }}
                         </div>
                     </div>
-                    <div class="mt-3">
-                        <div v-if="education.description"
-                             class="sector-text extra-small-size">
+                    <div v-if="education.description"
+                         class="mt-3">
+                        <div class="sector-text extra-small-size">
                             {{ education.description }}
                         </div>
                     </div>

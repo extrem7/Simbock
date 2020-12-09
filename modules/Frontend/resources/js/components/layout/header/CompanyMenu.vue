@@ -26,13 +26,13 @@
         </a>
         <a v-b-tooltip.hover
            :href="route('volunteers.search')"
-           class="menu-account-link"
+           class="menu-account-link has-message link-stroke"
            title="Messenger">
             <SvgVue icon="chat"/>
         </a>
         <a v-b-tooltip.hover
            :href="route('volunteers.search')"
-           class="menu-account-link"
+           class="menu-account-link link-stroke"
            title="Search resume">
             <SvgVue icon="file"/>
         </a>

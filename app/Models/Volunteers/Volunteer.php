@@ -11,6 +11,7 @@ use App\Models\Map\US\City;
 use App\Models\User;
 use App\Models\Vacancy;
 use Auth;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -125,6 +126,7 @@ class Volunteer extends Model implements HasMedia
         return $this->belongsToMany(Vacancy::class, 'volunteer_has_applies')->distinct();
     }
 
+    /* @return Vacancy|BelongsToMany */
     public function bookmarks(): BelongsToMany
     {
         return $this->belongsToMany(Vacancy::class, 'volunteer_has_bookmarks');
@@ -191,6 +193,12 @@ class Volunteer extends Model implements HasMedia
     public function avatarMedia(): MorphOne
     {
         return $this->morphOne(Media::class, 'model')->where('collection_name', 'avatar');
+    }
+
+    // SCOPES
+    public function scopePublic(Builder $query): Builder
+    {
+        return $query->where('is_private', '!=', true);
     }
 
     // ACCESSORS

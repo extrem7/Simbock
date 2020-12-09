@@ -45,7 +45,8 @@ class VacancyController extends Controller
 
         $filters = $request->validated();
 
-        $vacancies = Vacancy::when($query, fn($q) => $q->where('title', 'REGEXP', '[[:<:]]' . $query . '[[:>:]]'))
+        $vacancies = Vacancy::active()
+            ->when($query, fn($q) => $q->where('title', 'REGEXP', '[[:<:]]' . $query . '[[:>:]]'))
             ->when(!empty($locations), fn(Builder $q) => $q->whereIn('city_id', $locations))
             ->with(['company.logoMedia', 'city', 'type', 'hours'])
             ->when(isset($filters['is_relocation']), fn($q) => $q->where('is_relocation', '=', true))

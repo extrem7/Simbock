@@ -20,7 +20,7 @@
                         v-bind="vacancyProps(vacancy)"
                         :in-bookmarks="vacancy.in_bookmarks"
                         :is-applied="vacancy.is_applied"
-                        :has-actions="enableActions"
+                        :has-actions="hasActions"
                         @update:applied="updateVacancyApplied(i)"
                         @update:bookmarked="updateVacancyBookmarked(i,$event)"/>
 
@@ -83,6 +83,14 @@ export default {
             lastPage: data.last_page || 1,
 
             isFilterOpen: false
+        }
+    },
+    computed: {
+        user() {
+            return this.$store.state.user
+        },
+        hasActions() {
+            return (this.user === null || this.user.is_volunteer) && this.enableActions
         }
     },
     created() {

@@ -1,7 +1,7 @@
 <template>
     <a :class="{'completed-account' : isCompleted}"
        :href="route('companies.show',id)"
-       class="d-block card-work card-company">
+       class="d-block card-work card-company link-inherit">
         <div class="card-company-profile">
             <img :alt="name"
                  :src="logo"

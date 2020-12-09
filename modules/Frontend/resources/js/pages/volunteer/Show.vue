@@ -111,7 +111,8 @@
                     <div class="item-box">
                         <div class="sector-body">
                             <div class="sector-body-inner">
-                                <div v-for="{name,fluency} in languages">
+                                <div v-for="({name,fluency},i) in languages"
+                                     :class="{'mt-3':i>0}">
                                     <div class="sector-name">{{ name }}</div>
                                     <div class="sector-text small-size mt-1">({{ fluency }})</div>
                                 </div>
@@ -226,9 +227,9 @@
                                         {{ education.end }}
                                     </div>
                                 </div>
-                                <div class="mt-3">
-                                    <div v-if="education.description"
-                                         class="sector-text extra-small-size">
+                                <div v-if="education.description"
+                                     class="mt-3">
+                                    <div class="sector-text extra-small-size">
                                         {{ education.description }}
                                     </div>
                                 </div>
@@ -267,9 +268,9 @@
                                     <div class="sector-text small-size">{{ certificate.issuing_authority }}</div>
                                     <div class="sector-text small-size flex-shrink-0">{{ certificate.year }}</div>
                                 </div>
-                                <div class="mt-3">
-                                    <div v-if="certificate.description"
-                                         class="sector-text extra-small-size">
+                                <div v-if="certificate.description"
+                                     class="mt-3">
+                                    <div class="sector-text extra-small-size">
                                         {{ certificate.description }}
                                     </div>
                                 </div>
@@ -338,7 +339,7 @@
                     <div class="item-box">
                         <div class="sector-body sector-body-divider">
                             <div class="sector-body-inner">
-                                <div class="sector-text">{{ personal_statement }}</div>
+                                <div class="sector-text small-size">{{ personal_statement }}</div>
                             </div>
                         </div>
                     </div>

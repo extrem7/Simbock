@@ -49,17 +49,18 @@ class VolunteerController extends Controller
 
         $filters = $request->validated();
 
-        $volunteers = Volunteer::when(
-            $query,
-            fn(Builder $q) => $q->where('job_title', 'REGEXP', '[[:<:]]' . $query . '[[:>:]]')
-                ->orWhereHas('user',
-                    fn(Builder $q) => $q->where('name', 'REGEXP', '[[:<:]]' . $query . '[[:>:]]')))
+        $volunteers = Volunteer::public()
+            ->when(
+                $query,
+                fn(Builder $q) => $q->where('job_title', 'REGEXP', '[[:<:]]' . $query . '[[:>:]]')
+                    ->orWhereHas('user',
+                        fn(Builder $q) => $q->where('name', 'REGEXP', '[[:<:]]' . $query . '[[:>:]]')))
             ->when(!empty($locations),
                 fn(Builder $q) => $q->whereHas('locations',
                     fn(Builder $q) => $q->whereIn('id', $locations)))
             ->with(['user', 'types', 'hours', 'roles'])
-            ->when(isset($filters['is_relocation']), fn($q) => $q->where('is_relocation', '=', true))
-            ->when(isset($filters['is_remote_work']), fn($q) => $q->where('is_remote_work', '=', true))
+            ->when(isset($filters['is_relocation']), fn($q) => $q->where('is_relocating', '=', true))
+            ->when(isset($filters['is_remote_work']), fn($q) => $q->where('is_working_remotely', '=', true))
             ->when(isset($filters['hours']) && !empty($filters['hours']),
                 fn($q) => $q->whereHas('hours', fn($q) => $q->whereIn('id', $filters['hours'])))
             ->when(isset($filters['types']) && !empty($filters['types']),
@@ -70,6 +71,7 @@ class VolunteerController extends Controller
                 fn($q) => $q->whereHas('resume',
                     fn($q) => $q->where('created_at', '>=', Carbon::now()->subDays($filters['time'])->toDateTimeString()))
             )
+            ->where('completeness', '!=', 0.)
             ->orderByDesc('completeness')
             ->paginate(4, ['volunteers.*']);
 

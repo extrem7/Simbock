@@ -2,6 +2,7 @@
 
 /node_modules
 
+/public/favicon
 /public/hot/
 /public/storage/
 /public/dist/

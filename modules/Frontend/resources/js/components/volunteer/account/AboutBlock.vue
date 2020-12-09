@@ -25,13 +25,13 @@
                     </div>
                     <div v-if="name" class="sector-name text-center profile-name mb-2">{{ name }}</div>
                     <button v-else
-                            class="btn btn-sector-link mb-1 extra-small-size"
+                            class="btn btn-sector-link mb-1 extra-small-size text-nowrap"
                             @click="showModal">
                         Add Full name
                     </button>
                     <div v-if="headline" class="sector-text text-center extra-small-size mt-1">{{ headline }}</div>
                     <button v-else
-                            class="btn btn-sector-link mb-1 extra-small-size"
+                            class="btn btn-sector-link mb-1 extra-small-size text-nowrap"
                             @click="showModal">
                         Add Headline
                     </button>
@@ -39,7 +39,7 @@
                          class="sector-text text-center extra-small-size mt-1">{{ city.text }}
                     </div>
                     <button v-else
-                            class="btn btn-sector-link extra-small-size"
+                            class="btn btn-sector-link extra-small-size text-nowrap"
                             @click="showModal">
                         Add Location
                     </button>

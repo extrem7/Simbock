@@ -29,9 +29,9 @@
                         <div class="sector-text small-size">{{ certificate.issuing_authority }}</div>
                         <div class="sector-text small-size flex-shrink-0">{{ certificate.year }}</div>
                     </div>
-                    <div class="mt-3">
-                        <div v-if="certificate.description"
-                             class="sector-text extra-small-size">
+                    <div v-if="certificate.description"
+                         class="mt-3">
+                        <div class="sector-text extra-small-size">
                             {{ certificate.description }}
                         </div>
                     </div>

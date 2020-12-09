@@ -7,7 +7,6 @@ use Illuminate\Support\Collection;
 use Modules\Frontend\Http\Controllers\Controller;
 use Modules\Frontend\Http\Controllers\Volunteer\Account\HasVolunteer;
 use Modules\Frontend\Repositories\VacancyRepository;
-use Route2Class;
 
 class VacancyController extends Controller
 {
@@ -29,6 +28,7 @@ class VacancyController extends Controller
         $this->seo()->setTitle("Saved vacancies");
 
         $vacancies = $this->volunteer()->bookmarks()
+            ->active()
             ->with(['company.logoMedia', 'city', 'type', 'hours'])
             ->latest()
             ->paginate(4, $this->fields);
@@ -44,7 +44,7 @@ class VacancyController extends Controller
 
         share(compact('vacancies'));
 
-        Route2Class::addClass('page-with-search');
+        \Route2Class::addClass('page-with-search');
 
         return view('frontend::volunteer.vacancies.saved');
     }
@@ -69,7 +69,7 @@ class VacancyController extends Controller
 
         share(compact('vacancies'));
 
-        Route2Class::addClass('page-with-search');
+        \Route2Class::addClass('page-with-search');
 
         return view('frontend::volunteer.vacancies.history');
     }

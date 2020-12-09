@@ -82,7 +82,9 @@
                         {{ text }}
                     </label>
                 </div>
-                <Invalid name="types"/>
+                <Invalid
+                    class="pl-2"
+                    name="types"/>
             </div>
             <div class="control-label">Hours</div>
             <div :class="[invalid('hours')]" class="inline-custom-control form-group">
@@ -97,7 +99,9 @@
                         {{ text }}
                     </label>
                 </div>
-                <Invalid name="hours"/>
+                <Invalid
+                    class="pl-2"
+                    name="hours"/>
             </div>
             <div :class="[invalid('sectors')]" class="add-sector-item">
                 <div class="control-label">Select up to 10 sectors</div>

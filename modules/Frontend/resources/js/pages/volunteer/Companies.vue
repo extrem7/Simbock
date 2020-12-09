@@ -6,7 +6,8 @@
                 <CompanyCard
                     v-for="company in companies"
                     :key="company.id"
-                    v-bind="companyProps(company)"/>
+                    v-bind="companyProps(company)"
+                />
                 <div
                     v-if="page!==lastPage"
                     class="text-center">

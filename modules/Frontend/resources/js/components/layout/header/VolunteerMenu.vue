@@ -14,7 +14,7 @@
         </a>
         <a v-b-tooltip.hover
            :href="route('volunteer.vacancies.companies')"
-           class="menu-account-link"
+           class="menu-account-link link-stroke"
            title="Recommended companies">
             <SvgVue icon="company"/>
         </a>

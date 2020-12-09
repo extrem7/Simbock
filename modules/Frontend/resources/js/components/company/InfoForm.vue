@@ -207,7 +207,7 @@ export default {
                 if (status === 200) {
                     this.notify(data.message)
                     setTimeout(() => {
-                        if (!this.isEdit) location.href = this.route('companies.self')
+                        if (!this.isEdit) location.reload()
                     }, 2500)
                 }
             } catch (e) {

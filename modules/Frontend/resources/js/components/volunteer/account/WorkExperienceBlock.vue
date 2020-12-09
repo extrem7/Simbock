@@ -32,9 +32,9 @@
                             <span v-else>Current</span>
                         </div>
                     </div>
-                    <div class="mt-3">
-                        <div v-if="education.description"
-                             class="sector-text extra-small-size">
+                    <div v-if="education.description"
+                         class="mt-3">
+                        <div class="sector-text extra-small-size">
                             {{ education.description }}
                         </div>
                     </div>
