@@ -67,6 +67,10 @@ class UserController extends Controller
 
         $user->assignRole($request->input('role'));
 
+        if ($user->is_volunteer) {
+            $user->volunteer()->create();
+        }
+
         return response()->json([
             'status' => 'User has been created',
             'title' => $this->seo()->getTitle(),

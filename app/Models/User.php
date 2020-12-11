@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\SearchTrait;
 use App\Models\Volunteers\Volunteer;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Modules\Frontend\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,22 +46,30 @@ class User extends Authenticatable implements HasMedia
     }
 
     // RELATIONS
-    public function company()
+
+    /* @return Company|HasOne */
+    public function company(): HasOne
     {
         return $this->hasOne(Company::class);
     }
 
-    public function volunteer()
+    /* @return Volunteer|HasOne */
+    public function volunteer(): HasOne
     {
         return $this->hasOne(Volunteer::class);
     }
 
     // ACCESSORS
-    public function getAvatarAttribute(): string
+    public function getAvatarAttribute(): ?string
     {
-        return $this->type === self::VOLUNTEER
-            ? $this->volunteer->avatar
-            : $this->company->logo;
+        if ($this->type === self::VOLUNTEER) {
+            if ($volunteer = $this->volunteer) {
+                return $this->volunteer->avatar;
+            }
+        } else if ($company = $this->company) {
+            return $this->company->logo;
+        }
+        return null;
     }
 
     public function getHasPasswordAttribute(): bool

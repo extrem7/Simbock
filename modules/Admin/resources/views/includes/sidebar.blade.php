@@ -1,8 +1,10 @@
 <div class="sidebar">
     <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image d-flex align-items-center">
-            <img src="{{Auth::getUser()->avatar}}" class="avatar img-circle elevation-2" alt="avatar">
-        </div>
+        @if($avatar = Auth::user()->avatar)
+            <div class="image d-flex align-items-center">
+                <img src="{{$avatar}}" class="avatar img-circle elevation-2" alt="avatar">
+            </div>
+        @endif
         <div class="info d-flex align-items-center">
             <p class="d-block text-white m-0">{{$name}}</p>
         </div>
