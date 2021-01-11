@@ -18,7 +18,9 @@
                            title="Help and support">
                 <img alt="support" class="dropdown-item-icon" src="/dist/img/icons/support.svg">
             </BDropdownItem>
-            <BDropdownItem v-b-tooltip.hover.left title="Tooltip directive content">
+            <BDropdownItem v-b-tooltip.hover.left
+                           :href="route('company.upgrade.page')"
+                           title="Upgrade subscription plan">
                 <img alt="support" class="dropdown-item-icon" src="/dist/img/icons/upgrade.svg">
             </BDropdownItem>
             <TheLogout/>

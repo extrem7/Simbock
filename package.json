@@ -45,6 +45,7 @@
         "vue-scrollto": "^2.18.1",
         "vue-select": "^3.10.3",
         "vue-simple-alert": "^1.1.1",
+        "vue-stripe-checkout": "^3.5.14-beta.0",
         "vue-super-call": "^1.0.0",
         "vue-typeahead-bootstrap": "^2.5.3-beta",
         "vue-youtube": "^1.4.0",

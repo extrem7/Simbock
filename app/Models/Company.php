@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Laravel\Cashier\Billable;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -19,6 +20,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 class Company extends Model implements HasMedia
 {
     use InteractsWithMedia;
+    use Billable;
 
     public const CREATED_AT = null;
     public const UPDATED_AT = null;
@@ -26,11 +28,16 @@ class Company extends Model implements HasMedia
     protected $fillable = [
         'name', 'title', 'sector_id', 'description', 'size_id',
         'address', 'address_2', 'city_id', 'state_id', 'zip',
-        'phone', 'email', 'social'
+        'phone', 'email', 'social',
+        'card_brand', 'card_last_four'
     ];
 
     protected $casts = [
         'social' => 'array'
+    ];
+
+    protected $dates = [
+        'trial_ends_at'
     ];
 
     // FUNCTIONS

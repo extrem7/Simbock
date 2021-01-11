@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Company;
+
 return [
 
     /*
@@ -22,6 +24,11 @@ return [
         'client_id' => env('FACEBOOK_ID'),
         'client_secret' => env('FACEBOOK_SECRET'),
         'redirect' => env('APP_URL') . '/social/facebook/callback/'
+    ],
+    'stripe' => [
+        'model' => Company::class,
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
     ],
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),

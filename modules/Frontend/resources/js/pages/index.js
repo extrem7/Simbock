@@ -9,7 +9,8 @@ import HistoryVacancies from "./volunteer/HistoryVacancies"
 import Board from "./company/Board"
 import CompanyVolunteersIndexPage from "./company/volunteers/Index"
 import CompanySavedVolunteersPage from "./company/volunteers/Saved"
-import CompanyCandidatesPage from "./company/volunteers/Candidates"
+import CompanyCandidatesPage from './company/volunteers/Candidates'
+import CompanyUpgradePage from './company/Upgrade'
 
 import Default from "./Default"
 
@@ -26,6 +27,7 @@ export default {
     CompanyVolunteersIndexPage,
     CompanySavedVolunteersPage,
     CompanyCandidatesPage,
+    CompanyUpgradePage,
 
     DefaultPage: Default,
 }

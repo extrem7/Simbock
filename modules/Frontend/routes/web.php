@@ -140,6 +140,19 @@ Route::middleware('auth')->group(function () {
                         Route::delete('', 'VacancyController@destroy')->name('destroy');
                     });
                 });
+                Route::prefix('upgrade')->as('upgrade.')->group(function () {
+                    Route::get('', 'UpgradeController@page')->name('page');
+                    Route::get('checkout/{plan}', 'UpgradeController@checkout')->name('checkout');
+                    Route::post('cancel', 'UpgradeController@cancel')->name('cancel');
+                    /*Route::get('setup-intent', 'UpgradeController@intent')->name('intent');
+                    Route::put('subscription', 'UpgradeController@updatePlan')->name('update');
+                    Route::prefix('payments')->as('payments.')->group(function () {
+                        Route::get('', 'UpgradeController@getPaymentMethods')->name('index');
+                        Route::post('', 'UpgradeController@createPaymentMethod')->name('create');
+                        Route::delete('', 'UpgradeController@removePaymentMethod')->name('destroy');
+                    });*/
+
+                });
             });
         });
 

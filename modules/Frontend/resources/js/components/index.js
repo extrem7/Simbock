@@ -12,15 +12,17 @@ import CompanyVacanciesList from "~/components/company/vacancies/List"
 
 import VacanciesHomeForm from "~/components/vacancies/VacanciesHomeForm";
 import VacanciesIndex from "~/components/vacancies/VacanciesIndex";
-import VacancyShow from "~/components/vacancies/Show"
+import VacancyShow from '~/components/vacancies/Show'
 
-import VolunteerAccountPage from "~/components/volunteer/account/AccountPage"
+import VolunteerAccountPage from '~/components/volunteer/account/AccountPage'
 
-import Register from "./auth/Register"
+import Register from './auth/Register'
 import Login from './auth/Login'
-import EmailReset from "./auth/EmailReset"
-import PasswordReset from "./auth/PasswordReset"
-import PasswordChange from "./auth/PasswordChange"
+import EmailReset from './auth/EmailReset'
+import PasswordReset from './auth/PasswordReset'
+import PasswordChange from './auth/PasswordChange'
+
+import SubscriptionManagement from './company/SubscriptionManagement'
 
 export default {
     App,
@@ -43,7 +45,8 @@ export default {
     LoginForm: Login,
     EmailResetForm: EmailReset,
     PasswordResetForm: PasswordReset,
-    PasswordChangeForm: PasswordChange
+    PasswordChangeForm: PasswordChange,
+    SubscriptionManagement
 }
 
 import SelectMaterial from "./layout/SelectMaterial"
