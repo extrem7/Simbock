@@ -73,6 +73,32 @@ class Company extends Model implements HasMedia
         return asset('dist/img/avatar.svg');
     }
 
+    public function getPlan(): ?array
+    {
+        $plans = collect(config('simbok.plans'));
+        if ($subscription = $this->subscription()) {
+            return $plans->where('stripe_plan', $subscription->stripe_plan)->first();
+        }
+    }
+
+    public function canPostVacancy(): bool
+    {
+        if ($plan = $this->getPlan()) {
+            $limit = $plan['limits']['vacancies'];
+            return $limit === -1 || $this->vacancies()->count() >= $limit;
+        }
+        return false;
+    }
+
+    public function getAvailableCandidatesCount(): int
+    {
+        if ($plan = $this->getPlan()) {
+            $recommendations = $plan['limits']['recommendations'];
+            return $recommendations === -1 ? 0 : $recommendations;
+        }
+        return 0;
+    }
+
     // RELATIONS
     public function user(): BelongsTo
     {

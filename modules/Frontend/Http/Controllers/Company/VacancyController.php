@@ -43,7 +43,9 @@ class VacancyController extends Controller
                 return $vacancy;
             });
 
-        if ($status && !$vacancies->count()) return redirect()->route('frontend.company.vacancies.index');
+        if ($status && !$vacancies->count()) {
+            return redirect()->route('frontend.company.vacancies.index');
+        }
 
         share(compact('vacancies'));
 
@@ -52,9 +54,15 @@ class VacancyController extends Controller
         $draft = $company->vacancies()->draft()->count();
         $closed = $company->vacancies()->closed()->count();
 
+        $availableVacancies = 0;
+        if ($plan = $company->getPlan()) {
+            $limit = $plan['limits']['vacancies'];
+            $availableVacancies = $limit === -1 ? '∞' : $limit;
+        }
+
         return view('frontend::company.vacancies.index', [
             'counts' => compact('all', 'active', 'draft', 'closed')
-        ]);
+        ], compact('availableVacancies'));
     }
 
     public function create()
@@ -70,6 +78,12 @@ class VacancyController extends Controller
     public function store(VacancyRequest $request)
     {
         $company = Auth::getUser()->company;
+
+        if ($company->canPostVacancy()) {
+            return response()->json([
+                'message' => 'You have exhausted the vacancy limit. Delete another vacancy or update your plan.'
+            ], 403);
+        }
 
         /* @var $vacancy Vacancy */
         $vacancy = $company->vacancies()->create($request->only($this->fillable));

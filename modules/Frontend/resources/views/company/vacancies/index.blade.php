@@ -8,7 +8,7 @@
                 <ul class="tabs-wrapper horizontal-scroll">
                     <li class="tab-item btn-scale-active">
                         <a href="{{route('frontend.company.vacancies.index')}}" class="job-status job-status-all">
-                            All ({{$counts['all']}})
+                            All ({{$counts['all']}}/{{$availableVacancies}})
                         </a>
                     </li>
                     <li class="tab-item btn-scale-active">

@@ -48,10 +48,18 @@ class BoardController extends Controller
                 $q->orWhereHas('hours', fn($q) => $q->whereIn('id', $hours));
             })
             ->orderByDesc('completeness')
-            ->paginate(4, ['volunteers.*']);
+            ->paginate(5, ['volunteers.*']);
 
         /* @var $volunteers Collection<Volunteer> */
         $volunteers->transform([$this->repository, 'transformForIndex']);
+
+        if ($availableCandidates = $company->getAvailableCandidatesCount()) {
+            $current = $volunteers->currentPage() * $volunteers->perPage();
+            if ($current >= $availableCandidates) {
+                $volunteers = $volunteers->toArray();
+                $volunteers['last_page'] = $volunteers['current_page'];
+            }
+        }
 
         if (request()->expectsJson()) {
             return $volunteers;
