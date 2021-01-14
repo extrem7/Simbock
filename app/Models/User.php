@@ -4,7 +4,9 @@ namespace App\Models;
 
 use App\Models\Traits\SearchTrait;
 use App\Models\Volunteers\Volunteer;
+use Iatstuti\Database\Support\CascadeSoftDeletes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Modules\Frontend\Notifications\ResetPassword as ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,6 +19,8 @@ class User extends Authenticatable implements HasMedia
     use HasRoles,
         Notifiable,
         InteractsWithMedia,
+        SoftDeletes,
+        CascadeSoftDeletes,
         SearchTrait;
 
     protected $fillable = [
@@ -26,6 +30,8 @@ class User extends Authenticatable implements HasMedia
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    protected $cascadeDeletes = ['company', 'volunteer'];
 
     protected $search = [
         'email', 'name'
@@ -40,7 +46,7 @@ class User extends Authenticatable implements HasMedia
     ];
 
     // FUNCTIONS
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
     }

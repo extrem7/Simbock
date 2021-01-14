@@ -2,7 +2,7 @@
 
 return [
     'groups' => [
-        'admin' => ['admin.*'],
+        'admin' => ['admin.*', 'frontend.*'],
         'frontend' => ['frontend.*']
     ]
 ];

@@ -8,6 +8,7 @@ use App\Models\Jobs\Skill;
 use App\Models\Jobs\Type;
 use App\Models\Language;
 use App\Models\Map\US\City;
+use App\Models\Traits\SearchTrait;
 use App\Models\User;
 use App\Models\Vacancy;
 use Auth;
@@ -18,6 +19,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
 use Spatie\MediaLibrary\HasMedia;
@@ -26,7 +28,9 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class Volunteer extends Model implements HasMedia
 {
-    use InteractsWithMedia;
+    use InteractsWithMedia,
+        SoftDeletes,
+        SearchTrait;
 
     public const CREATED_AT = null;
     public const UPDATED_AT = null;
@@ -45,6 +49,10 @@ class Volunteer extends Model implements HasMedia
         'has_driver_license' => 'boolean',
         'has_car' => 'boolean',
         'completeness' => 'float'
+    ];
+
+    protected array $search = [
+        'id', 'job_title'
     ];
 
     // FUNCTIONS

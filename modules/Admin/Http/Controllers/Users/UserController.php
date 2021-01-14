@@ -1,10 +1,11 @@
 <?php
 
-namespace Modules\Admin\Http\Controllers;
+namespace Modules\Admin\Http\Controllers\Users;
 
 use App\Models\User;
 use Hash;
 use Illuminate\Database\Eloquent\Builder;
+use Modules\Admin\Http\Controllers\Controller;
 use Modules\Admin\Http\Controllers\Traits\CRUDController;
 use Modules\Admin\Http\Requests\IndexRequest;
 use Modules\Admin\Http\Requests\UserRequest;

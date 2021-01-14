@@ -21,6 +21,9 @@ export default {
     UsersIndex: () => import('./users/Index'),
     UsersForm: () => import('./users/Form'),
 
+    CompaniesIndex: () => import('./users/companies/Index'),
+    VolunteersIndex: () => import('./users/volunteers/Index'),
+
     SectorsIndex: () => import('./jobs/sectors/Index'),
     SectorsForm: () => import('./jobs/sectors/Form'),
 

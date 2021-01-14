@@ -27,10 +27,12 @@ Route::middleware(Admin::class)->group(function () {
             Route::resource('/articles', 'ArticleController')->except('show');
         });
 
-    Route::resource('/users', 'UserController', ['names' => 'users'])->except(['show']);
-    Route::group(['as' => 'users.', 'prefix' => 'users'], function () {
-        Route::get('/search', 'UserController@search')->name('search');
+    Route::namespace('Users')->group(function () {
+        Route::resource('/users', 'UserController', ['names' => 'users'])->except(['show']);
+        Route::get('/companies', 'CompanyController@index')->name('companies.index');
+        Route::get('/volunteers', 'VolunteerController@index')->name('volunteers.index');
     });
+
 
     Route::prefix('/jobs')->namespace('Jobs')->group(function () {
         Route::resource('/sectors', 'SectorController', ['names' => 'sectors'])->except(['show']);

@@ -57,6 +57,18 @@
                     <p>Users</p>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{route('admin.companies.index')}}" class="nav-link {{ Nav::isResource('companies') }}">
+                    <i class="nav-icon fas fa-building"></i>
+                    <p>Companies</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('admin.volunteers.index')}}" class="nav-link {{ Nav::isResource('volunteers') }}">
+                    <i class="nav-icon fas fa-user-friends"></i>
+                    <p>Volunteers</p>
+                </a>
+            </li>
 
             <li class="nav-item has-treeview {{ Nav::urlDoesContain('jobs','menu-open') }}">
                 <a href="#" class="nav-link">
