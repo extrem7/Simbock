@@ -9,6 +9,7 @@ use Modules\Frontend\Http\Middleware\Company;
 use Modules\Frontend\Http\Middleware\VacancyNotClosed;
 use Modules\Frontend\Http\Middleware\VacancyOwner;
 use Modules\Frontend\Http\Middleware\Volunteer;
+use Modules\Frontend\Http\Middleware\VolunteerViewed;
 
 Auth::routes();
 
@@ -65,6 +66,7 @@ Route::middleware('auth')
 
         Route::prefix('volunteer/{volunteer}')->group(function () {
             Route::get('', 'VolunteerController@show')
+                ->middleware(VolunteerViewed::class)
                 ->name('show')
                 ->where('volunteer', '[0-9]+');
             Route::middleware(Company::class)

@@ -33,7 +33,7 @@ class Company extends Model implements HasMedia
         'name', 'title', 'sector_id', 'description', 'size_id',
         'address', 'address_2', 'city_id', 'state_id', 'zip',
         'phone', 'email', 'social',
-        'card_brand', 'card_last_four'
+        'card_brand', 'card_last_four', 'resume_views'
     ];
 
     protected $casts = [
@@ -89,18 +89,35 @@ class Company extends Model implements HasMedia
         }
     }
 
-    public function canPostVacancy(): bool
+    public function canSeeVolunteer(): bool
     {
-        if ($plan = $this->getPlan()) {
-            $limit = $plan['limits']['vacancies'];
-            return $limit === -1 || $this->vacancies()->count() >= $limit;
+        if ($this->subscribed() && $plan = $this->getPlan()) {
+            $limit = $this->getAvailableVolunteersCount();
+            return $limit === -1 || $this->resume_views < $limit;
         }
         return false;
     }
 
+    public function canPostVacancy(): bool
+    {
+        if ($this->subscribed() && $plan = $this->getPlan()) {
+            $limit = $plan['limits']['vacancies'];
+            return $limit === -1 || $this->vacancies()->count() < $limit;
+        }
+        return false;
+    }
+
+    public function getAvailableVolunteersCount(): int
+    {
+        if ($this->subscribed() && $plan = $this->getPlan()) {
+            return $plan['limits']['volunteers'];
+        }
+        return 0;
+    }
+
     public function getAvailableCandidatesCount(): int
     {
-        if ($plan = $this->getPlan()) {
+        if ($this->subscribed() && $plan = $this->getPlan()) {
             $recommendations = $plan['limits']['recommendations'];
             return $recommendations === -1 ? 0 : $recommendations;
         }

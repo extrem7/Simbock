@@ -2,7 +2,6 @@
 
 namespace Modules\Frontend\Http\Controllers;
 
-use App\Models\Company;
 use App\Models\Volunteers\Volunteer;
 use App\Services\LocationService;
 use Auth;
@@ -139,6 +138,13 @@ class VolunteerController extends Controller
 
     public function show(Volunteer $volunteer)
     {
+        $company = $this->company();
+        abort_if(
+            !$company->canSeeVolunteer(),
+            403,
+            'You have exhausted the resume views limit. Wait for next monthly payment or update your plan.'
+        );
+
         $this->seo()->setTitle("$volunteer->name | Volunteers");
 
         $volunteer = $this->repository->setupRelations($volunteer);

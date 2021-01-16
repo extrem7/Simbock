@@ -4,12 +4,15 @@ namespace Modules\Frontend\Http\Controllers\Company;
 
 use App\Models\Vacancy;
 use Auth;
+use Illuminate\Http\JsonResponse;
 use Modules\Frontend\Http\Controllers\Controller;
 use Modules\Frontend\Http\Requests\Company\VacancyRequest;
 use Modules\Frontend\Repositories\VacancyRepository;
 
 class VacancyController extends Controller
 {
+    use HasCompany;
+
     protected VacancyRepository $repository;
 
     protected array $fillable = [
@@ -67,6 +70,10 @@ class VacancyController extends Controller
 
     public function create()
     {
+        if (!$this->company()->subscribed()) {
+            return redirect()->route('frontend.company.upgrade.page');
+        }
+
         $title = 'Post vacancy';
         $this->seo()->setTitle($title);
 
@@ -75,11 +82,11 @@ class VacancyController extends Controller
         return view('frontend::company.vacancies.form', compact('title'));
     }
 
-    public function store(VacancyRequest $request)
+    public function store(VacancyRequest $request): JsonResponse
     {
         $company = Auth::getUser()->company;
 
-        if ($company->canPostVacancy()) {
+        if (!$company->canPostVacancy()) {
             return response()->json([
                 'message' => 'You have exhausted the vacancy limit. Delete another vacancy or update your plan.'
             ], 403);
@@ -108,7 +115,7 @@ class VacancyController extends Controller
         return view('frontend::company.vacancies.form', compact('title'));
     }
 
-    public function update(VacancyRequest $request, Vacancy $vacancy)
+    public function update(VacancyRequest $request, Vacancy $vacancy): JsonResponse
     {
         $vacancy->update($request->only($this->fillable));
         $request->setVacancy($vacancy);
@@ -120,13 +127,13 @@ class VacancyController extends Controller
         return response()->json(['message' => 'Vacancy has been updated.']);
     }
 
-    public function destroy(Vacancy $vacancy)
+    public function destroy(Vacancy $vacancy): JsonResponse
     {
         $vacancy->delete();
         return response()->json(['message' => 'The vacancy has been deleted.']);
     }
 
-    public function post(Vacancy $vacancy)
+    public function post(Vacancy $vacancy): JsonResponse
     {
         //todo check subscription
         if (!in_array($vacancy->status, [Vacancy::DRAFT])) abort(403);
@@ -135,14 +142,14 @@ class VacancyController extends Controller
         return response()->json(['message' => 'The vacancy has been published.']);
     }
 
-    public function stop(Vacancy $vacancy)
+    public function stop(Vacancy $vacancy): JsonResponse
     {
         $vacancy->status = Vacancy::DRAFT;
         $vacancy->save();
         return response()->json(['message' => 'The vacancy has been stopped.']);
     }
 
-    public function close(Vacancy $vacancy)
+    public function close(Vacancy $vacancy): JsonResponse
     {
         if (!in_array($vacancy->status, [Vacancy::DRAFT, Vacancy::ACTIVE])) abort(403);
         $vacancy->status = Vacancy::CLOSED;
@@ -157,8 +164,9 @@ class VacancyController extends Controller
 
         $this->repository->sharedData();
 
-        $vacancy = $this->repository->transformForEdit($vacancy);
-        share(compact('vacancy'));
+        share([
+            'vacancy' => $this->repository->transformForEdit($vacancy)
+        ]);
 
         return view('frontend::company.vacancies.form', compact('title'));
     }

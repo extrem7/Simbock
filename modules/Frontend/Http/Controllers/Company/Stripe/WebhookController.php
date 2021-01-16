@@ -99,6 +99,13 @@ class WebhookController extends CashierController
 
     protected function handleInvoicePaymentSucceeded($payload): Response
     {
+        $data = $payload['data']['object'];
+        $company = $this->getUserByStripeId($data['customer']);
+        Log::debug('Invoice for :' . $company->name);
+        if ($company) {
+            Log::debug('Views for :' . $company->resume_views);
+            $company->update(['resume_views' => 0]);
+        }
         return $this->updateSubscriptionStatus($payload);
     }
 

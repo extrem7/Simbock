@@ -13,7 +13,7 @@ return [
                 '5 candidate recommendations'
             ],
             'limits' => [
-                'vacancies' => 2,
+                'vacancies' => 1,
                 'volunteers' => 50,
                 'recommendations' => 5
             ]

@@ -2,6 +2,16 @@
     <main class="container content-inner">
         <div class="row flex-column-reverse flex-lg-row">
             <HistoryBack small/>
+            <main v-if="!shared('volunteers').data.length"
+                  class="col-lg-7">
+                <h1 class="title medium-size text-center text-lg-left">
+                    To see recommended volunteers
+                    <a :href="route('company.upgrade.page')"
+                       class="link-border link">
+                        upgrade your plan
+                    </a>.
+                </h1>
+            </main>
             <VolunteersIndex
                 :enable-filter="false"
                 :is-container="false"
@@ -15,9 +25,19 @@
                     :name="company.name"
                     can-edit
                 />
-                <div class="card-work card-company border-left-0 border-r-10 text-center">
-                    <div>Viewed <span class="text-danger">50 vacancies</span></div>
-                    <div>If you want you can <a class="link-border link" href="">upgrade your plan</a></div>
+                <div v-if="resumeViews.available && resumeViews.available!=='∞'"
+                     class="card-work card-company border-left-0 border-r-10 text-center">
+                    <div>Viewed
+                        <span class="text-danger">
+                            {{ resumeViews.viewed }}/{{ resumeViews.available }} vacancies
+                        </span>
+                    </div>
+                    <div>If you want you can
+                        <a :href="route('company.upgrade.page')"
+                           class="link-border link">
+                            upgrade your plan
+                        </a>
+                    </div>
                 </div>
                 <div class="item-box board d-none d-lg-block">
                     <div class="board-header">
@@ -70,11 +90,11 @@
 </template>
 
 <script>
-import VolunteersIndex from "./volunteers/Index"
-import CompanyCardActions from "~/components/layout/CompanyCardActions"
-import HistoryBack from "~/components/layout/HistoryBack"
+import VolunteersIndex from './volunteers/Index'
+import CompanyCardActions from '~/components/layout/CompanyCardActions'
+import HistoryBack from '~/components/layout/HistoryBack'
 
-import statuses from "~/components/vacancies/statuses.json"
+import statuses from '~/components/vacancies/statuses.json'
 
 export default {
     components: {
@@ -86,7 +106,7 @@ export default {
         return {
             vacancies: this.shared('lastVacancies'),
             counts: this.shared('counts'),
-
+            resumeViews: this.shared('resumeViews'),
             statuses
         }
     },
