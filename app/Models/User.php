@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\SearchRecordable;
 use App\Models\Traits\SearchTrait;
 use App\Models\Volunteers\Volunteer;
 use Iatstuti\Database\Support\CascadeSoftDeletes;
@@ -49,6 +50,11 @@ class User extends Authenticatable implements HasMedia
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function getClient(): SearchRecordable
+    {
+        return $this->is_volunteer ? $this->volunteer : $this->company;
     }
 
     // RELATIONS

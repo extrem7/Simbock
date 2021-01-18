@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Interfaces\SearchRecordable;
 use App\Models\Jobs\Size;
 use App\Models\Map\US\City;
+use App\Models\Traits\SearchRecording;
 use App\Models\Traits\SearchTrait;
 use App\Models\Volunteers\Volunteer;
 use Illuminate\Database\Eloquent\Model;
@@ -19,11 +21,12 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Company extends Model implements HasMedia
+class Company extends Model implements HasMedia, SearchRecordable
 {
     use InteractsWithMedia,
         Billable,
         SoftDeletes,
+        SearchRecording,
         SearchTrait;
 
     public const CREATED_AT = null;

@@ -43,6 +43,8 @@ Route::middleware(Admin::class)->group(function () {
         Route::post('/roles/sort', 'RoleController@sort')->name('roles.sort');
     });
 
+    Route::get('/search-queries', 'SearchQueryController@index')->name('search-queries.index');
+
     Route::post('/media', 'MediaController@upload')->name('media.upload');
 
     Route::post('logout', 'LoginController@logout')->name('logout');

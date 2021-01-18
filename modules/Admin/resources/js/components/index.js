@@ -1,6 +1,6 @@
-import Alert from "./includes/Alert"
-import Logout from "./layout/Logout"
-import MenuToggle from "./layout/MenuToggle"
+import Alert from './includes/Alert'
+import Logout from './layout/Logout'
+import MenuToggle from './layout/MenuToggle'
 
 export default {
     Alert,
@@ -29,4 +29,6 @@ export default {
 
     RolesIndex: () => import('./jobs/roles/Index'),
     RolesForm: () => import('./jobs/roles/Form'),
+
+    SearchQueriesIndex: () => import('./search-queries/Index')
 }

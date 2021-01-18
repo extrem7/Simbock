@@ -2,12 +2,14 @@
 
 namespace App\Models\Volunteers;
 
+use App\Models\Interfaces\SearchRecordable;
 use App\Models\Jobs\Hour;
 use App\Models\Jobs\Role;
 use App\Models\Jobs\Skill;
 use App\Models\Jobs\Type;
 use App\Models\Language;
 use App\Models\Map\US\City;
+use App\Models\Traits\SearchRecording;
 use App\Models\Traits\SearchTrait;
 use App\Models\User;
 use App\Models\Vacancy;
@@ -26,10 +28,11 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Volunteer extends Model implements HasMedia
+class Volunteer extends Model implements HasMedia, SearchRecordable
 {
     use InteractsWithMedia,
         SoftDeletes,
+        SearchRecording,
         SearchTrait;
 
     public const CREATED_AT = null;

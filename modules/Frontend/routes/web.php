@@ -6,6 +6,7 @@
  */
 
 use Modules\Frontend\Http\Middleware\Company;
+use Modules\Frontend\Http\Middleware\Searched;
 use Modules\Frontend\Http\Middleware\VacancyNotClosed;
 use Modules\Frontend\Http\Middleware\VacancyOwner;
 use Modules\Frontend\Http\Middleware\Volunteer;
@@ -34,6 +35,7 @@ Route::prefix('newsroom')->as('articles.')->group(function () {
 
 Route::as('vacancies.')->group(function () {
     Route::prefix('vacancies/{query?}')
+        ->middleware(Searched::class)
         ->as('search')
         ->group(function () {
             Route::get('', 'VacancyController@index');
@@ -58,6 +60,7 @@ Route::middleware('auth')
     ->as('volunteers.')
     ->group(function () {
         Route::prefix('volunteers/{query?}')
+            ->middleware(Searched::class)
             ->as('search')
             ->group(function () {
                 Route::get('', 'VolunteerController@index');

@@ -2,7 +2,7 @@
 
 @section('content')
     <main class="container content-inner">
-        <div class="text-center">
+        <div class="text-center m-auto">
             <img src="/dist/img/{{$image}}.svg" alt="{{$image}}" class="img-fluid">
             <h1 class="extra-large-size bold-weight text-center color-white mt-4 mb-4">{{$title}}</h1>
             @if($message)

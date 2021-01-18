@@ -96,6 +96,13 @@
                 </ul>
             </li>
 
+            <li class="nav-item">
+                <a href="{{route('admin.search-queries.index')}}"
+                   class="nav-link {{ Nav::isResource('search-queries') }}">
+                    <i class="nav-icon fas fa-history"></i>
+                    <p>Search history</p>
+                </a>
+            </li>
             @if(config('telescope.enabled'))
                 <li class="nav-item">
                     <a href="{{config('app.url').route('telescope',null,false)}}" class="nav-link"

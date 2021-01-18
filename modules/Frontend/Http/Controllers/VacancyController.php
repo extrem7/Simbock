@@ -2,6 +2,7 @@
 
 namespace Modules\Frontend\Http\Controllers;
 
+use App\Models\SearchQuery;
 use App\Models\Vacancy;
 use App\Services\LocationService;
 use Auth;
