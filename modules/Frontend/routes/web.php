@@ -56,29 +56,27 @@ Route::as('vacancies.')->group(function () {
     });
 });
 
-Route::middleware('auth')
-    ->as('volunteers.')
-    ->group(function () {
-        Route::prefix('volunteers/{query?}')
-            ->middleware(Searched::class)
-            ->as('search')
-            ->group(function () {
-                Route::get('', 'VolunteerController@index');
-                Route::get('{location?}', 'VolunteerController@index')->name('.location');
-            });
-
-        Route::prefix('volunteer/{volunteer}')->group(function () {
-            Route::get('', 'VolunteerController@show')
-                ->middleware(VolunteerViewed::class)
-                ->name('show')
-                ->where('volunteer', '[0-9]+');
-            Route::middleware(Company::class)
-                ->as('actions.')
-                ->group(function () {
-                    Route::post('bookmark', 'VolunteerController@bookmark')->name('bookmark');
-                });
+Route::as('volunteers.')->middleware('auth')->group(function () {
+    Route::prefix('volunteers/{query?}')
+        ->middleware(Searched::class)
+        ->as('search')
+        ->group(function () {
+            Route::get('', 'VolunteerController@index');
+            Route::get('{location?}', 'VolunteerController@index')->name('.location');
         });
+
+    Route::prefix('volunteer/{volunteer}')->group(function () {
+        Route::get('', 'VolunteerController@show')
+            ->middleware(VolunteerViewed::class)
+            ->name('show')
+            ->where('volunteer', '[0-9]+');
+        Route::middleware(Company::class)
+            ->as('actions.')
+            ->group(function () {
+                Route::post('bookmark', 'VolunteerController@bookmark')->name('bookmark');
+            });
     });
+});
 
 Route::middleware('auth')->group(function () {
     Route::prefix('account/change-password')
@@ -220,6 +218,13 @@ Route::middleware('auth')->group(function () {
                         Route::delete('', 'LanguageController@destroy')->name('destroy');
                     });
                 });
+            });
+
+            Route::prefix('survey')->as('survey.')->group(function () {
+                Route::get('', 'SurveyController@page')->name('page');
+                Route::post('', 'SurveyController@store')->name('create');
+                Route::post('job', 'SurveyController@updateJob')->name('job');
+                Route::post('complete', 'SurveyController@complete')->name('complete');
             });
         });
 });

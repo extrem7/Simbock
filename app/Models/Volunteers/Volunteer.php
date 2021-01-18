@@ -13,6 +13,7 @@ use App\Models\Traits\SearchRecording;
 use App\Models\Traits\SearchTrait;
 use App\Models\User;
 use App\Models\Vacancy;
+use App\Models\Volunteers\Surveys\Survey;
 use Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -199,6 +200,11 @@ class Volunteer extends Model implements HasMedia, SearchRecordable
     public function languages(): BelongsToMany
     {
         return $this->belongsToMany(Language::class, 'volunteer_has_languages')->withPivot(['fluency']);
+    }
+
+    public function surveys(): HasMany
+    {
+        return $this->hasMany(Survey::class);
     }
 
     public function avatarMedia(): MorphOne

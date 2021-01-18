@@ -39,7 +39,10 @@
                 </div>
             </div>
             <div class="sector-footer text-center">
-                <a class="link-inherit small-size" href="">I got hired!</a>
+                <a :href="route('volunteer.survey.page')"
+                   class="link-inherit small-size">
+                    I got hired!
+                </a>
             </div>
         </div>
     </div>
@@ -47,7 +50,7 @@
 
 <script>
 import RadialProgressBar from 'vue-radial-progress'
-import {mapState} from "vuex"
+import {mapState} from 'vuex'
 
 export default {
     components: {

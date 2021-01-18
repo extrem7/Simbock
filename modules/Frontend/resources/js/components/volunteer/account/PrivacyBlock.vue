@@ -21,7 +21,10 @@
                     <div class="item-box item-box-survey extra-small-size">
                         <span class="semi-bold-weight">
                             Were you recently hired?</span> Take a minute and fill out our
-                        <a class="link" href="">short survey.</a>
+                        <a :href="route('volunteer.survey.page')"
+                           class="link">
+                            short survey.
+                        </a>
                     </div>
                 </div>
             </div>
