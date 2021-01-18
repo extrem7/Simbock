@@ -3,7 +3,6 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Models\SearchQuery;
-use App\Models\Volunteers\Volunteer;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Admin\Http\Controllers\Traits\CRUDController;
 use Modules\Admin\Http\Requests\IndexRequest;

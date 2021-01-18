@@ -22,12 +22,12 @@ class Searched
             'query' => $route->parameter('query'),
             'location' => $route->parameter('location'),
         ];
-
-        if (($user = Auth::user()) && $client = $user->getClient()) {
-            $client->searchQueries()->create($attributes);
-        } else {
-            SearchQuery::create($attributes);
+        if ($attributes['query']) {
+            if (($user = Auth::user()) && $client = $user->getClient()) {
+                $client->searchQueries()->create($attributes);
+            } else {
+                SearchQuery::create($attributes);
+            }
         }
-
     }
 }
