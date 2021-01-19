@@ -97,6 +97,13 @@
             </li>
 
             <li class="nav-item">
+                <a href="{{route('admin.surveys.index')}}"
+                   class="nav-link {{ Nav::isResource('search-queries') }}">
+                    <i class="nav-icon fas fa-poll-h"></i>
+                    <p>Surveys</p>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{route('admin.search-queries.index')}}"
                    class="nav-link {{ Nav::isResource('search-queries') }}">
                     <i class="nav-icon fas fa-history"></i>

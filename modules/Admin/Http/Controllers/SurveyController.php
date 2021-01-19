@@ -3,39 +3,38 @@
 namespace Modules\Admin\Http\Controllers;
 
 use App\Models\SearchQuery;
+use App\Models\Volunteers\Surveys\Survey;
 use Illuminate\Database\Eloquent\Builder;
 use Modules\Admin\Http\Controllers\Traits\CRUDController;
 use Modules\Admin\Http\Requests\IndexRequest;
 
-class SearchQueryController extends Controller
+class SurveyController extends Controller
 {
     use CRUDController;
 
-    protected string $resource = 'search-queries';
+    protected string $resource = 'surveys';
 
     public function index(IndexRequest $request)
     {
-        $this->seo()->setTitle('Search queries');
+        $this->seo()->setTitle('Surveys');
 
-        $searchQueries = SearchQuery::with(['company', 'volunteer'])
+        $surveys = Survey::with(['volunteer', 'source'])
             ->when($request->has('sortBy'), function (Builder $users) use ($request) {
                 $users->orderBy($request->get('sortBy'), $request->get('sortDesc') ? 'desc' : 'asc');
             })
             ->latest()
             ->paginate(10);
 
-        $searchQueries->transform(function (SearchQuery $query) {
-            if ($query->volunteer) {
-                $query->volunteer->append('name');
-            }
-            return $query;
+        $surveys->transform(function (Survey $survey) {
+            $survey->volunteer->append('name');
+            return $survey;
         });
 
         if (request()->expectsJson()) {
-            return $searchQueries;
+            return $surveys;
         }
 
-        share(compact('searchQueries'));
+        share(compact('surveys'));
 
         return $this->listing();
     }

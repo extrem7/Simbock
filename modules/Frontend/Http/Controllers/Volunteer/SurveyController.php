@@ -35,7 +35,7 @@ class SurveyController extends Controller
             'specified' => $request->specified
         ]);
 
-        return response()->json(['survey' => $survey->id]);
+        return response()->json(['message' => 'Ok.']);
     }
 
     public function updateJob(UpdateJobRequest $request): JsonResponse
@@ -54,7 +54,12 @@ class SurveyController extends Controller
         $survey = $this->volunteer()->surveys()->latest()->first();
         if ($survey) {
             $survey->update([
-
+                'name' => $request->name,
+                'email' => $request->email,
+                'address' => $request->address,
+                'phone' => $request->phone,
+                'company_name' => $request->company_name,
+                'description' => $request->description
             ]);
         }
 

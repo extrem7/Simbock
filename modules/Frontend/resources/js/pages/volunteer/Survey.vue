@@ -55,7 +55,7 @@
                     No, Thanks
                 </button>
                 <button class="btn btn-green btn-scale-active btn-shadow min-width-140"
-                        @click="nextStep">
+                        @click="updateJob">
                     Submit
                 </button>
             </div>
@@ -89,26 +89,50 @@
                 Tell us about your job/volunterring search success story on Simbok and we may feature you in an upcoming
                 TV commercial.
             </div>
-            <form @submit.prevent>
-                <div class="form-group">
-                    <input-material placeholder="Full Name"></input-material>
+            <form @submit.prevent="shareStory">
+                <div :class="[invalid('name')]"
+                     class="form-group">
+                    <InputMaterial
+                        v-model="storyForm.name"
+                        placeholder="Full Name"/>
+                    <Invalid name="name"/>
                 </div>
-                <div class="form-group">
-                    <input-material placeholder="Email"></input-material>
+                <div :class="[invalid('email')]"
+                     class="form-group">
+                    <InputMaterial
+                        v-model="storyForm.email"
+                        placeholder="Email"/>
+                    <Invalid name="email"/>
                 </div>
-                <div class="form-group">
-                    <input-material placeholder="Home Address"></input-material>
+                <div :class="[invalid('address')]"
+                     class="form-group">
+                    <InputMaterial
+                        v-model="storyForm.address"
+                        placeholder="Home Address"/>
+                    <Invalid name="address"/>
                 </div>
-                <div class="form-group">
-                    <input-material placeholder="Phone Number"></input-material>
+                <div :class="[invalid('phone')]"
+                     class="form-group">
+                    <InputMaterial
+                        v-model="storyForm.phone"
+                        placeholder="Phone Number"/>
+                    <Invalid name="phone"/>
                 </div>
-                <div class="form-group">
-                    <input-material placeholder="What is the name of the company that hired you?"></input-material>
+                <div :class="[invalid('company_name')]"
+                     class="form-group">
+                    <InputMaterial
+                        v-model="storyForm.company_name"
+                        placeholder="What is the name of the company that hired you?"/>
+                    <Invalid name="company_title"/>
                 </div>
-                <div class="form-group">
-                <textarea class="form-control form-control-material"
-                          placeholder="Tell us how getting this job changed your life for the better."
-                          rows="5"></textarea>
+                <div :class="[invalid('description')]"
+                     class="form-group">
+                <textarea
+                    v-model="storyForm.description"
+                    class="form-control form-control-material"
+                    placeholder="Tell us how getting this job changed your life for the better."
+                    rows="5"></textarea>
+                    <Invalid name="description"/>
                 </div>
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
@@ -118,7 +142,9 @@
                     </div>
                 </div>
                 <div class="form-box-actions mt-4">
-                    <button class="btn btn-green btn-scale-active btn-shadow min-width-140">Share Your Story</button>
+                    <button class="btn btn-green btn-scale-active btn-shadow min-width-140">
+                        Share Your Story
+                    </button>
                 </div>
             </form>
         </div>
@@ -126,17 +152,26 @@
 </template>
 
 <script>
+import validation from '~/mixins/validation'
+
 export default {
+    mixins: [validation],
     data() {
         return {
-            survey: null,
-
             source_id: 1,
             specified: '',
 
             jobForm: {
                 job_title: '',
                 company_name: ''
+            },
+            storyForm: {
+                name: '',
+                email: '',
+                address: '',
+                phone: '',
+                company_name: '',
+                description: '',
             },
 
             step: 1,
@@ -146,12 +181,31 @@ export default {
     methods: {
         async create() {
             try {
-                const {data: {survey}} = await this.axios.post(this.route('volunteer.survey.create'), {
+                await this.axios.post(this.route('volunteer.survey.create'), {
                     source_id: this.source_id,
                     specified: this.specified
                 })
-                this.survey = survey
-                this.step = 2
+                this.nextStep()
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async updateJob() {
+            try {
+                const {data: {message}} = await this.send(this.route('volunteer.survey.job'), this.jobForm)
+                this.notify(message)
+                this.nextStep()
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async shareStory() {
+            try {
+                const {data: {message}} = await this.send(this.route('volunteer.survey.complete'), this.storyForm)
+                this.notify(message)
+                setTimeout(() => {
+                    this.back()
+                }, 3000)
             } catch (e) {
                 console.log(e)
             }

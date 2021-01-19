@@ -10,9 +10,9 @@ class CompleteRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string255'],
-            'email' => ['required', 'string255'],
+            'email' => ['required', 'email'],
             'address' => ['required', 'string255'],
-            'phone' => ['required', 'string255'],
+            'phone' => ['required', 'phone:US'],
             'company_name' => ['required', 'string255'],
             'description' => ['required', 'string']
         ];

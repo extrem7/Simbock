@@ -30,5 +30,6 @@ export default {
     RolesIndex: () => import('./jobs/roles/Index'),
     RolesForm: () => import('./jobs/roles/Form'),
 
+    SurveysIndex: () => import('./surveys/Index'),
     SearchQueriesIndex: () => import('./search-queries/Index')
 }

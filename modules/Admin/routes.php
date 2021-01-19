@@ -43,6 +43,8 @@ Route::middleware(Admin::class)->group(function () {
         Route::post('/roles/sort', 'RoleController@sort')->name('roles.sort');
     });
 
+    Route::get('/surveys', 'SurveyController@index')->name('surveys.index');
+
     Route::get('/search-queries', 'SearchQueryController@index')->name('search-queries.index');
 
     Route::post('/media', 'MediaController@upload')->name('media.upload');
