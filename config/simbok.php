@@ -4,7 +4,7 @@ return [
     'debugbar_emails' => [env('DEBUGBAR_EMAIL')],
     'plans' => [
         [
-            'stripe_plan' => 'price_1I1rLoJ7D6nBxczV6mD4eCSs',
+            'stripe_plan' => env('PLAN_1_ID'),
             'name' => 'Starter',
             'price' => 11.50,
             'advantages' => [
@@ -19,7 +19,7 @@ return [
             ]
         ],
         [
-            'stripe_plan' => 'price_1I1sB9J7D6nBxczVjId5w0U8',
+            'stripe_plan' => env('PLAN_2_ID'),
             'name' => 'Standard',
             'price' => 19.50,
             'description' => 'Hire easily on a budget',
@@ -36,7 +36,7 @@ return [
             ]
         ],
         [
-            'stripe_plan' => 'price_1I3kv8J7D6nBxczVr5cYvrmK',
+            'stripe_plan' => env('PLAN_3_ID'),
             'name' => 'Premium',
             'price' => 25.50,
             'description' => 'Find qualified candidates fast',
@@ -53,7 +53,7 @@ return [
             ]
         ],
         [
-            'stripe_plan' => 'price_1I3kvmJ7D6nBxczVo3jGGfiM',
+            'stripe_plan' => env('PLAN_4_ID'),
             'name' => 'Enterprise',
             'price' => 65.50,
             'advantages' => [
