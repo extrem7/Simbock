@@ -35,7 +35,8 @@ class UpgradeController extends Controller
         share([
             'plans' => $plans,
             'hasTrial' => $subscription === null,
-            'card' => $card
+            'card' => $card,
+            'stripeAPIToken' => config('services.stripe.key')
         ]);
 
         return view('frontend::company.subscribe.plans');

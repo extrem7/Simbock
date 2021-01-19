@@ -129,7 +129,7 @@ export default {
             hasTrial: this.shared('hasTrial'),
             card: this.shared('card'),
 
-            stripeAPIToken: 'pk_test_FwjvH3gKEDV81Z84p4cnXeyZ',
+            stripeAPIToken: this.shared('stripeAPIToken'),
             stripeSession: null,
 
             isLoading: false,
