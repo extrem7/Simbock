@@ -5,7 +5,6 @@ namespace Modules\Frontend\Http\Middleware;
 use Auth;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class VolunteerViewed
 {
@@ -14,7 +13,7 @@ class VolunteerViewed
         return $next($request);
     }
 
-    public function terminate(Request $request, Response $response): void
+    public function terminate(Request $request, $response): void
     {
         $company = Auth::user()->company;
         if ($company->canSeeVolunteer()) {

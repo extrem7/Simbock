@@ -24,7 +24,7 @@ class BoardController extends Controller
     {
         $this->seo()->setTitle("Board | Company");
 
-        $company = $this->company();
+        $company = $this->company()->append('is_subscribed');
         $volunteers = collect();
         $vacancies = $company->vacancies()->with(['city', 'hours', 'type'])->get();
 

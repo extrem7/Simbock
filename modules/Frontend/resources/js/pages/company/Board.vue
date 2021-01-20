@@ -2,7 +2,7 @@
     <main class="container content-inner">
         <div class="row flex-column-reverse flex-lg-row">
             <HistoryBack small/>
-            <main v-if="!shared('volunteers').data.length"
+            <main v-if="!company.is_subscribed"
                   class="col-lg-7">
                 <h1 class="title medium-size text-center text-lg-left">
                     To see recommended volunteers
@@ -13,6 +13,7 @@
                 </h1>
             </main>
             <VolunteersIndex
+                v-else
                 :enable-filter="false"
                 :is-container="false"
                 class="col-lg-7"
@@ -111,8 +112,11 @@ export default {
         }
     },
     computed: {
+        user() {
+            return this.$store.state.user
+        },
         company() {
-            return this.$store.state.user.company
+            return this.user.company
         },
     },
     methods: {

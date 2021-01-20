@@ -49,6 +49,7 @@ class VolunteerController extends Controller
         $filters = $request->validated();
 
         $volunteers = Volunteer::public()
+            ->select(['id', 'user_id', 'city_id', 'job_title'])
             ->when(
                 $query,
                 fn(Builder $q) => $q->where('job_title', 'REGEXP', '[[:<:]]' . $query . '[[:>:]]')
@@ -72,7 +73,7 @@ class VolunteerController extends Controller
             )
             ->where('completeness', '!=', 0.)
             ->orderByDesc('completeness')
-            ->paginate(4, ['volunteers.*']);
+            ->paginate(4);
 
         /* @var $volunteers Collection<Volunteer> */
         $volunteers->transform([$this->repository, 'transformForIndex']);
@@ -170,6 +171,22 @@ class VolunteerController extends Controller
                 ($bookmarks['attached'] ? 'saved to' : 'removed from')
                 . ' bookmarks.',
             'inBookmarks' => in_array($volunteer->id, $bookmarks['attached'], true)
+        ]);
+    }
+
+    public function contact(Volunteer $volunteer): JsonResponse
+    {
+        $company = $this->company();
+
+        if (!$company->canSeeVolunteer()) {
+            return response()->json([
+                'message' => 'You have exhausted the resume views limit. Wait for next monthly payment or update your plan.'
+            ], 403);
+        }
+
+        return response()->json([
+            'email' => $volunteer->email,
+            'phone' => $volunteer->phone
         ]);
     }
 }

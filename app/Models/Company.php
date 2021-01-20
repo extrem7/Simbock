@@ -90,6 +90,7 @@ class Company extends Model implements HasMedia, SearchRecordable
         if ($subscription = $this->subscription()) {
             return $plans->where('stripe_plan', $subscription->stripe_plan)->first();
         }
+        return null;
     }
 
     public function canSeeVolunteer(): bool
@@ -191,5 +192,10 @@ class Company extends Model implements HasMedia, SearchRecordable
         $name = $c->name;
         if ($c->name !== $c->county) $name .= ", $c->county";
         return "$name $c->state_id";
+    }
+
+    public function getIsSubscribedAttribute(): bool
+    {
+        return $this->subscribed();
     }
 }

@@ -23,7 +23,7 @@
                             :key="volunteer.id"
                             v-bind="volunteerProps(volunteer)"
                             :in-bookmarks="volunteer.in_bookmarks"
-                            @contact="contactVolunteer(volunteer)"
+                            @contact="contactVolunteer(volunteer.id)"
                             @update:bookmarked="updateVolunteerBookmarked(i,$event)"
                         />
                         <div
@@ -91,10 +91,10 @@
 </template>
 
 <script>
-import Vue from "vue"
-import VolunteerCard from "~/components/company/VolunteerCard"
-import VacanciesFilter from "~/components/vacancies/VacanciesFilter"
-import ModalHeader from "~/components/volunteer/account/components/ModalHeader"
+import Vue from 'vue'
+import VolunteerCard from '~/components/company/VolunteerCard'
+import VacanciesFilter from '~/components/vacancies/VacanciesFilter'
+import ModalHeader from '~/components/volunteer/account/components/ModalHeader'
 
 import {copyTextToClipboard} from '~/helpers/helpers'
 
@@ -157,10 +157,15 @@ export default {
         updateVolunteerBookmarked(i, in_bookmarks) {
             Vue.set(this.volunteers[i], 'in_bookmarks', in_bookmarks)
         },
-        contactVolunteer({email, phone}) {
-            this.contacts.phone = phone
-            this.contacts.email = email
-            this.$refs.contacts.show()
+        async contactVolunteer(id) {
+            try {
+                const {data: {phone, email}} = await this.axios.get(this.route('volunteers.actions.contact', id))
+                this.contacts.phone = phone
+                this.contacts.email = email
+                this.$refs.contacts.show()
+            } catch (e) {
+                console.log(e)
+            }
         },
         copyVolunteerEmail() {
             copyTextToClipboard(this.contacts.email, () => {

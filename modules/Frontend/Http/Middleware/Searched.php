@@ -6,7 +6,6 @@ use App\Models\SearchQuery;
 use Auth;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class Searched
 {
@@ -15,8 +14,10 @@ class Searched
         return $next($request);
     }
 
-    public function terminate(Request $request, Response $response): void
+    public function terminate(Request $request, $response): void
     {
+        if ($request->exists('page')) return;
+
         $route = $request->route();
         $attributes = [
             'query' => $route->parameter('query'),

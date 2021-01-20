@@ -74,6 +74,9 @@ Route::as('volunteers.')->middleware('auth')->group(function () {
             ->as('actions.')
             ->group(function () {
                 Route::post('bookmark', 'VolunteerController@bookmark')->name('bookmark');
+                Route::get('contact', 'VolunteerController@contact')
+                    ->middleware(VolunteerViewed::class)
+                    ->name('contact');
             });
     });
 });

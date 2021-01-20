@@ -1,7 +1,7 @@
 <template>
     <div class="menu-account">
         <a v-b-tooltip.hover
-           :href="route('vacancies.search')"
+           :href="route('vacancies.search',{types:8})"
            class="menu-account-link"
            title="Sport volunteering">
             <SvgVue icon="cup"/>
