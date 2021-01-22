@@ -30,13 +30,11 @@
                 </template>
                 <template v-slot:cell(user_id)="{item:{user}}">
                     <a :href="route('admin.users.edit',user.id)"
-                       target="_blank">
-                        {{ user.name }}
-                    </a>
+                       target="_blank">{{ user.name }}</a>
                 </template>
 
                 <template v-slot:cell(city_id)="{item:{city}}">
-                    {{ city.name }}, {{ city.county }}, {{ city.state_id }}
+                    <span v-if="city">{{ city.name }}, {{ city.county }}, {{ city.state_id }}</span>
                 </template>
             </b-table>
 
