@@ -20,6 +20,7 @@ class FrontendServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RouteServiceProvider::class);
+        $this->app->register(BroadcastServiceProvider::class);
     }
 
     public function registerViews()

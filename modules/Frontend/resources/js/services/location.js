@@ -12,5 +12,18 @@ export default {
         } finally {
             if (loading) loading(false)
         }
+    },
+
+    async searchLocation(query, loading = null) {
+        if (loading) loading(true)
+        try {
+            const {data} = await Vue.axios.get(`/api/locations/${query}`)
+            return data
+        } catch (e) {
+            console.log(e)
+            return []
+        } finally {
+            if (loading) loading(false)
+        }
     }
 }

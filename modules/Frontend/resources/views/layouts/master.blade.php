@@ -22,6 +22,7 @@
 <div id="app">
     <app>
         @yield('content')
+        <chat-notifications></chat-notifications>
     </app>
 </div>
 @shared

@@ -2,6 +2,8 @@
 
 namespace App\Models\Volunteers;
 
+use App\Models\Chats\Chat;
+use App\Models\Client;
 use App\Models\Interfaces\SearchRecordable;
 use App\Models\Jobs\Hour;
 use App\Models\Jobs\Role;
@@ -29,11 +31,10 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Volunteer extends Model implements HasMedia, SearchRecordable
+class Volunteer extends Client implements HasMedia
 {
     use InteractsWithMedia,
         SoftDeletes,
-        SearchRecording,
         SearchTrait;
 
     public const CREATED_AT = null;
@@ -111,7 +112,10 @@ class Volunteer extends Model implements HasMedia, SearchRecordable
                 'cost' => 0.2
             ],
             'contact_social' => [
-                'value' => ($this->email && $this->phone && !empty(array_filter($this->social, fn($l) => $l !== null))),
+                'value' => (
+                    $this->email && $this->phone &&
+                    ($this->social !== null && !empty(array_filter($this->social, fn($l) => $l !== null)))
+                ),
                 'cost' => 0.2
             ],
             'skills' => [

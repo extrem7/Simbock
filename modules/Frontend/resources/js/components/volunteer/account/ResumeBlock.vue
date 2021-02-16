@@ -44,6 +44,7 @@
                 <Invalid name="title"/>
             </div>
             <div :class="[invalid('file')]" class="form-group">
+                <p class="mb-2">Less than 1 MB.</p>
                 <BFormFile
                     v-model="form.file"
                     accept="application/pdf"

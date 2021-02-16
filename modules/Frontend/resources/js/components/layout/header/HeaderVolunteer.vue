@@ -14,7 +14,7 @@
             <BDropdownItem
                 v-b-tooltip.hover.left
                 :href="route('volunteer.vacancies.history')"
-                title="History apply">
+                title="Application History">
                 <img alt="history" class="dropdown-item-icon" src="/dist/img/icons/history-apply.svg">
             </BDropdownItem>
             <BDropdownItem v-b-tooltip.hover.left

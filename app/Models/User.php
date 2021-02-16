@@ -52,7 +52,7 @@ class User extends Authenticatable implements HasMedia
         $this->notify(new ResetPasswordNotification($token));
     }
 
-    public function getClient(): SearchRecordable
+    public function getClient(): ?Client
     {
         return $this->is_volunteer ? $this->volunteer : $this->company;
     }

@@ -20,7 +20,7 @@ class AccountRequest extends FormRequest
             'is_working_remotely' => ['nullable', 'boolean'],
 
             'email' => ['nullable', 'email', 'string255'],
-            'phone' => ['nullable', 'string255', 'phone:US'],
+            'phone' => ['nullable', 'string255', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/'/*'phone:US'*/],
 
             'social' => ['nullable', 'array'],
             'social.website' => ['nullable', 'url'],

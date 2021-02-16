@@ -13,6 +13,8 @@ import CompanySavedVolunteersPage from './company/volunteers/Saved'
 import CompanyCandidatesPage from './company/volunteers/Candidates'
 import CompanyUpgradePage from './company/Upgrade'
 
+import Chat from './Chat'
+
 import Default from './Default'
 
 export default {
@@ -30,6 +32,8 @@ export default {
     CompanySavedVolunteersPage,
     CompanyCandidatesPage,
     CompanyUpgradePage,
+
+    ChatPage: Chat,
 
     DefaultPage: Default,
 }

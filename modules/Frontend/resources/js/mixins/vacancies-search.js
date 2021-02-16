@@ -18,7 +18,7 @@ export default {
         },
         async cityQuery(query) {
             if (query.length && !this.cities.includes(query)) {
-                this.cities = (await locationService.searchCity(query)).map(({text}) => text)
+                this.cities = (await locationService.searchLocation(query)).map(({text}) => text)
             }
         }
     },

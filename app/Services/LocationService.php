@@ -30,8 +30,9 @@ class LocationService
                 $zips = array_filter(explode(' ', $c->zips), fn($zip) => str_contains($zip, $query));
                 $zip = array_shift($zips);
                 $mapped = $this->mapCity($c);
-                $mapped = "$zip, $mapped";
-                return $mapped;
+                //$mapped = "$zip, $mapped";
+                //return $mapped;
+                return ['text' => $mapped, 'value' => $c->id];
             })->toArray();
         } else {
             if (strlen($query) === 2) {
@@ -42,17 +43,12 @@ class LocationService
                     $cities = $cities->biggest()
                         ->limit($this->resultsLimit - 1)
                         ->get($this->cityFields)
-                        ->map(fn(City $c) => $this->mapCity($c));
-                    return ["$state->name state", ...$cities];
+                        ->map(fn(City $c) => ['text' => $this->mapCity($c), 'id' => $c->id]);
+                    return $cities->toArray();
+                    //return ["$state->name state", ...$cities];
                 }
             } else if (strlen($query) > 2) {
-                return City::where('name', $query)
-                    ->orWhere('name', 'like', "$query%")
-                    ->biggest()
-                    ->limit($this->resultsLimit)
-                    ->get($this->cityFields)
-                    ->map(fn(City $c) => $this->mapCity($c))
-                    ->toArray();
+                return $this->searchCity($query);
             }
         }
         return [];

@@ -69,7 +69,7 @@
             </div>
             <div class="form-divider mt-3 mb-3 line-height-1-2"></div>
             <div class="silver-color">
-                Tell us all about your new job, what it means to you, and your experience using Simbok.
+                Tell us all about your new job, what it means to you, and your experience using Simboсk.
             </div>
             <div class="form-box-actions mt-4">
                 <button class="btn btn-outline-silver btn-scale-active btn-shadow min-width-140 mod-dark"
@@ -86,7 +86,8 @@
              class="survey-box form-box form-box-decorative_bg mx-auto">
             <div class="title title-page title-line line-large">Congrats on the New Job!</div>
             <div class="silver-color text-center mt-3 mb-3 line-height-1-2">We want to celebrate your success with you.
-                Tell us about your job/volunterring search success story on Simbok and we may feature you in an upcoming
+                Tell us about your job/volunterring search success story on Simboсk and we may feature you in an
+                upcoming
                 TV commercial.
             </div>
             <form @submit.prevent="shareStory">
@@ -101,6 +102,7 @@
                      class="form-group">
                     <InputMaterial
                         v-model="storyForm.email"
+                        type="email"
                         placeholder="Email"/>
                     <Invalid name="email"/>
                 </div>
@@ -115,6 +117,7 @@
                      class="form-group">
                     <InputMaterial
                         v-model="storyForm.phone"
+                        type="phone"
                         placeholder="Phone Number"/>
                     <Invalid name="phone"/>
                 </div>
@@ -137,8 +140,12 @@
                 <div class="form-group">
                     <div class="custom-control custom-checkbox">
                         <input id="agree" class="custom-control-input" required type="checkbox">
-                        <label class="custom-control-label extra-small-size" for="agree"><span>By checking this box I confirm that I am at least 18 years of age and that I have read, understood and agreed to be bound by the
-                        <a class="link link-stroke" href="">Consent and Release.</a></span></label>
+                        <label class="custom-control-label extra-small-size" for="agree">
+                            <span>
+                                By checking this box I confirm that I am at least 18 years of age and that I have read, understood and agreed to be bound by the <a
+                                class="link link-stroke" href="">Consent and Release.</a>
+                            </span>
+                        </label>
                     </div>
                 </div>
                 <div class="form-box-actions mt-4">

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'debugbar_emails' => [env('DEBUGBAR_EMAIL')],
+    'debugbar_emails' => parse_emails(env('DEBUGBAR_EMAIL', '')),
     'plans' => [
         [
             'stripe_plan' => env('PLAN_1_ID'),

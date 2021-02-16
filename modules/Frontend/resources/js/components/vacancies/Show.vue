@@ -1,6 +1,7 @@
 <template>
     <main class="container content-inner">
         <AccessBox
+            v-if="this.user && this.user.is_volunteer"
             :id="vacancy.id"
             :in-bookmarks="vacancy.in_bookmarks"
             @update:bookmarked="updateVacancyBookmarked"/>

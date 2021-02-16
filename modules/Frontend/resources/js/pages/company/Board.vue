@@ -1,7 +1,6 @@
 <template>
     <main class="container content-inner">
         <div class="row flex-column-reverse flex-lg-row">
-            <HistoryBack small/>
             <main v-if="!company.is_subscribed"
                   class="col-lg-7">
                 <h1 class="title medium-size text-center text-lg-left">

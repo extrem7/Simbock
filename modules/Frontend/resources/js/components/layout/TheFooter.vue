@@ -31,12 +31,12 @@
                 <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">About us</div>
                     <nav class="footer-nav">
-                        <a class="footer-nav-link" href="/about">About Simbok</a>
+                        <a class="footer-nav-link" href="/about">About Simboсk</a>
                         <a :href="route('articles.index')"
                            class="footer-nav-link">Newsroom</a>
-                        <a class="footer-nav-link" href="/our-vacancies">Work for Simbok</a>
+                        <a class="footer-nav-link" href="/our-vacancies">Work for Simboсk</a>
                         <a class="footer-nav-link" href="">Partner with us</a>
-                        <a class="footer-nav-link" href="">Simbok International</a>
+                        <a class="footer-nav-link" href="">Simboсk International</a>
                     </nav>
                 </div>
                 <div class="col-md-3 col-6">
@@ -107,7 +107,7 @@
                     <a class="text-uppercase" href="/policies#cookies">COOKIES</a>,
                     <a class="text-uppercase" href="/policies#terms">TERMS & CONDITIONS</a>
                 </nav>
-                <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">COPYRIGHT © Simbok.com {{ year }}</div>
+                <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">COPYRIGHT © Simboсk.com {{ year }}</div>
             </div>
         </div>
     </footer>

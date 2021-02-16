@@ -62,7 +62,7 @@ class InfoController extends Controller
     public function uploadLogo(Request $request)
     {
         ['logo' => $logo] = $this->validate($request, [
-            'logo' => ['required', 'image', 'max:2048', 'mimes:jpg,jpeg,bmp,png']
+            'logo' => ['required', 'image', 'max:4096', 'mimes:jpg,jpeg,bmp,png']
         ]);
 
         $company = \Auth::getUser()->company;

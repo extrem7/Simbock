@@ -25,8 +25,9 @@
             <SvgVue icon="job"/>
         </a>
         <a v-b-tooltip.hover
-           :href="route('volunteers.search')"
-           class="menu-account-link has-message link-stroke"
+           :class="{'has-message':unviewedMessages}"
+           :href="route('chat.page')"
+           class="menu-account-link link-stroke"
            title="Messenger">
             <SvgVue icon="chat"/>
         </a>
@@ -38,3 +39,11 @@
         </a>
     </nav>
 </template>
+
+<script>
+import messagesNotifications from '~/mixins/messages-notifications'
+
+export default {
+    mixins: [messagesNotifications]
+}
+</script>

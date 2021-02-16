@@ -16,6 +16,11 @@ class LocationController extends Controller
         $this->service = app(LocationService::class);
     }
 
+    public function all(string $query)
+    {
+        return $this->service->search($query);
+    }
+
     public function cities(string $query)
     {
         return $this->service->searchCity($query);

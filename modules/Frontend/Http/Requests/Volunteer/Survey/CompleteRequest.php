@@ -12,7 +12,7 @@ class CompleteRequest extends FormRequest
             'name' => ['required', 'string255'],
             'email' => ['required', 'email'],
             'address' => ['required', 'string255'],
-            'phone' => ['required', 'phone:US'],
+            'phone' => ['required', 'regex:/\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/',/*'phone:US'*/],
             'company_name' => ['required', 'string255'],
             'description' => ['required', 'string']
         ];

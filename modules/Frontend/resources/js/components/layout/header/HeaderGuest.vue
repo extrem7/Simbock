@@ -11,7 +11,7 @@
                 <div :class="{'is-open-menu' : isOpenMenuMobile}" class="header-menu-wrapper">
                     <ul class="menu">
                         <li class="menu-item">
-                            <a class="menu-link active" href="">Volunteer Job Seekers</a>
+                            <a class="menu-link" href="">For Seekers</a>
                         </li>
                         <li class="menu-item">
                             <a class="menu-link" href="">Small & Medium Businesses</a>
@@ -20,21 +20,18 @@
                             <a class="menu-link" href="">Enterprise Businesses</a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="">Sport Volunteer</a>
-                        </li>
-                        <li class="menu-item menu-item-profile flex-grow-1">
-                            <a class="menu-link" href="">My Account</a>
-                        </li>
-                        <li class="menu-item menu-item-profile">
-                            <a class="menu-link" href="">Logout</a>
+                            <a class="menu-link" href="">Sports & events</a>
                         </li>
                     </ul>
-                    <a class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140" href="">Post
-                        vacancy</a>
+                    <a :href="route('login')"
+                       class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140">
+                        Post a need
+                    </a>
                 </div>
                 <a :href="route('register')"
-                   class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140 hidden-md">Post
-                    vacancy</a>
+                   class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140 hidden-md">
+                    Post a need
+                </a>
                 <a :href="route('login')" class="header-link-sign header-link link-inherit small-size">
                     <svg-vue class="mr-1" icon="login"></svg-vue>
                     Sign in</a>

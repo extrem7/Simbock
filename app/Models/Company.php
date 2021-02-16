@@ -2,13 +2,10 @@
 
 namespace App\Models;
 
-use App\Models\Interfaces\SearchRecordable;
 use App\Models\Jobs\Size;
 use App\Models\Map\US\City;
-use App\Models\Traits\SearchRecording;
 use App\Models\Traits\SearchTrait;
 use App\Models\Volunteers\Volunteer;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -21,12 +18,11 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
-class Company extends Model implements HasMedia, SearchRecordable
+class Company extends Client implements HasMedia
 {
     use InteractsWithMedia,
         Billable,
         SoftDeletes,
-        SearchRecording,
         SearchTrait;
 
     public const CREATED_AT = null;
@@ -155,11 +151,6 @@ class Company extends Model implements HasMedia, SearchRecordable
         return $this->belongsToMany(Volunteer::class, 'company_has_bookmarks');
     }
 
-    public function logoMedia(): MorphOne
-    {
-        return $this->morphOne(Media::class, 'model')->where('collection_name', 'logo');
-    }
-
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);
@@ -170,15 +161,30 @@ class Company extends Model implements HasMedia, SearchRecordable
         return $this->belongsTo(Size::class);
     }
 
+    public function logoMedia(): MorphOne
+    {
+        return $this->morphOne(Media::class, 'model')->where('collection_name', 'logo');
+    }
+
     // ACCESSORS
     public function getLogoAttribute(): string
     {
         return $this->getLogo();
     }
 
+    public function getIconAttribute(): string
+    {
+        return $this->getLogo('icon');
+    }
+
+    public function getNameAttribute(string $name = null): ?string
+    {
+        return $name ?? $this->user->name;
+    }
+
     public function getEmailAttribute(string $email = null): string
     {
-        return $email ?: $this->user->email;
+        return $email ?? $this->user->email;
     }
 
     public function getEmploymentAttribute(): string

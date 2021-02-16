@@ -24,6 +24,8 @@ import PasswordChange from './auth/PasswordChange'
 
 import SubscriptionManagement from './company/SubscriptionManagement'
 
+import ChatNotifications from './ChatNotifications'
+
 export default {
     App,
 
@@ -46,7 +48,9 @@ export default {
     EmailResetForm: EmailReset,
     PasswordResetForm: PasswordReset,
     PasswordChangeForm: PasswordChange,
-    SubscriptionManagement
+    SubscriptionManagement,
+
+    ChatNotifications
 }
 
 import SelectMaterial from "./layout/SelectMaterial"

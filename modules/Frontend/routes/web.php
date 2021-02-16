@@ -52,6 +52,7 @@ Route::as('vacancies.')->group(function () {
             ->group(function () {
                 Route::post('apply', 'VacancyController@apply')->name('apply');
                 Route::post('bookmark', 'VacancyController@bookmark')->name('bookmark');
+                Route::post('chat', 'VacancyController@chat')->name('chat');
             });
     });
 });
@@ -230,6 +231,12 @@ Route::middleware('auth')->group(function () {
                 Route::post('complete', 'SurveyController@complete')->name('complete');
             });
         });
+
+    Route::prefix('chat')->as('chat.')->group(function () {
+        Route::get('{chat?}', 'ChatController@page')->name('page');
+        Route::get('messages/{chat}', 'ChatController@messages')->name('messages');
+        Route::post('messages/{chat}', 'ChatController@send')->name('messages.send');
+    });
 });
 
 Route::post('/contact-form', 'PageController@contactForm')->name('contact-form');

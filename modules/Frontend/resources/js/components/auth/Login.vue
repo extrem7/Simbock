@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="medium-size text-center mt-4 mb-sm-4 mb-3">To continue, log in to Simbok</div>
+        <div class="medium-size text-center mt-4 mb-sm-4 mb-3">To continue, log in to Simboсk</div>
         <div class="login-social-wrapper">
             <a class="btn btn-login-social" href="">
                 <img alt="facebook-login" src="dist/img/icons/facebook-login.svg">
@@ -41,7 +41,7 @@
             <button class="btn btn-violet w-100 btn-scale-active btn-shadow btn-lg mt-3">Log in</button>
             <div class="extra-small-size text-center mt-3">
                 Don't have an account?
-                <a :href="route('register')" class="link">Sign up for Simbok</a></div>
+                <a :href="route('register')" class="link">Sign up for Simboсk</a></div>
         </form>
     </div>
 </template>

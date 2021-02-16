@@ -18,7 +18,8 @@
                     <div class="text-center">
                         <div class="large-size semi-bold-weight">Let's work together in giving back to our societies
                         </div>
-                        <div class="mt-4">Simbok is here to encourage people to give back to the society by volunteering
+                        <div class="mt-4">Simboсk is here to encourage people to give back to the society by
+                            volunteering
                             and acting as goodwill ambassadors. We are here to make the world a better place by helping
                             using the least skills we have to help and give back those those in need. We ask everyone to
                             be part of the change we all want to see in the world.

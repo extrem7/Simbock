@@ -17,7 +17,7 @@
         <p v-else class="medium-size text-center">{{ doneMessage }}</p>
         <div class="extra-small-size text-center mt-3">
             If you still need help, please contact
-            <a class="link d-block mx-auto" href="">Simbok Support.</a>
+            <a class="link d-block mx-auto" href="">Simbock Support.</a>
         </div>
     </form>
 </template>

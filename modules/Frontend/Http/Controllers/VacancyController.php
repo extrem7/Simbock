@@ -2,19 +2,18 @@
 
 namespace Modules\Frontend\Http\Controllers;
 
-use App\Models\SearchQuery;
+use App\Models\Chats\Chat;
 use App\Models\Vacancy;
 use App\Services\LocationService;
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Modules\Frontend\Http\Controllers\Volunteer\Account\HasVolunteer;
 use Modules\Frontend\Http\Requests\VacanciesRequest;
 use Modules\Frontend\Notifications\Company\VacancyApplied;
 use Modules\Frontend\Repositories\VacancyRepository;
-use Route2Class;
 
 class VacancyController extends Controller
 {
@@ -81,7 +80,7 @@ class VacancyController extends Controller
 
         share(compact('vacancies', 'query', 'location'));
 
-        Route2Class::addClass('page-with-search');
+        \Route2Class::addClass('page-with-search');
 
         return view('frontend::vacancies.index');
     }
@@ -89,7 +88,7 @@ class VacancyController extends Controller
     public function show(Vacancy $vacancy)
     {
         if ($vacancy->status !== Vacancy::ACTIVE) {
-            if (($user = Auth::user()) && !$user->is_volunteer) {
+            if (($user = \Auth::user()) && !$user->is_volunteer) {
                 abort_if($vacancy->company_id !== $user->company->id, 404);
             } else {
                 abort(404);
@@ -129,5 +128,28 @@ class VacancyController extends Controller
                 . ' bookmarks.',
             'inBookmarks' => in_array($vacancy->id, $bookmarks['attached'], true)
         ]);
+    }
+
+    public function chat(Request $request, Vacancy $vacancy): JsonResponse
+    {
+        $request->validate([
+            'message' => ['required', 'string', 'max:510']
+        ]);
+
+        $volunteer = $this->volunteer();
+        /* @var $chat Chat */
+        $chat = $volunteer->chats()->where('vacancy_id', '=', $vacancy->id)->first();
+        if (!$chat) {
+            $chat = $volunteer->chats()->create([
+                'vacancy_id' => $vacancy->id,
+                'company_id' => $vacancy->company_id
+            ]);
+        }
+        $chat->messages()->create([
+            'volunteer_id' => $volunteer->id,
+            'text' => $request->message
+        ]);
+
+        return response()->json(['message' => 'You message has been sent.'], 201);
     }
 }

@@ -27,11 +27,12 @@ import VueBus from 'vue-bus'
 import SvgVue from 'svg-vue'
 import './bootstrap'
 import './ls'
+import './broadcasting'
 
-import VueMoment from "vue-moment"
+import VueMoment from 'vue-moment'
 import VueLazyload from 'vue-lazyload'
 import VueScrollTo from 'vue-scrollto'
-import VueSimpleAlert from "vue-simple-alert"
+import VueSimpleAlert from 'vue-simple-alert'
 import VueObserveVisibility from 'vue-observe-visibility'
 
 Vue.use(VueBus)
@@ -48,4 +49,3 @@ import VueLodash from 'vue-lodash'
 import lodash from 'lodash'
 
 Vue.use(VueLodash, {lodash})
-

@@ -49,8 +49,6 @@ class UpgradeController extends Controller
         $company = $this->company();
         $subscription = $company->subscription();
 
-        $route = route('frontend.company.upgrade.page');
-
         if ($company->subscribedToPlan($plan)) {
             return response()->noContent(403);
         }
@@ -64,8 +62,8 @@ class UpgradeController extends Controller
             'allow_promotion_codes' => true,
             'mode' => 'subscription',
             'customer' => $company->createOrGetStripeCustomer()->id,
-            'success_url' => $route,
-            'cancel_url' => $route,
+            'success_url' => route('frontend.company.board'),
+            'cancel_url' => route('frontend.company.upgrade.page'),
         ]);
         return response()->json(['session' => $session->id]);
     }
