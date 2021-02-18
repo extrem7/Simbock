@@ -8,6 +8,6 @@ Vue.use(VueEcho, {
     key: 'Simbock',
     wsHost: window.location.hostname,
     wsPort: 6001,
-    forceTLS: false,
-    enabledTransports: ['ws', 'wss']
+    wssPort: 6001,
+    forceTLS: process.env.MIX_APP_ENV !== 'local'
 })

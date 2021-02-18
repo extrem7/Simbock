@@ -24,12 +24,13 @@ class ContactForm extends Mailable implements ShouldQueue
             ->salutation(null);
         foreach ($data as $field => $text) {
             $field = ucfirst($field);
-            if ($text)
+            if ($text) {
                 $this->message->line("$field : $text");
+            }
         }
     }
 
-    public function build()
+    public function build(): self
     {
         return $this->markdown('vendor.notifications.email', $this->message->data());
     }

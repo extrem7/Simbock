@@ -1,6 +1,8 @@
 <?php
 
 use BeyondCode\LaravelWebSockets\Dashboard\Http\Middleware\Authorize;
+use BeyondCode\LaravelWebSockets\Statistics\Models\WebSocketsStatisticsEntry;
+use BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManagers\ArrayChannelManager;
 use Modules\Admin\Http\Middleware\Admin;
 
 return [
@@ -81,7 +83,7 @@ return [
          * The only requirement is that the model should extend
          * `WebSocketsStatisticsEntry` provided by this package.
          */
-        'model' => \BeyondCode\LaravelWebSockets\Statistics\Models\WebSocketsStatisticsEntry::class,
+        'model' => WebSocketsStatisticsEntry::class,
 
         /**
          * The Statistics Logger will, by default, handle the incoming statistics, store them
@@ -130,6 +132,11 @@ return [
          * Passphrase for your local_cert file.
          */
         'passphrase' => env('LARAVEL_WEBSOCKETS_SSL_PASSPHRASE', null),
+
+        /*
+         * Require verification of SSL certificate used.
+         */
+        'verify_peer' => env('WEBSOCKETS_VERIFY_PEER', false),
     ],
 
     /*
@@ -139,5 +146,5 @@ return [
      * The only requirement is that the class should implement
      * `ChannelManager` interface provided by this package.
      */
-    'channel_manager' => \BeyondCode\LaravelWebSockets\WebSockets\Channels\ChannelManagers\ArrayChannelManager::class,
+    'channel_manager' => ArrayChannelManager::class,
 ];
