@@ -15,7 +15,7 @@ class SharedData
             if ($user = Auth::user()) {
                 $user->load(['company', 'volunteer'])->append(['is_volunteer']);
                 if ($user->company) {
-                    $user->company->append(['logo', 'employment', 'location']);
+                    $user->company->append(['logo', 'employment', 'location', 'is_subscribed']);
                 }
                 $userData = $user->toArray();
 

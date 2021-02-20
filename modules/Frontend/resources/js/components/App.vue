@@ -25,21 +25,23 @@
             <SvgVue icon="arrow-solid"/>
         </button>
         <AlertNotification/>
+        <ChatNotifications v-if="user && user.client"/>
     </div>
 </template>
 
 <script>
-import HeaderGuest from "./layout/header/HeaderGuest"
-import HeaderVolunteer from "./layout/header/HeaderVolunteer"
-import HeaderCompany from "./layout/header/HeaderCompany"
-import TheMainSearch from "./layout/TheMainSearch"
+import HeaderGuest from './layout/header/HeaderGuest'
+import HeaderVolunteer from './layout/header/HeaderVolunteer'
+import HeaderCompany from './layout/header/HeaderCompany'
+import TheMainSearch from './layout/TheMainSearch'
 import VolunteerMenu from './layout/header/VolunteerMenu'
-import CompanyMenu from "./layout/header/CompanyMenu"
-import TheFooter from "./layout/TheFooter"
-import AlertNotification from "./includes/AlertNotification"
+import CompanyMenu from './layout/header/CompanyMenu'
+import TheFooter from './layout/TheFooter'
+import AlertNotification from './includes/AlertNotification'
+import ChatNotifications from './ChatNotifications'
 
 export default {
-    name: "App",
+    name: 'App',
     components: {
         HeaderGuest,
         HeaderVolunteer,
@@ -49,6 +51,7 @@ export default {
         CompanyMenu,
         TheFooter,
         AlertNotification,
+        ChatNotifications
     },
     data() {
         return {
@@ -74,7 +77,7 @@ export default {
         }
     },
     created() {
-        window.addEventListener("scroll", this.handleScroll)
+        window.addEventListener('scroll', this.handleScroll)
 
         this.$bus.on('toggle-filter', () => {
             this.isFilterOpen = !this.isFilterOpen
@@ -88,11 +91,11 @@ export default {
         })
     },
     destroyed() {
-        window.removeEventListener("scroll", this.handleScroll);
+        window.removeEventListener('scroll', this.handleScroll)
     },
     methods: {
         handleScroll() {
-            let top = window.pageYOffset;
+            let top = window.pageYOffset
 
             if (window.innerWidth > 991) {
                 this.isScrolledSearch = top > 70
@@ -104,10 +107,10 @@ export default {
                 this.scrolled = true
             }
 
-            this.scroll = top;
+            this.scroll = top
         },
         scrollToHeader() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            window.scrollTo({top: 0, behavior: 'smooth'})
         }
     }
 }

@@ -1,3 +1,5 @@
+import Register from './auth/Register'
+
 import Work from './Work'
 import Help from './Help'
 
@@ -18,6 +20,8 @@ import Chat from './Chat'
 import Default from './Default'
 
 export default {
+    RegisterPage: Register,
+
     WorkPage: Work,
     HelpPage: Help,
 

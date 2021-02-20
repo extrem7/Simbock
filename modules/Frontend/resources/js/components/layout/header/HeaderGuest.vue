@@ -23,12 +23,12 @@
                             <a class="menu-link" href="">Sports & events</a>
                         </li>
                     </ul>
-                    <a :href="route('login')"
+                    <a :href="route('login')+'?employer'"
                        class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140">
                         Post a need
                     </a>
                 </div>
-                <a :href="route('register')"
+                <a :href="route('register')+'?employer'"
                    class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140 hidden-md">
                     Post a need
                 </a>

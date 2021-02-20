@@ -32,7 +32,7 @@
                             {{ resumeViews.viewed }}/{{ resumeViews.available }} vacancies
                         </span>
                     </div>
-                    <div>If you want you can
+                    <div v-if="resumeViews.viewed===resumeViews.available">If you want you can
                         <a :href="route('company.upgrade.page')"
                            class="link-border link">
                             upgrade your plan
