@@ -2,18 +2,18 @@
 
 namespace Modules\Frontend\Http\Controllers;
 
+use App\Models\Chats\Chat;
 use App\Models\Volunteers\Volunteer;
 use App\Services\LocationService;
-use Auth;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Modules\Frontend\Http\Controllers\Company\HasCompany;
+use Modules\Frontend\Http\Requests\MessageRequest;
 use Modules\Frontend\Http\Requests\VacanciesRequest;
 use Modules\Frontend\Repositories\VacancyRepository;
 use Modules\Frontend\Repositories\VolunteerRepository;
-use Route2Class;
 
 class VolunteerController extends Controller
 {
@@ -85,17 +85,17 @@ class VolunteerController extends Controller
         $this->vacancyRepository->shareForFilter();
         share(compact('volunteers', 'query', 'location'));
 
-        Route2Class::addClass('page-with-search');
+        \Route2Class::addClass('page-with-search');
 
         return view('frontend::company.volunteers.index');
     }
 
     public function saved()
     {
-        $this->seo()->setTitle("Saved Candidates");
+        $this->seo()->setTitle('Saved Candidates');
 
-        $volunteers = Volunteer::whereIn('id', Auth::user()->company->bookmarks()->pluck('id'))
-            ->with(['user', 'avatarMedia', 'city', 'types', 'hours', 'roles'])
+        $volunteers = Volunteer::with(['user', 'avatarMedia', 'city', 'types', 'hours', 'roles'])
+            ->whereIn('id', \Auth::user()->company->bookmarks()->pluck('id'))
             ->orderByDesc('completeness')
             ->paginate(4);
 
@@ -109,16 +109,16 @@ class VolunteerController extends Controller
         $this->vacancyRepository->shareForFilter();
         share(compact('volunteers'));
 
-        Route2Class::addClass('page-with-search');
+        \Route2Class::addClass('page-with-search');
 
         return view('frontend::company.volunteers.saved');
     }
 
     public function candidates()
     {
-        $this->seo()->setTitle("View Candidates");
-        $volunteers = Volunteer::whereIn('id', $this->company()->candidates()->pluck('id'))
-            ->with(['user', 'avatarMedia', 'city', 'types', 'hours', 'roles'])
+        $this->seo()->setTitle('View Candidates');
+        $volunteers = Volunteer::with(['user', 'avatarMedia', 'city', 'types', 'hours', 'roles'])
+            ->whereIn('id', $this->company()->candidates()->pluck('id'))
             ->orderByDesc('completeness')
             ->paginate(4);
 
@@ -132,7 +132,7 @@ class VolunteerController extends Controller
         $this->vacancyRepository->shareForFilter();
         share(compact('volunteers'));
 
-        Route2Class::addClass('page-with-search');
+        \Route2Class::addClass('page-with-search');
 
         return view('frontend::company.volunteers.candidates');
     }
@@ -159,12 +159,12 @@ class VolunteerController extends Controller
 
     public function self()
     {
-        return $this->show(Auth::getUser()->volunteer);
+        return $this->show(\Auth::getUser()->volunteer);
     }
 
     public function bookmark(Volunteer $volunteer): JsonResponse
     {
-        $bookmarks = Auth::user()->company->bookmarks()->toggle($volunteer->id);
+        $bookmarks = \Auth::user()->company->bookmarks()->toggle($volunteer->id);
 
         return response()->json([
             'message' => 'Volunteer has been ' .
@@ -188,5 +188,21 @@ class VolunteerController extends Controller
             'email' => $volunteer->email,
             'phone' => $volunteer->phone
         ]);
+    }
+
+    public function chat(MessageRequest $request, Volunteer $volunteer): JsonResponse
+    {
+        $company = $this->company();
+        /* @var $chat Chat */
+        $chat = $company->chats()->where('volunteer_id', '=', $volunteer->id)->latest()->first();
+        if (!$chat) {
+            $chat = $company->chats()->create(['volunteer_id' => $volunteer->id]);
+        }
+        $chat->messages()->create([
+            'company_id' => $company->id,
+            'text' => $request->input('message')
+        ]);
+
+        return response()->json(['message' => 'You message has been sent.'], 201);
     }
 }

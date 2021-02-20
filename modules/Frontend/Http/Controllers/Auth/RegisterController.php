@@ -47,7 +47,7 @@ class RegisterController extends Controller
 
     public function redirectPath(User $user): string
     {
-        return $user->is_volunteer ? route('frontend.volunteer.account.form') : '/';
+        return route('frontend.' . ($user->is_volunteer ? 'volunteer.account.form' : 'company.info.form'));
     }
 
     protected function validator(array $data)

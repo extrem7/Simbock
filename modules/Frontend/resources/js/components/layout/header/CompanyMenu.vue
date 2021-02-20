@@ -37,6 +37,12 @@
            title="Search resume">
             <SvgVue icon="file"/>
         </a>
+        <a v-b-tooltip.hover
+           :href="route('company.volunteers.saved')"
+           class="menu-account-link link-stroke"
+           title="Saved vacancies">
+            <SvgVue icon="box"/>
+        </a>
     </nav>
 </template>
 

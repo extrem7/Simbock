@@ -1,24 +1,28 @@
 <template>
-    <div
-        :class="{'completed-account' : isCompleted}"
-        class="card-work card-work-vacancy">
-        <a v-if="hasLogoAndName"
-           :href="route('companies.show',company.id)"
-           class="card-work-company link-inherit">
-            <div class="card-work-company-name">
-                {{ company_title }}
+    <div :class="{'completed-account' : isCompleted}"
+         class="card-work card-work-vacancy">
+        <div class="card-work-wrapper">
+            <div class="card-work-common">
+                <a v-if="hasLogoAndName"
+                   :href="route('companies.show',company.id)"
+                   class="card-work-company link-inherit">
+                    <div class="card-work-company-name">
+                        {{ company_title }}
+                    </div>
+                </a>
+                <a :href="link"
+                   class="card-work-title">
+                    {{ title }}
+                </a>
             </div>
-            <img
-                :alt="company_title"
-                :src="company.logo"
-                class="card-work-company-logo"
-            >
-        </a>
-        <a
-            :href="link"
-            class="card-work-title">
-            {{ title }}
-        </a>
+            <a v-if="hasLogoAndName"
+               :href="route('companies.show',company.id)"
+               class="d-block">
+                <img :alt="company_title"
+                     :src="company.logo"
+                     class="card-work-company-logo">
+            </a>
+        </div>
         <div class="card-work-info">
             <div class="card-work-place">{{ location }}</div>
             <span class="vertical-divider"></span>

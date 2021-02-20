@@ -8,9 +8,9 @@ use App\Services\LocationService;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Modules\Frontend\Http\Controllers\Volunteer\Account\HasVolunteer;
+use Modules\Frontend\Http\Requests\MessageRequest;
 use Modules\Frontend\Http\Requests\VacanciesRequest;
 use Modules\Frontend\Notifications\Company\VacancyApplied;
 use Modules\Frontend\Repositories\VacancyRepository;
@@ -130,12 +130,8 @@ class VacancyController extends Controller
         ]);
     }
 
-    public function chat(Request $request, Vacancy $vacancy): JsonResponse
+    public function chat(MessageRequest $request, Vacancy $vacancy): JsonResponse
     {
-        $request->validate([
-            'message' => ['required', 'string', 'max:510']
-        ]);
-
         $volunteer = $this->volunteer();
         /* @var $chat Chat */
         $chat = $volunteer->chats()->where('vacancy_id', '=', $vacancy->id)->first();
@@ -147,7 +143,7 @@ class VacancyController extends Controller
         }
         $chat->messages()->create([
             'volunteer_id' => $volunteer->id,
-            'text' => $request->message
+            'text' => $request->input('message')
         ]);
 
         return response()->json(['message' => 'You message has been sent.'], 201);

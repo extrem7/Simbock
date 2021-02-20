@@ -68,12 +68,18 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="chat-send-message mx-auto">
-                                <textarea class="form-control" placeholder="Write a message..."></textarea>
+                            <form class="chat-send-message mx-auto"
+                                  @submit.prevent="chat">
+                                <textarea v-model="contacts.message"
+                                          class="form-control"
+                                          maxlength="510"
+                                          placeholder="Write a message..."
+                                          required>
+                                </textarea>
                                 <button class="btn btn-silver btn-send-message min-width-100">
                                     <SvgVue icon="telegramm"/>
                                 </button>
-                            </div>
+                            </form>
                         </BModal>
                     </div>
                     <div v-else>
@@ -127,6 +133,7 @@ export default {
             lastPage: data.last_page || 1,
 
             contacts: {
+                id: null,
                 phone: null,
                 email: null
             },
@@ -160,9 +167,29 @@ export default {
         async contactVolunteer(id) {
             try {
                 const {data: {phone, email}} = await this.axios.get(this.route('volunteers.actions.contact', id))
+                this.contacts.id = id
                 this.contacts.phone = phone
                 this.contacts.email = email
                 this.$refs.contacts.show()
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async chat() {
+            try {
+                const {
+                    status,
+                    data: {message}
+                } = await this.axios.post(this.route('volunteers.actions.chat', this.contacts.id), {
+                    message: this.contacts.message
+                })
+                if (status === 201) {
+                    this.$bvModal.hide('contacts-modal')
+                    this.notify(message)
+                    setTimeout(() => {
+                        location.href = this.route('chat.page')
+                    }, 1500)
+                }
             } catch (e) {
                 console.log(e)
             }

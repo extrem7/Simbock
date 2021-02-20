@@ -31,26 +31,26 @@
 </template>
 
 <script>
-import AboutBlock from "./AboutBlock"
-import PrivacyBlock from "./PrivacyBlock"
-import ContactBlock from "./ContactBlock"
-import SocialBlock from "./SocialBlock"
-import CompleteBlock from "./CompleteBlock"
-import JobBlock from "./JobBlock"
-import WorkExperienceBlock from "./WorkExperienceBlock"
-import EducationBlock from "./EducationBlock"
-import ResumeBlock from "./ResumeBlock"
-import CertificatesBlock from "./CertificatesBlock"
-import SummaryBlock from "./SummaryBlock"
-import ObjectiveBlock from "./ObjectiveBlock"
-import AchievementsBlock from "./AchievementsBlock"
-import AssociationsBlock from "./AssociationsBlock"
-import SkillsBlock from "./SkillsBlock"
-import MoreInfoBlock from "./MoreInfoBlock"
-import CoverLetterBlock from "./CoverLetterBlock"
-import LanguageBlock from "./LanguageBlock"
-import PersonalStatementBlock from "./PersonalStatementBlock"
-import CarBlock from "./CarBlock"
+import AboutBlock from './AboutBlock'
+import PrivacyBlock from './PrivacyBlock'
+import ContactBlock from './ContactBlock'
+import SocialBlock from './SocialBlock'
+import CompleteBlock from './CompleteBlock'
+import JobBlock from './JobBlock'
+import WorkExperienceBlock from './WorkExperienceBlock'
+import EducationBlock from './EducationBlock'
+import ResumeBlock from './ResumeBlock'
+import CertificatesBlock from './CertificatesBlock'
+import SummaryBlock from './SummaryBlock'
+import ObjectiveBlock from './ObjectiveBlock'
+import AchievementsBlock from './AchievementsBlock'
+import AssociationsBlock from './AssociationsBlock'
+import SkillsBlock from './SkillsBlock'
+import MoreInfoBlock from './MoreInfoBlock'
+import CoverLetterBlock from './CoverLetterBlock'
+import LanguageBlock from './LanguageBlock'
+import PersonalStatementBlock from './PersonalStatementBlock'
+import CarBlock from './CarBlock'
 
 export default {
     components: {
@@ -80,3 +80,14 @@ export default {
     }
 }
 </script>
+
+<style>
+.sector input[type='number'] {
+    -moz-appearance: textfield;
+}
+
+.sector input::-webkit-outer-spin-button,
+.sector input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+</style>

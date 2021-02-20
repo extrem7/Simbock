@@ -78,6 +78,7 @@ Route::as('volunteers.')->middleware('auth')->group(function () {
                 Route::get('contact', 'VolunteerController@contact')
                     ->middleware(VolunteerViewed::class)
                     ->name('contact');
+                Route::post('chat', 'VolunteerController@chat')->name('chat');
             });
     });
 });

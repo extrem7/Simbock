@@ -57,7 +57,7 @@ class UpgradeController extends Controller
             'payment_method_types' => ['card'],
             'subscription_data' => [
                 'items' => [['plan' => $plan]],
-                'trial_period_days' => $subscription && $subscription->trial_ends_at ? 15 : null,
+                'trial_period_days' => !$subscription ? 15 : null,
             ],
             'allow_promotion_codes' => true,
             'mode' => 'subscription',

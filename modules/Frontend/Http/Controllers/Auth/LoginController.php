@@ -31,9 +31,9 @@ class LoginController extends Controller
         return view('frontend::auth.login');
     }
 
-    public function redirectPath(): string
+    public function redirectPath(User $user): string
     {
-        return '/';
+        return route('frontend.' . ($user->is_volunteer ? 'vacancies.search' : 'company.board'));
     }
 
     protected function sendLoginResponse(Request $request): JsonResponse
@@ -41,12 +41,13 @@ class LoginController extends Controller
         $request->session()->regenerate();
 
         $this->clearLoginAttempts($request);
+        $user = $this->guard()->user();
 
-        if ($response = $this->authenticated($request, $this->guard()->user())) {
+        if ($response = $this->authenticated($request, $user)) {
             return $response;
         }
 
-        return response()->json(['redirect' => $this->redirectPath()]);
+        return response()->json(['redirect' => $this->redirectPath($user)]);
     }
 
     protected function sendFailedLoginResponse(Request $request): void

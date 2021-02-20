@@ -85,6 +85,7 @@
                     <div class="item-box">
                         <VacancyCard v-for="vacancy in company.vacancies"
                                      :key="vacancy.id"
+                                     :company="company"
                                      v-bind="vacancyProps(vacancy)"
                                      :has-actions="false"
                                      :has-logo-and-name="false"

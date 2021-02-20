@@ -15,6 +15,9 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#7B68EE">
     <link href="{{mix('dist/css/app.css')}}" rel="stylesheet">
+    <script data-ad-client="ca-pub-2150066652665124"
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     @stack('styles')
     @php /*@include('frontend::includes.google')*/ @endphp
 </head>

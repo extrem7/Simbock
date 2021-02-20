@@ -6,8 +6,8 @@ use App\Models\Chats\Chat;
 use App\Models\Chats\Message;
 use App\Models\Client;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Modules\Frontend\Events\NewMessage;
+use Modules\Frontend\Http\Requests\MessageRequest;
 
 class ChatController extends Controller
 {
@@ -88,11 +88,8 @@ class ChatController extends Controller
         ]);
     }
 
-    public function send(Request $request, Chat $chat): JsonResponse
+    public function send(MessageRequest $request, Chat $chat): JsonResponse
     {
-        $request->validate([
-            'message' => ['required', 'string', 'max:510']
-        ]);
         $user = \Auth::user();
         /* @var $message Message */
         $message = $user->getClient()->messages()->create([

@@ -65,7 +65,7 @@
                 <Invalid name="phone"/>
             </div>
             <div :class="[invalid('email')]" class="form-group">
-                <InputMaterial v-model="form.email" placeholder="Email Address*"/>
+                <InputMaterial v-model="form.email" placeholder="Email Address"/>
                 <Invalid name="email"/>
             </div>
 
@@ -122,9 +122,9 @@
 </template>
 
 <script>
-import locationService from "~/services/location"
-import validation from "~/mixins/validation"
-import LogoUploader from "./LogoUploader"
+import locationService from '~/services/location'
+import validation from '~/mixins/validation'
+import LogoUploader from './LogoUploader'
 
 export default {
     components: {
@@ -189,7 +189,7 @@ export default {
                             if (company[field][subField] !== undefined && company[field][subField] !== null)
                                 this.form[field][subField] = company[field][subField]
                         }
-                        continue;
+                        continue
                     }
                     this.form[field] = company[field]
                 }
@@ -216,7 +216,7 @@ export default {
         },
         cancel() {
             if (this.isEdit) {
-                location.href = this.route('companies.self')
+                location.href = this.route('company.upgrade.page')
             } else {
                 location.reload()
             }
