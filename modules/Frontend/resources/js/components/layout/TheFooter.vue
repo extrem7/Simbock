@@ -64,7 +64,7 @@
                         <a class="media-link" href="">
                             <svg-vue class="media-icon" icon="media-twitter"></svg-vue>
                         </a>
-                        <a class="media-link" href="">
+                        <a class="media-link" href="https://www.instagram.com/simboka3k/" target="_blank">
                             <svg-vue class="media-icon" icon="media-instagramm"></svg-vue>
                         </a>
                         <a class="media-link" href="">
@@ -91,7 +91,7 @@
                         <a class="media-link" href="">
                             <svg-vue class="media-icon" icon="media-twitter"></svg-vue>
                         </a>
-                        <a class="media-link" href="">
+                        <a class="media-link" href="https://www.instagram.com/simboka3k/" target="_blank">
                             <svg-vue class="media-icon" icon="media-instagramm"></svg-vue>
                         </a>
                         <a class="media-link" href="">

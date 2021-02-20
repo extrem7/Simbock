@@ -3,7 +3,8 @@
 @section('content')
     <main class="container content-inner">
         <div class="home-center-wrapper">
-            <h1 class="title extra-large-size bold-weight text-center">Let's Find You <span class="violet-color">a Volunteering Job</span>
+            <h1 class="title extra-large-size bold-weight text-center">
+                <span class="violet-color">Let's Find You a Place to Volunteer</span>
             </h1>
             <div class="medium-size text-center mt-2">Any industry. Any location. Any experience level.</div>
             <div class="search-form search-form-main">
