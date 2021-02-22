@@ -8,7 +8,7 @@
             </div>
             <div class="medium-size text-center mt-3 mb-3">Password Reset</div>
             <div class="extra-small-size text-center mb-3 line-height-1">
-                Enter your Simbok email address that you used to register.
+                Enter your Simbock email address that you used to register.
                 We'll send you an email with a link to reset your password.
             </div>
             <email-reset-form></email-reset-form>

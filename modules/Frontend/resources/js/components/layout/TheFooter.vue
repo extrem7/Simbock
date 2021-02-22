@@ -6,71 +6,60 @@
             </div>
             <div v-if="!isAccount" class="row mt-4">
                 <div class="col-md-3 col-6">
-                    <div class="footer-title semi-bold-weight small-size">For Job Seekers</div>
+                    <div class="footer-title semi-bold-weight small-size">For volunteers</div>
                     <nav class="footer-nav">
-                        <a class="footer-nav-link" href="">Browse Jobs</a>
-                        <a class="footer-nav-link" href="">Upload resume</a>
-                        <a class="footer-nav-link" href="">Salary Tools</a>
-                        <a class="footer-nav-link" href="">Resume Help</a>
-                        <a class="footer-nav-link" href="">Career Advice</a>
-                        <a class="footer-nav-link" href="">Company Profile</a>
-                        <a class="footer-nav-link" href="">International Jobs</a>
-                        <a class="footer-nav-link" href="">Help</a>
+                        <a :href="route('vacancies.search')"
+                           class="footer-nav-link">Browse Jobs</a>
+                        <a :href="route('vacancies.search')"
+                           class="footer-nav-link">Job search</a>
+                        <a class="footer-nav-link" href="">From home</a>
+                        <a class="footer-nav-link" href="">Volunteering job categories</a>
+                        <a class="footer-nav-link" href="">Mobile Apps</a>
                     </nav>
                 </div>
                 <div class="col-md-3 col-6">
+                    <div class="footer-title semi-bold-weight small-size">Small & Medium Businesses</div>
+                    <nav class="footer-nav">
+                        <a :href="route('login')+'?employer'" class="footer-nav-link">Post vacancy</a>
+                        <a class="footer-nav-link" href="">Find candidates</a>
+                        <a class="footer-nav-link" href="">Plans</a>
+                        <a class="footer-nav-link" href="">How it works</a>
+                        <a class="footer-nav-link" href="">Mobile Apps</a>
+                    </nav>
                     <div class="footer-title semi-bold-weight small-size">For Employers</div>
                     <nav class="footer-nav">
-                        <a class="footer-nav-link" href="">Product</a>
-                        <a class="footer-nav-link" href="">Solutions</a>
-                        <a class="footer-nav-link" href="">Pricing</a>
-                        <a class="footer-nav-link" href="">Resources</a>
-                        <a class="footer-nav-link" href="">Help</a>
+                        <a :href="route('login')+'?employer'" class="footer-nav-link">Post vacancy</a>
+                        <a class="footer-nav-link" href="">Find candidates</a>
+                        <a class="footer-nav-link" href="">Plans</a>
+                        <a class="footer-nav-link" href="">How it works</a>
+                        <a class="footer-nav-link" href="">Mobile Apps</a>
                     </nav>
                 </div>
                 <div class="col-md-3 col-6">
-                    <div class="footer-title semi-bold-weight small-size">About us</div>
+                    <div class="footer-title semi-bold-weight small-size">Company</div>
                     <nav class="footer-nav">
-                        <a class="footer-nav-link" href="/about">About Simboсk</a>
+                        <a class="footer-nav-link" href="/about">About us</a>
+                        <a class="footer-nav-link" href="/our-vacancies">Careers</a>
                         <a :href="route('articles.index')"
                            class="footer-nav-link">Newsroom</a>
-                        <a class="footer-nav-link" href="/our-vacancies">Work for Simboсk</a>
-                        <a class="footer-nav-link" href="">Partner with us</a>
-                        <a class="footer-nav-link" href="">Simboсk International</a>
+                        <a class="footer-nav-link" href="/help">Help</a>
+                        <a class="footer-nav-link" href="">Site Map</a>
+                        <a class="footer-nav-link" href="">Partners</a>
+                        <a class="footer-nav-link" href="">Donate</a>
+                        <a class="footer-nav-link" href="">For investors</a>
+                        <a class="footer-nav-link" href="">Advertising</a>
+                        <a class="footer-nav-link" href="">Simbock international</a>
                     </nav>
                 </div>
                 <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">Helpful Resources</div>
                     <nav class="footer-nav">
-                        <a class="footer-nav-link" href="">Contact Us</a>
-                        <a class="footer-nav-link" href="">Site Map</a>
-                        <a class="footer-nav-link" href="">Terms of Use</a>
-                        <a class="footer-nav-link" href="">Security Center</a>
-                        <a class="footer-nav-link" href="">Accessibility Center</a>
-                        <a class="footer-nav-link" href="">AdChoices</a>
+                        <a class="footer-nav-link" href="/help">Contact Us</a>
+                        <a class="footer-nav-link" href="/policies">Terms of Use</a>
                     </nav>
                 </div>
                 <div class="col-12 text-center mt-3">
-                    <div class="media-wrapper">
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-news"></svg-vue>
-                        </a>
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-youtube"></svg-vue>
-                        </a>
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-facebook"></svg-vue>
-                        </a>
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-twitter"></svg-vue>
-                        </a>
-                        <a class="media-link" href="https://www.instagram.com/simboka3k/" target="_blank">
-                            <svg-vue class="media-icon" icon="media-instagramm"></svg-vue>
-                        </a>
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-linkedin"></svg-vue>
-                        </a>
-                    </div>
+                    <SocialMedia/>
                 </div>
             </div>
             <div v-else class="row">
@@ -78,26 +67,7 @@
                     <img alt="logo-footer" class="footer-logo" src="/dist/img/logo.svg">
                 </div>
                 <div class="col-md-9 text-md-right text-center">
-                    <div class="media-wrapper">
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-news"></svg-vue>
-                        </a>
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-youtube"></svg-vue>
-                        </a>
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-facebook"></svg-vue>
-                        </a>
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-twitter"></svg-vue>
-                        </a>
-                        <a class="media-link" href="https://www.instagram.com/simboka3k/" target="_blank">
-                            <svg-vue class="media-icon" icon="media-instagramm"></svg-vue>
-                        </a>
-                        <a class="media-link" href="">
-                            <svg-vue class="media-icon" icon="media-linkedin"></svg-vue>
-                        </a>
-                    </div>
+                    <SocialMedia/>
                 </div>
             </div>
             <div class="row extra-small-size mt-4 footer-bottom-link">
@@ -114,7 +84,12 @@
 </template>
 
 <script>
+import SocialMedia from './SocialMedia'
+
 export default {
+    components: {
+        SocialMedia
+    },
     data() {
         return {
             year: new Date().getFullYear()
