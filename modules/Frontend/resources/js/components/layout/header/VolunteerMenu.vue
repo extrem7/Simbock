@@ -3,13 +3,13 @@
         <a v-b-tooltip.hover
            :href="route('vacancies.search',{types:8})"
            class="menu-account-link"
-           title="Sport volunteering">
+           title="Sports and events volunteering">
             <SvgVue icon="cup"/>
         </a>
         <a v-b-tooltip.hover
            :href="route('vacancies.search')"
            class="menu-account-link"
-           title="Search job">
+           title="Search for opportunities">
             <SvgVue icon="job"/>
         </a>
         <a v-b-tooltip.hover

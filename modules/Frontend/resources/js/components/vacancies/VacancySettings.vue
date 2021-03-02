@@ -19,7 +19,7 @@
                     class="btn btn-outline-violet btn-flex btn-sm btn-job-post btn-scale-active"
                     @click.prevent="post">
                 <svg-vue class="mr-1" icon="arrow-up"></svg-vue>
-                Post vacancy
+                Post a need
             </button>
             <div class="job-settings-actions mt-1">
                 <button :disabled="status!=='ACTIVE'"

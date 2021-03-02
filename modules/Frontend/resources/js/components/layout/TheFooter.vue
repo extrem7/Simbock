@@ -20,7 +20,7 @@
                 <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">Small & Medium Businesses</div>
                     <nav class="footer-nav">
-                        <a :href="route('login')+'?employer'" class="footer-nav-link">Post vacancy</a>
+                        <a :href="route('login')+'?employer'" class="footer-nav-link">Post a need</a>
                         <a class="footer-nav-link" href="">Find candidates</a>
                         <a class="footer-nav-link" href="">Plans</a>
                         <a class="footer-nav-link" href="">How it works</a>
@@ -28,7 +28,7 @@
                     </nav>
                     <div class="footer-title semi-bold-weight small-size">For Employers</div>
                     <nav class="footer-nav">
-                        <a :href="route('login')+'?employer'" class="footer-nav-link">Post vacancy</a>
+                        <a :href="route('login')+'?employer'" class="footer-nav-link">Post a need</a>
                         <a class="footer-nav-link" href="">Find candidates</a>
                         <a class="footer-nav-link" href="">Plans</a>
                         <a class="footer-nav-link" href="">How it works</a>
@@ -77,7 +77,7 @@
                     <a class="text-uppercase" href="/policies#cookies">COOKIES</a>,
                     <a class="text-uppercase" href="/policies#terms">TERMS & CONDITIONS</a>
                 </nav>
-                <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">COPYRIGHT © Simboсk.com {{ year }}</div>
+                <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">COPYRIGHT © Simboсk {{ year }}</div>
             </div>
         </div>
     </footer>

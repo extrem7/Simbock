@@ -3,7 +3,7 @@
         <a v-b-tooltip.hover
            :href="route('company.vacancies.create')"
            class="menu-account-link link-stroke"
-           title="Post a job">
+           title="Post a need">
             <SvgVue icon="add"/>
         </a>
         <a v-b-tooltip.hover

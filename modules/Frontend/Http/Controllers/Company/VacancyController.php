@@ -74,7 +74,7 @@ class VacancyController extends Controller
             return redirect()->route('frontend.company.upgrade.page');
         }
 
-        $title = 'Post vacancy';
+        $title = 'Post a need';
         $this->seo()->setTitle($title);
 
         $this->repository->sharedData();
