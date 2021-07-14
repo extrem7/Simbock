@@ -55,15 +55,13 @@
 
 <script>
 import Vue from 'vue'
-import VacancyCard from "./VacancyCard"
+import {BAlert} from 'bootstrap-vue'
+import VacancyCard from './VacancyCard'
 import VacanciesFilter from "./VacanciesFilter"
 
 export default {
     name: 'VacanciesIndex',
-    components: {
-        VacanciesFilter,
-        VacancyCard
-    },
+    components: {BAlert, VacanciesFilter, VacancyCard},
     props: {
         title: String,
         enableActions: {

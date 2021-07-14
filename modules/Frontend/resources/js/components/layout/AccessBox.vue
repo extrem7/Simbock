@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import {BModal} from 'bootstrap-vue'
 import ModalHeader from '~/components/volunteer/account/components/ModalHeader'
 
 export default {
@@ -63,9 +64,7 @@ export default {
             default: false
         }
     },
-    components: {
-        ModalHeader,
-    },
+    components: {BModal, ModalHeader},
     data() {
         return {
             message: ''
@@ -86,7 +85,7 @@ export default {
                     message: this.message
                 })
                 if (status === 201) {
-                    this.$bvModal.hide('contacts-modal')
+                    this.$root.$emit('bv::hide::modal', 'contacts-modal')
                     this.notify(message)
                     setTimeout(() => {
                         location.href = this.route('chat.page')

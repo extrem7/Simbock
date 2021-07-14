@@ -98,6 +98,7 @@
 
 <script>
 import Vue from 'vue'
+import {BModal} from 'bootstrap-vue'
 import VolunteerCard from '~/components/company/VolunteerCard'
 import VacanciesFilter from '~/components/vacancies/VacanciesFilter'
 import ModalHeader from '~/components/volunteer/account/components/ModalHeader'
@@ -106,6 +107,7 @@ import {copyTextToClipboard} from '~/helpers/helpers'
 
 export default {
     components: {
+        BModal,
         VolunteerCard,
         VacanciesFilter,
         ModalHeader
@@ -184,7 +186,7 @@ export default {
                     message: this.contacts.message
                 })
                 if (status === 201) {
-                    this.$bvModal.hide('contacts-modal')
+                    this.$root.$emit('bv::hide::modal', 'contacts-modal')
                     this.notify(message)
                     setTimeout(() => {
                         location.href = this.route('chat.page')

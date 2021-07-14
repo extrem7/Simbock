@@ -22,17 +22,20 @@ Vue.mixin({
 })
 
 import './axios'
+import {VBModal, VBTooltip} from 'bootstrap-vue'
+
+Vue.directive('b-modal', VBModal)
+Vue.directive('b-tooltip', VBTooltip)
 
 import VueBus from 'vue-bus'
 import SvgVue from 'svg-vue'
-import './bootstrap'
 import './ls'
 import './broadcasting'
 
-import VueMoment from 'vue-moment'
+import VueMoment from 'vue-moment'//todo replace with day.js
 import VueLazyload from 'vue-lazyload'
 import VueScrollTo from 'vue-scrollto'
-import VueSimpleAlert from 'vue-simple-alert'
+import VueSimpleAlert from 'vue-simple-alert'//todo lazyload
 import VueObserveVisibility from 'vue-observe-visibility'
 
 Vue.use(VueBus)
@@ -44,8 +47,3 @@ Vue.use(VueLazyload, {
 Vue.use(VueScrollTo)
 Vue.use(VueSimpleAlert)
 Vue.use(VueObserveVisibility)
-
-import VueLodash from 'vue-lodash'
-import lodash from 'lodash'
-
-Vue.use(VueLodash, {lodash})

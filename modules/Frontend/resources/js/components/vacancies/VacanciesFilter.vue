@@ -161,7 +161,7 @@
         <div class="filter">
             <div class="title medium-size filter-title"> Choose an industry or sector below to browse jobs:</div>
             <div class="row">
-                <div v-for="chunk in _.chunk(sectors,Math.ceil(sectors.length/4))" class="col-lg-3 col-sm-6">
+                <div v-for="chunk in makeChunks(sectors,Math.ceil(sectors.length/4))" class="col-lg-3 col-sm-6">
                     <div v-for="{value,text} in chunk"
                          class="filter-item">
                         <div class="custom-control custom-checkbox">
@@ -189,8 +189,10 @@
 </template>
 
 <script>
+import {isString, isArray, isBoolean, chunk} from 'lodash'
+
 export default {
-    name: "VacanciesFilter",
+    name: 'VacanciesFilter',
     data() {
         return {
             filters: {
@@ -214,11 +216,11 @@ export default {
             const val = this.filters[key],
                 param = filters.get(key)
             if (param) {
-                if (this._.isString(val)) {
+                if (isString(val)) {
                     this.filters[key] = param
-                } else if (this._.isArray(val)) {
+                } else if (isArray(val)) {
                     this.filters[key] = param.split('|')
-                } else if (this._.isBoolean(val)) {
+                } else if (isBoolean(val)) {
                     this.filters[key] = !!param
                 } else {
                     this.filters[key] = param
@@ -243,7 +245,8 @@ export default {
         },
         back() {
             this.$bus.emit('toggle-filter')
-        }
+        },
+        makeChunks: chunk
     }
 }
 </script>

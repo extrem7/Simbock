@@ -1,56 +1,29 @@
 import Vue from 'vue'
 
-import App from './App'
-
-import ArticlesList from "./articles/ArticlesList"
-
-import CompanyInfoForm from "~/components/company/InfoForm"
-import CompanyShow from "~/components/companies/Show"
-
-import VacancyForm from "~/components/company/vacancies/Form"
-import CompanyVacanciesList from "~/components/company/vacancies/List"
-
-import VacanciesHomeForm from "~/components/vacancies/VacanciesHomeForm";
-import VacanciesIndex from "~/components/vacancies/VacanciesIndex";
-import VacancyShow from '~/components/vacancies/Show'
-
-import VolunteerAccountPage from '~/components/volunteer/account/AccountPage'
-
-import Register from './auth/Register'
-import Login from './auth/Login'
-import EmailReset from './auth/EmailReset'
-import PasswordReset from './auth/PasswordReset'
-import PasswordChange from './auth/PasswordChange'
-
-import SubscriptionManagement from './company/SubscriptionManagement'
-
-import ChatNotifications from './ChatNotifications'
-
 export default {
-    App,
+    App: () => import('./App'),
 
-    ArticlesList,
+    ArticlesList: () => import('./articles/ArticlesList'),
 
-    CompanyInfoForm,
-    CompanyShow,
+    CompanyInfoForm: () => import('./company/InfoForm'),
+    CompanyShow: () => import('./companies/Show'),
 
-    VacancyForm,
-    CompanyVacanciesList,
+    VacancyForm: () => import('./company/vacancies/Form'),
+    CompanyVacanciesList: () => import('./company/vacancies/List'),
 
-    VacanciesHomeForm,
-    VacanciesIndex,
-    VacancyShow,
+    VacanciesHomeForm: () => import('./vacancies/VacanciesHomeForm'),
+    VacanciesIndex: () => import('./vacancies/VacanciesIndex'),
+    VacancyShow: () => import('./vacancies/Show'),
 
-    VolunteerAccountPage,
+    VolunteerAccountPage: () => import('./volunteer/account/AccountPage'),
 
-    RegisterForm: Register,
-    LoginForm: Login,
-    EmailResetForm: EmailReset,
-    PasswordResetForm: PasswordReset,
-    PasswordChangeForm: PasswordChange,
-    SubscriptionManagement,
+    LoginForm: () => import('./auth/Login'),
+    EmailResetForm: () => import('./auth/EmailReset'),
+    PasswordResetForm: () => import('./auth/PasswordReset'),
+    PasswordChangeForm: () => import('./auth/PasswordChange'),
+    SubscriptionManagement: () => import('./company/SubscriptionManagement'),
 
-    ChatNotifications
+    ChatNotifications: () => import('./ChatNotifications')
 }
 
 import SelectMaterial from "./layout/SelectMaterial"

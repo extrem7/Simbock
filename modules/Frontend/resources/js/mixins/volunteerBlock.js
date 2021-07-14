@@ -1,11 +1,13 @@
 import {mapState} from "vuex"
 import {ReactiveProvideMixin} from 'vue-reactive-provide'
-import Invalid from "~/components/includes/Invalid"
+import {BModal} from 'bootstrap-vue'
+import Invalid from '~/components/includes/Invalid'
 import ModalHeader from "~/components/volunteer/account/components/ModalHeader"
 import ModalActions from "~/components/volunteer/account/components/ModalActions"
 
 export default {
     components: {
+        BModal,
         Invalid,
         ModalHeader,
         ModalActions

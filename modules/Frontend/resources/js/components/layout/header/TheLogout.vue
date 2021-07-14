@@ -8,7 +8,10 @@
 </template>
 
 <script>
+import {BDropdownItem} from 'bootstrap-vue'
+
 export default {
+    components: {BDropdownItem},
     methods: {
         async logout() {
             await this.axios.post(this.route('logout'))

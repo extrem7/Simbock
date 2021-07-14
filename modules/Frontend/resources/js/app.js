@@ -24,26 +24,32 @@ const app = new Vue({
             scroll: 0
         }
     },
+    async beforeCreate() {
+        if (shared('user')) {
+            const {ToastPlugin} = await import('bootstrap-vue')
+            ToastPlugin.install(Vue)
+        }
+    },
     created() {
         const user = this.shared('user')
         if (user) this.$store.commit('setUser', user)
     },
     beforeMount() {
-        window.addEventListener("resize", this.isCheckGrid, false);
-        window.addEventListener("load", this.isCheckGrid, false);
+        window.addEventListener('resize', this.isCheckGrid, false)
+        window.addEventListener('load', this.isCheckGrid, false)
     },
     mounted() {
-        let links = document.querySelectorAll(".navigate-by-page-link");
+        let links = document.querySelectorAll('.navigate-by-page-link')
 
         //якоря для страниц (Policy)
         links.forEach((link) => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
-                let href = link.getAttribute('href').replace("#", '');
+                e.preventDefault()
+                let href = link.getAttribute('href').replace('#', '')
                 console.log(href)
-                let scrollTo = document.getElementById(href).getBoundingClientRect().top - 100;
-                window.scrollTo({top: scrollTo, behavior: 'smooth'});
-            });
+                let scrollTo = document.getElementById(href).getBoundingClientRect().top - 100
+                window.scrollTo({top: scrollTo, behavior: 'smooth'})
+            })
         })
 
         this.socialPopups()
@@ -51,14 +57,14 @@ const app = new Vue({
     methods: {
         //проверка для размеры для того чтоб скрывать коегде html блоки
         isCheckGrid() {
-            this.isLargeGrid = window.innerWidth < 1200;
-            this.isMobileGrid = window.innerWidth < 768;
+            this.isLargeGrid = window.innerWidth < 1200
+            this.isMobileGrid = window.innerWidth < 768
         },
         socialPopups() {
             const popupSize = {
                 width: 780,
                 height: 550
-            };
+            }
 
             const links = document.querySelectorAll('.article-share-item')
 
@@ -76,7 +82,7 @@ const app = new Vue({
                         popup.focus()
                         e.preventDefault()
                     }
-                });
+                })
             })
         }
     },

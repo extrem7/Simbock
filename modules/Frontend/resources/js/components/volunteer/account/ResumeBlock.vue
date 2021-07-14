@@ -89,9 +89,11 @@
 </template>
 
 <script>
-import volunteerBlock from "~/mixins/volunteerBlock"
+import {BFormFile} from 'bootstrap-vue'
+import volunteerBlock from '~/mixins/volunteerBlock'
 
 export default {
+    components: {BFormFile},
     mixins: [volunteerBlock],
     data() {
         return {
@@ -115,11 +117,11 @@ export default {
         },
         destroy() {
             this.$store.dispatch('volunteer/destroyResume')
-            this.$bvModal.hide('resume-delete')
+            this.$root.$emit('bv::hide::modal', 'resume-delete')
         },
         async replace() {
             await this.$store.dispatch('volunteer/destroyResume')
-            this.$bvModal.hide('resume-replace')
+            this.$root.$emit('bv::hide::modal', 'resume-replace')
 
             setTimeout(() => {
                 this.showModal()

@@ -112,11 +112,13 @@
 </template>
 
 <script>
+import {BOverlay} from 'bootstrap-vue'
 import Fuse from 'fuse.js'
 import {sortBy} from 'lodash'
 import {createTextLinks} from '~/helpers/helpers'
 
 export default {
+    components: {BOverlay},
     data() {
         return {
             searchQuery: '',

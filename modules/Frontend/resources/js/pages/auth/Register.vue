@@ -18,13 +18,11 @@
 </template>
 
 <script>
-
+import {BTabs} from 'bootstrap-vue'
 import RegisterForm from '~/components/auth/Register'
 
 export default {
-    components: {
-        RegisterForm
-    },
+    components: {BTabs, RegisterForm},
     data: () => ({
         employer: new URLSearchParams(location.search).has('employer')
     })

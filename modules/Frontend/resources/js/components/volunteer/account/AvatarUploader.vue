@@ -32,12 +32,11 @@
 
 <script>
 import VueCropper from 'vue-cropperjs'
-import validation from "~/mixins/validation"
+import {BSpinner} from 'bootstrap-vue'
+import validation from '~/mixins/validation'
 
 export default {
-    components: {
-        VueCropper
-    },
+    components: {BSpinner, VueCropper},
     mixins: [validation],
     data() {
         return {
@@ -59,7 +58,7 @@ export default {
                     this.resetImage()
                     this.$emit('update', data.avatar)
                     //this.notify(data.message)
-                    this.$bvModal.hide('modal-avatar')
+                    this.$root.$emit('bv::hide::modal', 'modal-avatar')
                 }
             } catch (e) {
                 console.log(e)
@@ -67,7 +66,7 @@ export default {
         },
         cancel() {
             this.resetImage()
-            this.$bvModal.hide('modal-avatar')
+            this.$root.$emit('bv::hide::modal', 'modal-avatar')
         },
         async getBlob() {
             return new Promise((resolve) => {

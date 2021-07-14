@@ -1,4 +1,5 @@
-import locationService from "~/services/location"
+import locationService from '~/services/location'
+import {isEmpty} from 'lodash'
 
 export default {
     data() {
@@ -37,7 +38,7 @@ export default {
             }
             return this.route(`${resource}.search${this.cityQuery ? '.location' : ''}`, params)
                 +
-                (filters !== null ? (!this._.isEmpty(filters) ? `?${filters}` : '') : location.search)
+                (filters !== null ? (!isEmpty(filters) ? `?${filters}` : '') : location.search)
         }
     }
 }

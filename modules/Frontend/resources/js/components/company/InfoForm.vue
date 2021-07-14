@@ -124,12 +124,11 @@
 <script>
 import locationService from '~/services/location'
 import validation from '~/mixins/validation'
+import {BSpinner} from 'bootstrap-vue'
 import LogoUploader from './LogoUploader'
 
 export default {
-    components: {
-        LogoUploader
-    },
+    components: {BSpinner, LogoUploader},
     mixins: [validation],
     data() {
         return {

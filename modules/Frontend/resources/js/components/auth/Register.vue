@@ -50,9 +50,11 @@
 </template>
 
 <script>
-import validation from "~/mixins/validation"
+import {BTab} from 'bootstrap-vue'
+import validation from '~/mixins/validation'
 
 export default {
+    components: {BTab},
     mixins: [validation],
     props: {
         title: String,

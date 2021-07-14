@@ -11,9 +11,11 @@
 </template>
 
 <script>
-import input from "~/mixins/input"
+import {BFormSelect} from 'bootstrap-vue'
+import input from '~/mixins/input'
 
 export default {
+    components: {BFormSelect},
     mixins: [input],
     props: {
         options: Array,

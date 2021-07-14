@@ -118,11 +118,10 @@
 
 <script>
 import {StripeCheckout} from 'vue-stripe-checkout'
+import {BSpinner} from 'bootstrap-vue'
 
 export default {
-    components: {
-        StripeCheckout
-    },
+    components: {BSpinner, StripeCheckout},
     data() {
         return {
             plans: this.shared('plans'),

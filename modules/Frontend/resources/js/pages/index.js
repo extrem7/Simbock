@@ -1,43 +1,22 @@
-import Register from './auth/Register'
-
-import Work from './Work'
-import Help from './Help'
-
-import VolunteerShow from './volunteer/Show'
-import Companies from './volunteer/Companies'
-import SavedVacancies from './volunteer/SavedVacancies'
-import HistoryVacancies from './volunteer/HistoryVacancies'
-import Survey from './volunteer/Survey'
-
-import Board from './company/Board'
-import CompanyVolunteersIndexPage from './company/volunteers/Index'
-import CompanySavedVolunteersPage from './company/volunteers/Saved'
-import CompanyCandidatesPage from './company/volunteers/Candidates'
-import CompanyUpgradePage from './company/Upgrade'
-
-import Chat from './Chat'
-
-import Default from './Default'
-
 export default {
-    RegisterPage: Register,
+    RegisterPage: () => import('./auth/Register'),
 
-    WorkPage: Work,
-    HelpPage: Help,
+    WorkPage: () => import('./Work'),
+    HelpPage: () => import('./Help'),
 
-    VolunteerShowPage: VolunteerShow,
-    VolunteerCompaniesPage: Companies,
-    VolunteerSavedVacanciesPage: SavedVacancies,
-    VolunteerHistoryVacanciesPage: HistoryVacancies,
-    VolunteerSurveyPage: Survey,
+    VolunteerShowPage: () => import('./volunteer/Show'),
+    VolunteerCompaniesPage: () => import('./volunteer/Companies'),
+    VolunteerSavedVacanciesPage: () => import('./volunteer/SavedVacancies'),
+    VolunteerHistoryVacanciesPage: () => import('./volunteer/HistoryVacancies'),
+    VolunteerSurveyPage: () => import('./volunteer/Survey'),
 
-    CompanyBoardPage: Board,
-    CompanyVolunteersIndexPage,
-    CompanySavedVolunteersPage,
-    CompanyCandidatesPage,
-    CompanyUpgradePage,
+    CompanyBoardPage: () => import('./company/Board'),
+    CompanyVolunteersIndexPage: () => import('./company/volunteers/Index'),
+    CompanySavedVolunteersPage: () => import('./company/volunteers/Saved'),
+    CompanyCandidatesPage: () => import('./company/volunteers/Candidates'),
+    CompanyUpgradePage: () => import('./company/Upgrade'),
 
-    ChatPage: Chat,
+    ChatPage: () => import('./Chat'),
 
-    DefaultPage: Default,
+    DefaultPage: () => import('./Default'),
 }

@@ -29,12 +29,15 @@
 </template>
 
 <script>
-import TheHeader from "./TheHeader"
+import {BDropdown, BDropdownItem} from 'bootstrap-vue'
+import TheHeader from './TheHeader'
 import CompanyMenu from './CompanyMenu'
 import TheLogout from "./TheLogout"
 
 export default {
     components: {
+        BDropdown,
+        BDropdownItem,
         TheHeader,
         CompanyMenu,
         TheLogout
