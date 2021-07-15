@@ -30,7 +30,9 @@
 @shared
 @routes('frontend')
 @stack('scripts')
-<script src="{{mix('dist/js/app.js')}}" async></script>
+<script src="{{ mix('dist/js/manifest.js') }}" defer></script>
+<script src="{{ mix('dist/js/vendor.js') }}" defer></script>
+<script src="{{mix('dist/js/app.js')}}" defer></script>
 @php /* @schema */ @endphp
 </body>
 </html>

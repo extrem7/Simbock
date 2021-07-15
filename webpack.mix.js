@@ -19,9 +19,11 @@ mix.copy('modules/Frontend/resources/layout/src/favicon', 'public/favicon')
 
 mix.copy('modules/Frontend/resources/layout/src/fonts', 'public/dist/fonts')
 
-mix.ts('modules/Frontend/resources/js/app.js', 'public/dist/js/').vue().svgVue({
-    svgPath: 'modules/Frontend/resources/layout/src/svg',
-})
+mix.ts('modules/Frontend/resources/js/app.js', 'public/dist/js/').vue()
+    .extract(['vue', 'axios', 'dayjs', 'vue-bus', 'vue-lazyload', 'vue-scrollto', 'vue-observe-visibility', 'vue-select'])
+    .svgVue({
+        svgPath: 'modules/Frontend/resources/layout/src/svg',
+    })
 
 if (mix.inProduction()) {
     mix.version()
