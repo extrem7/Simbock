@@ -53,6 +53,13 @@ const app = new Vue({
             VueSimpleAlert.install(Vue)
         }
 
+        setTimeout(() => {
+            const adsbygoogle = document.createElement('script')
+            adsbygoogle.setAttribute('data-ad-client', 'ca-pub-2150066652665124')
+            adsbygoogle.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js'
+            document.head.append(adsbygoogle)
+        }, 5000)
+
         let links = document.querySelectorAll('.navigate-by-page-link')
 
         //якоря для страниц (Policy)

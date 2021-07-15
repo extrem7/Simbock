@@ -11,9 +11,6 @@
     <link rel="preload" as="font" href="{{asset('dist/fonts/GolosText-DemiBold.woff2')}}">
     <link rel="preload" as="font" href="{{asset('dist/fonts/GolosText-Bold.woff2')}}">
     <link href="{{mix('dist/css/app.css')}}" rel="stylesheet">
-    <script data-ad-client="ca-pub-2150066652665124"
-            async
-            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     @stack('styles')
     @php /*@include('frontend::includes.google')*/ @endphp
     <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
