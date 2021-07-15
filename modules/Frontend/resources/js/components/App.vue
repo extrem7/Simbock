@@ -31,11 +31,6 @@
 
 <script>
 import HeaderGuest from './layout/header/HeaderGuest'
-import HeaderVolunteer from './layout/header/HeaderVolunteer'
-import HeaderCompany from './layout/header/HeaderCompany'
-import TheMainSearch from './layout/TheMainSearch'
-import VolunteerMenu from './layout/header/VolunteerMenu'
-import CompanyMenu from './layout/header/CompanyMenu'
 import TheFooter from './layout/TheFooter'
 import AlertNotification from './includes/AlertNotification'
 import ChatNotifications from './ChatNotifications'
@@ -44,11 +39,11 @@ export default {
     name: 'App',
     components: {
         HeaderGuest,
-        HeaderVolunteer,
-        HeaderCompany,
-        TheMainSearch,
-        VolunteerMenu,
-        CompanyMenu,
+        HeaderVolunteer: () => import('./layout/header/HeaderVolunteer'),
+        HeaderCompany: () => import('./layout/header/HeaderCompany'),
+        TheMainSearch: () => import('./layout/TheMainSearch'),
+        VolunteerMenu: () => import('./layout/header/VolunteerMenu'),
+        CompanyMenu: () => import('./layout/header/CompanyMenu'),
         TheFooter,
         AlertNotification,
         ChatNotifications
