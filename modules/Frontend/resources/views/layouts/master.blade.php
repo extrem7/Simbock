@@ -7,9 +7,9 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     {!! SEO::generate() !!}
-    <link rel="preload" as="font" href="{{asset('fonts/GolosText-Regular.woff2')}}">
-    <link rel="preload" as="font" href="{{asset('fonts/GolosText-DemiBold.woff2')}}">
-    <link rel="preload" as="font" href="{{asset('fonts/GolosText-Bold.woff2')}}">
+    <link rel="preload" as="font" href="{{asset('dist/fonts/GolosText-Regular.woff2')}}">
+    <link rel="preload" as="font" href="{{asset('dist/fonts/GolosText-DemiBold.woff2')}}">
+    <link rel="preload" as="font" href="{{asset('dist/fonts/GolosText-Bold.woff2')}}">
     <link href="{{mix('dist/css/app.css')}}" rel="stylesheet">
     <script data-ad-client="ca-pub-2150066652665124"
             async

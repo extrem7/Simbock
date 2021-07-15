@@ -11,7 +11,7 @@ mix.webpackConfig({
 
 mix.options({processCssUrls: false})
 
-mix.sass('modules/Frontend/resources/scss/app.scss', 'public/dist/css').version().sourceMaps()
+mix.sass('modules/Frontend/resources/scss/app.scss', 'public/dist/css')
 
 mix.copy('modules/Frontend/resources/layout/src/img', 'public/dist/img')
 
@@ -21,6 +21,13 @@ mix.copy('modules/Frontend/resources/layout/src/fonts', 'public/dist/fonts')
 
 mix.ts('modules/Frontend/resources/js/app.js', 'public/dist/js/').vue().svgVue({
     svgPath: 'modules/Frontend/resources/layout/src/svg',
-}).sourceMaps().version()
+})
 
-mix.mergeManifest()
+if (mix.inProduction()) {
+    mix.version()
+} else {
+    mix.sourceMaps()
+}
+
+mix.disableNotifications()
+    .mergeManifest()
