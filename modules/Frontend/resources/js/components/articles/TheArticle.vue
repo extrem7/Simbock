@@ -1,7 +1,7 @@
 <template>
     <article class="article-item col-md-6 col-xl-4">
         <div class="article-item-header">
-            <a :href="link"><img :src="thumbnail" alt="" class="article-item-image"></a>
+            <a :href="link"><img v-lazy="thumbnail" alt="" class="article-item-image"></a>
             <h2>
                 <a :href="link"
                    class="article-item-title title large-size line-cap semi-bold-weight">{{ title }}</a>
