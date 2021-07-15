@@ -61,9 +61,11 @@
 </template>
 
 <script>
-import volunteerBlock from "~/mixins/volunteerBlock";
+import InputTag from '~/components/layout/InputTag'
+import volunteerBlock from '~/mixins/volunteerBlock'
 
 export default {
+    components: {InputTag},
     mixins: [volunteerBlock],
     data() {
         return {

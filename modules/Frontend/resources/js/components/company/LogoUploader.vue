@@ -31,12 +31,11 @@
 
 <script>
 import VueCropper from 'vue-cropperjs'
-import validation from "~/mixins/validation"
+import {BSpinner} from 'bootstrap-vue'
+import validation from '~/mixins/validation'
 
 export default {
-    components: {
-        VueCropper
-    },
+    components: {VueCropper, BSpinner},
     mixins: [validation],
     props: {
         value: String
@@ -112,3 +111,7 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+@import '~cropperjs/dist/cropper.css';
+</style>

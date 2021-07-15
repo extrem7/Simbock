@@ -24,12 +24,6 @@ const app = new Vue({
             scroll: 0
         }
     },
-    async beforeCreate() {
-        if (shared('user')) {
-            const {ToastPlugin} = await import('bootstrap-vue')
-            ToastPlugin.install(Vue)
-        }
-    },
     created() {
         const user = this.shared('user')
         if (user) this.$store.commit('setUser', user)
@@ -38,7 +32,27 @@ const app = new Vue({
         window.addEventListener('resize', this.isCheckGrid, false)
         window.addEventListener('load', this.isCheckGrid, false)
     },
-    mounted() {
+    async mounted() {
+        if (shared('user')) {
+            const {default: VueEcho} = await import('vue-echo')
+            window.Pusher = await require('pusher-js')
+            VueEcho.install(Vue, {
+                broadcaster: 'pusher',
+                key: 'Simbock',
+                wsHost: window.location.hostname,
+                wsPort: 6001,
+                wssPort: 6001,
+                forceTLS: process.env.MIX_APP_ENV !== 'local'
+            })
+            const {ToastPlugin} = await import('bootstrap-vue')
+            ToastPlugin.install(Vue)
+            setTimeout(() => {
+                this.$bus.emit('broadcasting-ready')
+            }, 1000)
+            const {default: VueSimpleAlert} = await import('vue-simple-alert')
+            VueSimpleAlert.install(Vue)
+        }
+
         let links = document.querySelectorAll('.navigate-by-page-link')
 
         //якоря для страниц (Policy)

@@ -19,10 +19,12 @@
 </template>
 
 <script>
-import input from "~/mixins/input"
+import VueTypeaheadBootstrap from 'vue-typeahead-bootstrap'
+import input from '~/mixins/input'
 import {debounce} from 'lodash'
 
 export default {
+    components: {VueTypeaheadBootstrap},
     mixins: [input],
     props: {
         value: String | Number,

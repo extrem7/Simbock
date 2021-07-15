@@ -94,10 +94,12 @@
 </template>
 
 <script>
-import volunteerBlock from "~/mixins/volunteerBlock"
-import {mapState} from "vuex"
+import SelectMaterial from '~/components/layout/SelectMaterial'
+import volunteerBlock from '~/mixins/volunteerBlock'
+import {mapState} from 'vuex'
 
 export default {
+    components: {SelectMaterial},
     mixins: [volunteerBlock],
     data() {
         return {

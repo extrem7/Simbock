@@ -122,13 +122,15 @@
 </template>
 
 <script>
+import InputTypeahead from '~/components/layout/InputTypeahead'
+import SelectMaterial from '~/components/layout/SelectMaterial'
 import locationService from '~/services/location'
 import validation from '~/mixins/validation'
 import {BSpinner} from 'bootstrap-vue'
 import LogoUploader from './LogoUploader'
 
 export default {
-    components: {BSpinner, LogoUploader},
+    components: {BSpinner, LogoUploader, InputTypeahead, SelectMaterial},
     mixins: [validation],
     data() {
         return {

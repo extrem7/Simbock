@@ -26,12 +26,12 @@
 </template>
 
 <script>
-import input from "~/mixins/input"
+import VueTagsInput, {createTag} from '@johmun/vue-tags-input'
+import input from '~/mixins/input'
 import vClickOutside from 'v-click-outside'
 
-import {createTag} from '@johmun/vue-tags-input';
-
 export default {
+    components: {VueTagsInput},
     mixins: [input],
     directives: {
         clickOutside: vClickOutside.directive

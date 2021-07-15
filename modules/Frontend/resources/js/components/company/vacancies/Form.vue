@@ -150,11 +150,13 @@
 </template>
 
 <script>
-import locationService from "~/services/location"
-import validation from "~/mixins/validation"
+import InputTag from '~/components/layout/InputTag'
+import {BSpinner} from 'bootstrap-vue'
+import locationService from '~/services/location'
+import validation from '~/mixins/validation'
 
 export default {
-    components: {},
+    components: {InputTag, BSpinner},
     mixins: [validation],
     data() {
         return {
@@ -201,7 +203,7 @@ export default {
                             if (vacancy[field][subField] !== undefined && vacancy[field][subField] !== null)
                                 this.form[field][subField] = vacancy[field][subField]
                         }
-                        continue;
+                        continue
                     }
                     this.form[field] = vacancy[field]
                 }

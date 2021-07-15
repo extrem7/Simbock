@@ -16,9 +16,11 @@
 </template>
 
 <script>
-import input from "~/mixins/input"
+import VueTypeaheadBootstrap from 'vue-typeahead-bootstrap'
+import input from '~/mixins/input'
 
 export default {
+    components: {VueTypeaheadBootstrap},
     mixins: [input],
     props: {
         options: Array,

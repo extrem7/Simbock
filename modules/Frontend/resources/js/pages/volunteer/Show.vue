@@ -195,7 +195,7 @@
                                 <div class="sector-text-between">
                                     <div class="sector-text small-size">{{ experience.company }}</div>
                                     <div class="sector-text small-size flex-shrink-0">
-                                        {{ experience.start | moment('MMM YYYY') }}
+                                        {{ dayjs(experience.start).format('MMM YYYY') }}
                                         -
                                         {{ experience.end ? experience.end : 'Current' }}
                                     </div>
@@ -248,7 +248,7 @@
                                 <a :href="resume.url"
                                    class="sector-text extra-small-size mt-1"
                                    target="_blank">
-                                    Added {{ resume.created_at | moment('d.m.YYYY, hh:ss') }}
+                                    Added {{ dayjs(resume.created_at).format('d.m.YYYY, hh:ss') }}
                                 </a>
                             </div>
                         </div>
@@ -350,16 +350,16 @@
 </template>
 
 <script>
-import Vue from "vue"
-import {mapState} from "vuex"
+import Vue from 'vue'
+import {mapState} from 'vuex'
 
-import AccessBox from "~/components/layout/AccessBox"
-import HistoryBack from "~/components/layout/HistoryBack"
+import AccessBox from '~/components/layout/AccessBox'
+import HistoryBack from '~/components/layout/HistoryBack'
 
 const languages = Vue.options.methods.shared('languages')
 
 export default {
-    name: "VolunteerShow",
+    name: 'VolunteerShow',
     components: {
         AccessBox,
         HistoryBack

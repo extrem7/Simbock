@@ -46,9 +46,11 @@
 </template>
 
 <script>
-import vacanciesSearch from "~/mixins/vacancies-search"
+import InputSearch from '~/components/layout/InputSearch'
+import vacanciesSearch from '~/mixins/vacancies-search'
 
 export default {
+    components: {InputSearch},
     mixins: [vacanciesSearch],
     props: {
         enableFilter: {

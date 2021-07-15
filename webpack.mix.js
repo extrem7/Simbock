@@ -19,7 +19,7 @@ mix.copy('modules/Frontend/resources/layout/src/favicon', 'public/favicon')
 
 mix.copy('modules/Frontend/resources/layout/src/fonts', 'public/dist/fonts')
 
-mix.ts('modules/Frontend/resources/js/app.js', 'public/dist/js/').svgVue({
+mix.ts('modules/Frontend/resources/js/app.js', 'public/dist/js/').vue().svgVue({
     svgPath: 'modules/Frontend/resources/layout/src/svg',
 }).sourceMaps().version()
 

@@ -36,7 +36,7 @@
                             <div class="chat-user-info">
                                 <div class="chat-user-name chat-text-max">{{ chat.name }}</div>
                                 <span class="chat-message-date">
-                                    {{ chat.lastMessage.created_at | moment('MMM D') }}
+                                    {{ dayjs(chat.lastMessage.created_at).format('MMM D') }}
                                 </span>
                             </div>
                             <div class="chat-users-last-text chat-text-max">
@@ -75,7 +75,7 @@
                         <div v-for="(message,i) in messages" class="chat-item">
                             <div v-if="newDay(message,i-1)"
                                  class="chat-message-date">
-                                {{ message.created_at | moment('MMMM D') }}
+                                {{ dayjs(message.created_at).format('MMMM D') }}
                             </div>
                             <div :class="[message.isOwner?'chat-message-item-my':'chat-message-item-user']"
                                  class="chat-message-item">
@@ -88,7 +88,7 @@
                                          v-html="parseLinks(message.text)"></div>
                                 </div>
                                 <div class="chat-message-date chat-message-time text-right">
-                                    {{ message.created_at | moment('HH:mm') }}
+                                    {{ dayjs(message.created_at).format('HH:mm') }}
                                 </div>
                             </div>
                         </div>

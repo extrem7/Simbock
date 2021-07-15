@@ -23,9 +23,11 @@
 </template>
 
 <script>
-import validation from "~/mixins/validation"
+import {BSpinner} from 'bootstrap-vue'
+import validation from '~/mixins/validation'
 
 export default {
+    components: {BSpinner},
     mixins: [validation],
     data: () => ({
         done: false,

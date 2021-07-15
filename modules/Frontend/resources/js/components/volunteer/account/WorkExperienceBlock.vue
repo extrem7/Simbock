@@ -26,9 +26,9 @@
                     <div class="sector-text-between">
                         <div class="sector-text small-size">{{ education.company }}</div>
                         <div class="sector-text small-size flex-shrink-0">
-                            {{ education.start | moment('MMM YYYY') }}
+                            {{ dayjs(education.start).format('MMM YYYY') }}
                             -
-                            <span v-if="education.end">{{ education.end | moment('MMM YYYY') }}</span>
+                            <span v-if="education.end">{{ dayjs(education.end).format('MMM YYYY') }}</span>
                             <span v-else>Current</span>
                         </div>
                     </div>

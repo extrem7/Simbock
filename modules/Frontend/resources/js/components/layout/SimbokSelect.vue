@@ -29,9 +29,11 @@
 </template>
 
 <script>
-import input from "~/mixins/input"
+import VSelect from 'vue-select'
+import input from '~/mixins/input'
 
 export default {
+    components: {VSelect},
     mixins: [input],
     props: {
         options: Array,

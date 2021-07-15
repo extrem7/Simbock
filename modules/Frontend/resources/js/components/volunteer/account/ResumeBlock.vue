@@ -28,7 +28,7 @@
                     <a :href="resume.url"
                        class="sector-text extra-small-size mt-1"
                        target="_blank">
-                        Added {{ resume.created_at | moment('d.m.YYYY, hh:ss') }}
+                        Added {{ dayjs(resume.created_at).format('d.m.YYYY, hh:ss') }}
                     </a>
                 </div>
             </div>

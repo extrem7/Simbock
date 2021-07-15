@@ -26,10 +26,12 @@
 </template>
 
 <script>
+import InputSearch from '~/components/layout/InputSearch'
 import vacanciesSearch from '~/mixins/vacancies-search'
 
 export default {
-    name: "VacanciesHomeForm",
+    name: 'VacanciesHomeForm',
+    components: {InputSearch},
     mixins: [vacanciesSearch]
 }
 </script>

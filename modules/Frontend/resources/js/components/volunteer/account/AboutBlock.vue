@@ -140,15 +140,14 @@
 </template>
 
 <script>
-import {mapState} from "vuex"
-import AvatarUploader from "./AvatarUploader"
-import locationService from "~/services/location"
-import volunteerBlock from "~/mixins/volunteerBlock"
+import InputTypeahead from '~/components/layout/InputTypeahead'
+import {mapState} from 'vuex'
+import AvatarUploader from './AvatarUploader'
+import locationService from '~/services/location'
+import volunteerBlock from '~/mixins/volunteerBlock'
 
 export default {
-    components: {
-        AvatarUploader
-    },
+    components: {AvatarUploader, InputTypeahead},
     mixins: [volunteerBlock],
     data() {
         const volunteer = this.shared('volunteer')
