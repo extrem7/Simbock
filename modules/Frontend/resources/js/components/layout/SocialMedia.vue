@@ -1,22 +1,71 @@
 <template>
     <div class="media-wrapper">
-        <a class="media-link" href="">
-            <svg-vue class="media-icon" icon="media-news"></svg-vue>
+        <a
+            :href="route('articles.index')"
+            class="media-link"
+        >
+            <SvgVue
+                class="media-icon"
+                icon="media-news"
+            />
         </a>
-        <a class="media-link" href="">
-            <svg-vue class="media-icon" icon="media-youtube"></svg-vue>
+        <a
+            :href="youtube"
+            class="media-link"
+            target="_blank"
+        >
+            <SvgVue
+                class="media-icon"
+                icon="media-youtube"
+            />
         </a>
-        <a class="media-link" href="">
-            <svg-vue class="media-icon" icon="media-facebook"></svg-vue>
+        <a
+            :href="facebook"
+            class="media-link"
+            target="_blank"
+        >
+            <SvgVue
+                class="media-icon"
+                icon="media-facebook"
+            />
         </a>
-        <a class="media-link" href="">
-            <svg-vue class="media-icon" icon="media-twitter"></svg-vue>
+        <a
+            :href="twitter"
+            class="media-link"
+            target="_blank"
+        >
+            <SvgVue
+                class="media-icon"
+                icon="media-twitter"
+            />
         </a>
-        <a class="media-link" href="https://www.instagram.com/simboka3k/" target="_blank">
-            <svg-vue class="media-icon" icon="media-instagramm"></svg-vue>
+        <a
+            :href="instagram"
+            class="media-link"
+            target="_blank"
+        >
+            <SvgVue
+                class="media-icon"
+                icon="media-instagramm"
+            />
         </a>
-        <a class="media-link" href="">
-            <svg-vue class="media-icon" icon="media-linkedin"></svg-vue>
+        <a
+            :href="linkedin"
+            class="media-link"
+            target="_blank"
+        >
+            <SvgVue
+                class="media-icon"
+                icon="media-linkedin"
+            />
         </a>
     </div>
 </template>
+
+<script>
+export default {
+    data() {
+        return {...this.shared('social')}
+    }
+}
+</script>
