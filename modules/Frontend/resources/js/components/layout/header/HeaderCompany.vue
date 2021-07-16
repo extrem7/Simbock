@@ -5,7 +5,7 @@
             <template v-slot:button-content>
                 <img alt="dots" class="dropdown-item-icon" src="/dist/img/icons/dots.svg">
             </template>
-            <BDropdownItem v-b-tooltip.hover.left :href="route('companies.self')" title="Company info">
+            <BDropdownItem v-b-tooltip.hover.left :href="route('companies.self')" title="Account">
                 <img alt="company" class="dropdown-item-icon" src="/dist/img/icons/company-profile.svg">
             </BDropdownItem>
             <BDropdownItem v-b-tooltip.hover.left
@@ -15,7 +15,7 @@
             </BDropdownItem>
             <BDropdownItem v-b-tooltip.hover.left
                            href="/help"
-                           title="Help and support">
+                           title="Help">
                 <img alt="support" class="dropdown-item-icon" src="/dist/img/icons/support.svg">
             </BDropdownItem>
             <BDropdownItem v-b-tooltip.hover.left

@@ -7,7 +7,7 @@
             <BTabs>
                 <RegisterForm
                     :is-active="!employer"
-                    title="I'm a Job Seeker"/>
+                    title="I'm a Seeker"/>
                 <RegisterForm
                     :is-active="employer"
                     is-company

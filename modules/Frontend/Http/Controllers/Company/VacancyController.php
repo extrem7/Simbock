@@ -27,7 +27,7 @@ class VacancyController extends Controller
 
     public function index(string $status = null)
     {
-        $this->seo()->setTitle('Volunteering Vacancies');
+        $this->seo()->setTitle('Vacancies');
 
         $company = Auth::getUser()->company->append('logo');
 

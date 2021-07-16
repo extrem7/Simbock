@@ -20,7 +20,7 @@
                             <a class="menu-link" href="">Enterprise Businesses</a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="">Sports & events</a>
+                            <a class="menu-link" href="">Sport & Events</a>
                         </li>
                     </ul>
                     <a :href="route('login')+'?employer'"

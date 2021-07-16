@@ -2,7 +2,7 @@
 
 @section('content')
     <main class="container content-inner">
-        <h1 class="title title-page title-line line-large mb-4">Volunteering Vacancies</h1>
+        <h1 class="title title-page title-line line-large mb-4">Vacancies</h1>
         <div class="row">
             <div class="offset-xl-1 col-xl-11">
                 <ul class="tabs-wrapper horizontal-scroll">

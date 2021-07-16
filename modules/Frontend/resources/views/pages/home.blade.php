@@ -4,9 +4,9 @@
     <main class="container content-inner">
         <div class="home-center-wrapper">
             <h1 class="title extra-large-size bold-weight text-center">
-                <span class="violet-color">Let's Find You a Place to Volunteer</span>
+                <span class="violet-color">Let's find you a place</span>
             </h1>
-            <div class="medium-size text-center mt-2">Any industry. Any location. Any experience level.</div>
+            <div class="medium-size text-center mt-2">Any industry, any location, any experience level.</div>
             <div class="search-form search-form-main">
                 <vacancies-home-form></vacancies-home-form>
             </div>
@@ -17,7 +17,8 @@
             <div class="row">
                 <div class="offset-xl-2 col-xl-8">
                     <div class="text-center">
-                        <div class="large-size semi-bold-weight">Let's work together in giving back to our societies
+                        <div class="large-size semi-bold-weight">Let's work together in giving back to this
+                            communities.
                         </div>
                         <div class="mt-4">Simboсk is here to encourage people to give back to the society by
                             volunteering

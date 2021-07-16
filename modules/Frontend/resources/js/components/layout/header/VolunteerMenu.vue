@@ -3,13 +3,13 @@
         <a v-b-tooltip.hover
            :href="route('vacancies.search',{types:8})"
            class="menu-account-link"
-           title="Sports and events volunteering">
+           title="Sport & Events">
             <SvgVue icon="cup"/>
         </a>
         <a v-b-tooltip.hover
            :href="route('vacancies.search')"
            class="menu-account-link"
-           title="Search for opportunities">
+           title="Recommended vacancy">
             <SvgVue icon="job"/>
         </a>
         <a v-b-tooltip.hover
@@ -22,7 +22,7 @@
            :class="{'has-message':unviewedMessages}"
            :href="route('chat.page')"
            class="menu-account-link link-stroke"
-           title="Messenger">
+           title="Messages">
             <SvgVue icon="chat"/>
         </a>
         <a v-b-tooltip.hover

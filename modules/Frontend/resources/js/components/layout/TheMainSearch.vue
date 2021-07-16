@@ -13,7 +13,7 @@
                         :options="jobs"
                         :value="query"
                         icon="search"
-                        placeholder="Job tittle or keyword"
+                        placeholder="Vacancy title or keyword"
                         @change="query = $event.trim()"/>
                 </div>
                 <div class="search-field-group search-form-item search-form-where">
@@ -30,7 +30,7 @@
                        v-b-tooltip.hover
                        class="btn btn-filter btn-rotate-icon btn-scale-active"
                        href="#"
-                       title="Filter results"
+                       title="Filter"
                        @click.prevent="filter">
                         <svg-vue icon="filter"></svg-vue>
                     </a>

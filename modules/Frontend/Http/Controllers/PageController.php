@@ -13,6 +13,10 @@ class PageController extends Controller
 {
     public function home()
     {
+        if ($user = \Auth::user()) {
+            return redirect(route($user->is_volunteer ? 'frontend.vacancies.search' : 'frontend.company.board'));
+        }
+
         $page = Page::find(1);
 
         $this->seo()->setTitle($page->meta_title ?? $page->title, false);

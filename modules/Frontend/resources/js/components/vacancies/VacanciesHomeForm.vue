@@ -6,7 +6,7 @@
                 :options="jobs"
                 :value="query"
                 icon="search"
-                placeholder="Job tittle or keyword"
+                placeholder="Vacancy title or keyword"
                 @change="query = $event.trim()"/>
         </div>
         <div class="search-field-group search-form-item search-form-where">

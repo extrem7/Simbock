@@ -8,7 +8,7 @@
             <BDropdownItem
                 :href="route('volunteer.account.form')"
                 v-b-tooltip.hover.left
-                title="Your account">
+                title="Account">
                 <img alt="company" class="dropdown-item-icon" src="/dist/img/icons/volunteer.svg">
             </BDropdownItem>
             <BDropdownItem
@@ -24,7 +24,7 @@
             </BDropdownItem>
             <BDropdownItem v-b-tooltip.hover.left
                            href="/help"
-                           title="Help and support">
+                           title="Help">
                 <img alt="support" class="dropdown-item-icon" src="/dist/img/icons/support.svg">
             </BDropdownItem>
             <TheLogout/>
