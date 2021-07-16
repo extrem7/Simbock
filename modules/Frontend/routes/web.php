@@ -242,4 +242,6 @@ Route::middleware('auth')->group(function () {
 
 Route::post('/contact-form', 'PageController@contactForm')->name('contact-form');
 
+Route::get('sitemap.xml', 'SitemapController');
+
 Route::get('/{pageModel:slug}', 'PageController@show')->name('pages.show');
