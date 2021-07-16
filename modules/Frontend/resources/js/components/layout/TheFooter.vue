@@ -10,52 +10,44 @@
                     <nav class="footer-nav">
                         <a :href="route('vacancies.search')"
                            class="footer-nav-link">Browse Jobs</a>
-                        <a :href="route('vacancies.search')"
-                           class="footer-nav-link">Job search</a>
-                        <a class="footer-nav-link" href="">From home</a>
-                        <a class="footer-nav-link" href="">Volunteering job categories</a>
-                        <a class="footer-nav-link" href="">Mobile Apps</a>
+                        <a class="footer-nav-link" href="/job-search">Job search</a>
+                        <a class="footer-nav-link" href="/from-home">From home</a>
+                        <a class="footer-nav-link" href="/volunteering-job-categories">Volunteering job categories</a>
+                        <a class="footer-nav-link" href="/mobile-apps">Mobile Apps</a>
                     </nav>
                 </div>
                 <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">Small & Medium Businesses</div>
                     <nav class="footer-nav">
-                        <a :href="route('login')+'?employer'" class="footer-nav-link">Post a need</a>
-                        <a class="footer-nav-link" href="">Find candidates</a>
-                        <a class="footer-nav-link" href="">Plans</a>
-                        <a class="footer-nav-link" href="">How it works</a>
-                        <a class="footer-nav-link" href="">Mobile Apps</a>
+                        <a class="footer-nav-link" href="/post-a-need">Post a need</a>
+                        <a class="footer-nav-link" href="/find-candidates">Find candidates</a>
+                        <a class="footer-nav-link" href="/plans">Plans</a>
+                        <a class="footer-nav-link" href="/how-it-works">How it works</a>
+                        <a class="footer-nav-link" href="/mobile-apps">Mobile Apps</a>
                     </nav>
                     <div class="footer-title semi-bold-weight small-size">For Employers</div>
                     <nav class="footer-nav">
-                        <a :href="route('login')+'?employer'" class="footer-nav-link">Post a need</a>
-                        <a class="footer-nav-link" href="">Find candidates</a>
-                        <a class="footer-nav-link" href="">Plans</a>
-                        <a class="footer-nav-link" href="">How it works</a>
-                        <a class="footer-nav-link" href="">Mobile Apps</a>
+                        <a class="footer-nav-link" href="/for-employers">Post a need</a>
+                        <a class="footer-nav-link" href="/find-candidates">Find candidates</a>
+                        <a class="footer-nav-link" href="/plans-for-employers">Plans</a>
+                        <a class="footer-nav-link" href="/how-it-works-for-employers">How it works</a>
+                        <a class="footer-nav-link" href="/mobile-apps">Mobile Apps</a>
                     </nav>
                 </div>
                 <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">Company</div>
                     <nav class="footer-nav">
-                        <a class="footer-nav-link" href="/about">About us</a>
-                        <a class="footer-nav-link" href="/our-vacancies">Careers</a>
+                        <a class="footer-nav-link" href="/about-us">About us</a>
+                        <a class="footer-nav-link" href="/careers">Careers</a>
                         <a :href="route('articles.index')"
                            class="footer-nav-link">Newsroom</a>
                         <a class="footer-nav-link" href="/help">Help</a>
-                        <a class="footer-nav-link" href="">Site Map</a>
-                        <a class="footer-nav-link" href="">Partners</a>
-                        <a class="footer-nav-link" href="">Donate</a>
-                        <a class="footer-nav-link" href="">For investors</a>
-                        <a class="footer-nav-link" href="">Advertising</a>
-                        <a class="footer-nav-link" href="">Simbock international</a>
-                    </nav>
-                </div>
-                <div class="col-md-3 col-6">
-                    <div class="footer-title semi-bold-weight small-size">Helpful Resources</div>
-                    <nav class="footer-nav">
-                        <a class="footer-nav-link" href="/help">Contact Us</a>
-                        <a class="footer-nav-link" href="/policies">Terms of Use</a>
+                        <a class="footer-nav-link" href="/">Site Map</a>
+                        <a class="footer-nav-link" href="/partners">Partners</a>
+                        <a class="footer-nav-link" href="/donate">Donate</a>
+                        <a class="footer-nav-link" href="/for-investors">For investors</a>
+                        <a class="footer-nav-link" href="/advertising">Advertising</a>
+                        <a class="footer-nav-link" href="/simbock-international">Simbock international</a>
                     </nav>
                 </div>
                 <div class="col-12 text-center mt-3">

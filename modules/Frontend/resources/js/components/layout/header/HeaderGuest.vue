@@ -11,16 +11,16 @@
                 <div :class="{'is-open-menu' : isOpenMenuMobile}" class="header-menu-wrapper">
                     <ul class="menu">
                         <li class="menu-item">
-                            <a class="menu-link" href="">For Seekers</a>
+                            <a class="menu-link" href="/for-seekers">For Seekers</a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="">Small & Medium Businesses</a>
+                            <a class="menu-link" href="/small-medium-businesses">Small & Medium Businesses</a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="">Enterprise Businesses</a>
+                            <a class="menu-link" href="/enterprise-businesses">Enterprise Businesses</a>
                         </li>
                         <li class="menu-item">
-                            <a class="menu-link" href="">Sport & Events</a>
+                            <a class="menu-link" href="/sports-events">Sport & Events</a>
                         </li>
                     </ul>
                     <a :href="route('login')+'?employer'"
