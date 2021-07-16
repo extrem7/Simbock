@@ -1,2 +1,6 @@
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /index.php
+Disallow: /index.php/*
+
+Sitemap: https://simbock.com/sitemap.xml
