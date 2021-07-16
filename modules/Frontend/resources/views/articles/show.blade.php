@@ -36,3 +36,7 @@
         </article>
     </main>
 @endsection
+
+@push('scripts')
+    {!!$articleSchema!!}
+@endpush

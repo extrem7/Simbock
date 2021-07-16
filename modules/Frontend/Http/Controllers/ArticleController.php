@@ -6,6 +6,7 @@ use App\Models\Blog\Article;
 use App\Models\Blog\Category;
 use Modules\Frontend\Http\Resources\ArticleResource;
 use Modules\Frontend\Repositories\ArticleRepository;
+use Spatie\SchemaOrg\Schema;
 
 class ArticleController extends Controller
 {
@@ -45,7 +46,19 @@ class ArticleController extends Controller
     {
         $this->seo()->setTitle("$article->title | Newsroom");
 
+        $articleSchema = Schema::blogPosting()
+            ->headline($article->title)
+            ->image($article->image)
+            ->url($article->link)
+            ->articleBody($article->body)
+            ->datePublished($article->created_at)
+            ->dateModified($article->updated_at)
+            ->author(Schema::person()->name('Simbock'))
+            ->publisher(Schema::organization()
+                ->name('Simbock')
+                ->logo(Schema::imageObject()->url(asset('dist/img/logo.svg'))));
+
         $categories = $this->repository->getCategories($category);
-        return view('frontend::articles.show', compact('categories', 'category', 'article'));
+        return view('frontend::articles.show', compact('categories', 'category', 'article', 'articleSchema'));
     }
 }
