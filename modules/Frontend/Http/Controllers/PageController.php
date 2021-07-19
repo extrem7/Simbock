@@ -50,12 +50,6 @@ class PageController extends Controller
         return view('frontend::pages.work');
     }
 
-    public function help(Page $page)
-    {
-        share(['title' => $page->title]);
-        return view('frontend::pages.help');
-    }
-
     public function show(Page $pageModel)
     {
         $page = $pageModel;
@@ -66,6 +60,7 @@ class PageController extends Controller
         }
 
         share([
+            'title' => $page->title,
             'content' => $page->body
         ]);
 
@@ -78,7 +73,12 @@ class PageController extends Controller
         \Route2Class::addClass('bg-linear-gradient');
 
         if ($page->id === 5 || $page->slug === 'help') {
-            return $this->help($page);
+            $view = 'help';
+        }
+
+        if ($page->slug === 'sitemap') {
+            \Route2Class::addClass('page-sitemap');
+            $view = 'sitemap';
         }
 
         if ($page->id === 0) {

@@ -1,8 +1,9 @@
 export default {
     RegisterPage: () => import('./auth/Register'),
 
-    WorkPage: () => import('./Work'),
-    HelpPage: () => import('./Help'),
+    WorkPage: () => import('./static/Work'),
+    HelpPage: () => import('./static/Help'),
+    SitemapPage: () => import('./static/Sitemap'),
 
     VolunteerShowPage: () => import('./volunteer/Show'),
     VolunteerCompaniesPage: () => import('./volunteer/Companies'),
@@ -18,5 +19,5 @@ export default {
 
     ChatPage: () => import('./Chat'),
 
-    DefaultPage: () => import('./Default'),
+    DefaultPage: () => import('./static/Default'),
 }

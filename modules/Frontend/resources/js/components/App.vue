@@ -18,7 +18,7 @@
                 v-else
                 class="menu-account-fixed"/>
         </div>
-        <TheFooter/>
+        <TheFooter v-if="showFooter"/>
         <button :class="{'active' : scrolled}"
                 class="btn btn-up btn-scale-active"
                 @click="scrollToHeader">
@@ -36,7 +36,6 @@ import AlertNotification from './includes/AlertNotification'
 import ChatNotifications from './ChatNotifications'
 
 export default {
-    name: 'App',
     components: {
         HeaderGuest,
         HeaderVolunteer: () => import('./layout/header/HeaderVolunteer'),
@@ -57,7 +56,8 @@ export default {
             isSearch: this.routeIncludes([
                 'vacancies.search', 'vacancies.saved', 'vacancies.history', 'vacancies.companies',
                 'volunteers.search', 'volunteers.saved', 'volunteers.candidates'
-            ])
+            ]),
+            showFooter: !location.href.includes('sitemap')
         }
     },
     computed: {

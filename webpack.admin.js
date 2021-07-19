@@ -13,7 +13,7 @@ mix.options({processCssUrls: false})
 
 mix.sass('modules/Admin/resources/scss/app.scss', 'public/admin/css').version().sourceMaps()
 
-mix.js('modules/Admin/resources/js/app.js', 'public/admin/js').svgVue({svgPath: 'modules/Admin/resources/assets/svg'}).version().sourceMaps()
+mix.js('modules/Admin/resources/js/app.js', 'public/admin/js').vue().svgVue({svgPath: 'modules/Admin/resources/assets/svg'}).version().sourceMaps()
 
 mix.copy('node_modules/pace-js/themes/blue/pace-theme-minimal.css', 'public/admin/css/pace.css')
 mix.copy('node_modules/pace-js/pace.min.js', 'public/admin/js/pace.js')

@@ -4,7 +4,7 @@
             <div v-if="!isAccount" class="text-center">
                 <img alt="logo-footer" class="footer-logo" src="/dist/img/logo.svg">
             </div>
-            <div v-if="!isAccount" class="row mt-4">
+            <div v-if="!isAccount" class="row justify-content-center text-center mt-4">
                 <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">For volunteers</div>
                     <nav class="footer-nav">
@@ -42,7 +42,7 @@
                         <a :href="route('articles.index')"
                            class="footer-nav-link">Newsroom</a>
                         <a class="footer-nav-link" href="/help">Help</a>
-                        <a class="footer-nav-link" href="/">Site Map</a>
+                        <a class="footer-nav-link" href="/sitemap">Site Map</a>
                         <a class="footer-nav-link" href="/partners">Partners</a>
                         <a class="footer-nav-link" href="/donate">Donate</a>
                         <a class="footer-nav-link" href="/for-investors">For investors</a>
