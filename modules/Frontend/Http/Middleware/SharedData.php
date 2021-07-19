@@ -10,6 +10,8 @@ class SharedData
 {
     public function handle(Request $request, Closure $next)
     {
+        $shared = ['social' => config('frontend.social')];
+
         if (!$request->expectsJson() && $request->isMethod('GET') && $user = Auth::user()) {
             $user->load(['company', 'volunteer'])->append(['is_volunteer']);
             if ($user->company) {
@@ -25,10 +27,12 @@ class SharedData
 
             share([
                 'user' => $userData,
-                'unviewedMessages' => $unviewedMessages ?? 0,
-                'social' => config('frontend.social')
+                'unviewedMessages' => $unviewedMessages ?? 0
             ]);
         }
+
+        share($shared);
+
         return $next($request);
     }
 }
