@@ -21,7 +21,8 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
-        $this->seo()->setTitle('Register');
+        $this->seo()->setTitle(__('meta.register.title'));
+        $this->seo()->setDescription(__('meta.register.description'));
 
         \Route2Class::addClass('bg-decorative');
 

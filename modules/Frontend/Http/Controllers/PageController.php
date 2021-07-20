@@ -54,7 +54,7 @@ class PageController extends Controller
     {
         $page = $pageModel;
 
-        $this->seo()->setTitle($page->meta_title ?? $page->title);
+        $this->seo()->setTitle($page->meta_title ?? $page->title, false);
         if ($description = $page->meta_description) {
             $this->seo()->setDescription($description);
         }

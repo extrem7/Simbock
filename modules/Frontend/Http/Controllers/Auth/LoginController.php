@@ -24,7 +24,8 @@ class LoginController extends Controller
 
     public function showLoginForm()
     {
-        $this->seo()->setTitle('Login');
+        $this->seo()->setTitle(__('meta.login.title'));
+        $this->seo()->setDescription(__('meta.login.description'));
 
         Route2Class::addClass('bg-decorative');
 

@@ -37,11 +37,11 @@ class VacancyController extends Controller
         $locations = [];
 
         if ($location) {
-            $title .= " in $location";
             $locations = $locationService->parseLocation($location);
         }
 
-        $this->seo()->setTitle("$title | Vacancies");
+        $this->seo()->setTitle(__('meta.vacancies.index.title'));
+        $this->seo()->setDescription(__('meta.vacancies.index.description'));
 
         $filters = $request->validated();
 
@@ -95,7 +95,11 @@ class VacancyController extends Controller
             }
         }
 
-        $this->seo()->setTitle("$vacancy->title | Vacancies");
+        $this->seo()->setTitle(__('meta.vacancies.show.title', ['name' => $vacancy->title]));
+        $this->seo()->setDescription(__('meta.vacancies.show.description', [
+            'name' => $vacancy->title,
+            'location' => "{$vacancy->city->name}, {$vacancy->city->state_id} "
+        ]));
 
         $vacancy->load('company.logoMedia', 'city', 'hours', 'benefits', 'incentives', 'skills');
         $vacancy->append(['employment', 'date', 'location', 'is_applied', 'in_bookmarks']);

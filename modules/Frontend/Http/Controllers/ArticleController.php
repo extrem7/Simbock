@@ -19,9 +19,14 @@ class ArticleController extends Controller
 
     public function index(Category $category = null)
     {
-        $title = 'Newsroom';
-        if ($category) $title = "$category->name | $title";
+        $title = __('meta.blog.index.title');
+        $description = __('meta.blog.index.description');
+        if ($category) {
+            $title = __('meta.blog.category.title', ['name' => $category->name]);
+            $description = __('meta.blog.category.description', ['name' => $category->name]);
+        }
         $this->seo()->setTitle($title);
+        $this->seo()->setDescription($description);
 
         $query = $category ? $category->articles() : Article::query();
 
@@ -44,7 +49,8 @@ class ArticleController extends Controller
 
     public function show(Category $category, Article $article)
     {
-        $this->seo()->setTitle("$article->title | Newsroom");
+        $this->seo()->setTitle($article->title);
+        $this->seo()->setDescription(__('meta.blog.show.description', ['name' => $article->title]));
 
         $articleSchema = Schema::blogPosting()
             ->headline($article->title)
