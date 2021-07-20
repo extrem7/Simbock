@@ -49,8 +49,8 @@ class ArticleController extends Controller
 
     public function show(Category $category, Article $article)
     {
-        $this->seo()->setTitle($article->title);
-        $this->seo()->setDescription(__('meta.blog.show.description', ['name' => $article->title]));
+        $this->seo()->setTitle($article->meta_title ?? "$article->title | Simbock", false);
+        $this->seo()->setDescription($article->meta_description ?? __('meta.blog.show.description', ['name' => $article->title]));
 
         $articleSchema = Schema::blogPosting()
             ->headline($article->title)
