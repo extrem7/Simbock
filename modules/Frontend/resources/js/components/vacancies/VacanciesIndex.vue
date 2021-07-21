@@ -43,7 +43,7 @@
                     </BAlert>
                 </div>
                 <div class="col-xl-4 mt-4 mt-xl-0">
-                    <div class="simbok-banner">
+                    <div class="simbok-banner d-none">
                         <img alt="" class="i-amphtml-fill-content i-amphtml-replaced-content" decoding="async"
                              src="https://tpc.googlesyndication.com/simgad/173663363447728466?sqp=4sqPyQQ7QjkqNxABHQAAtEIgASgBMAk4A0DwkwlYAWBfcAKAAQGIAQGdAQAAgD-oAQGwAYCt4gS4AV_FAS2ynT4&amp;rs=AOga4qnCv7URJOJbJAOsv9i0WVj6iXmNQw">
                     </div>
