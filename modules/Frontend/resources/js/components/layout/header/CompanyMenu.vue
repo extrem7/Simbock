@@ -28,8 +28,8 @@
          :class="{'has-message':unviewedMessages}"
          :href="route('chat.page')"
          class="menu-account-link link-stroke"
-         title="ChatMessages">
-        <SvgVue icon="chat"/>
+         title="Chat">
+          <SvgVue icon="chat"/>
       </a>
       <a v-b-tooltip.hover
          :href="route('volunteers.search')"
@@ -37,12 +37,12 @@
          title="Search candidates">
         <SvgVue icon="file"/>
       </a>
-      <a v-b-tooltip.hover
-         :href="route('company.volunteers.saved')"
-         class="menu-account-link link-stroke"
-         title="Saved Candidates">
-        <SvgVue icon="box"/>
-      </a>
+        <a v-b-tooltip.hover
+           :href="route('company.volunteers.saved')"
+           class="menu-account-link link-stroke"
+           title="Saved candidates">
+            <SvgVue icon="box"/>
+        </a>
     </nav>
 </template>
 

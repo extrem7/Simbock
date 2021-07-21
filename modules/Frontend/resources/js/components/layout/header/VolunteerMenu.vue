@@ -22,7 +22,7 @@
            :class="{'has-message':unviewedMessages}"
            :href="route('chat.page')"
            class="menu-account-link link-stroke"
-           title="Messages">
+           title="Chat">
             <SvgVue icon="chat"/>
         </a>
         <a v-b-tooltip.hover

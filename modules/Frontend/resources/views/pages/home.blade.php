@@ -6,8 +6,8 @@
             <h1 class="title extra-large-size bold-weight text-center">
                 <span class="violet-color">Let's find you a place</span>
             </h1>
-            <div class="medium-size text-center mt-2">Any industry, any location, any experience level.</div>
-            <div class="search-form search-form-main">
+            <div class="medium-size text-center mt-2">any industry, any location, any experience level.</div>
+            <div class="search-form search-form-main mt-0">
                 <vacancies-home-form></vacancies-home-form>
             </div>
         </div>

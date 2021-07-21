@@ -25,12 +25,12 @@
                     </ul>
                     <a :href="route('login')+'?employer'"
                        class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140">
-                        Post a need
+                        Post vacancy
                     </a>
                 </div>
                 <a :href="route('register')+'?employer'"
                    class="btn btn-outline-violet violet-color medium-weight btn-sm min-width-140 hidden-md">
-                    Post a need
+                    Post vacancy
                 </a>
                 <a :href="route('login')" class="header-link-sign header-link link-inherit small-size">
                     <svg-vue class="mr-1" icon="login"></svg-vue>

@@ -1,7 +1,7 @@
 <template>
     <VolunteersIndex
         :enable-filter="false"
-        title="Saved Candidates"/>
+        title="Saved candidates"/>
 </template>
 
 <script>
