@@ -4,7 +4,7 @@
             <div v-if="!isAccount" class="text-center">
                 <img alt="logo-footer" class="footer-logo" src="/dist/img/logo.svg">
             </div>
-            <div v-if="!isAccount" class="row justify-content-center text-center mt-4">
+            <div v-if="!isAccount" class="row text-center mt-4">
                 <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">For volunteers</div>
                     <nav class="footer-nav">
@@ -19,15 +19,17 @@
                 <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">Small & Medium Businesses</div>
                     <nav class="footer-nav">
-                        <a class="footer-nav-link" href="/post-a-need">Post a need</a>
+                        <a class="footer-nav-link" href="/post-a-need">Post vacancy</a>
                         <a class="footer-nav-link" href="/find-candidates">Find candidates</a>
                         <a class="footer-nav-link" href="/plans">Plans</a>
                         <a class="footer-nav-link" href="/how-it-works">How it works</a>
                         <a class="footer-nav-link" href="/mobile-apps">Mobile Apps</a>
                     </nav>
+                </div>
+                <div class="col-md-3 col-6">
                     <div class="footer-title semi-bold-weight small-size">For Employers</div>
                     <nav class="footer-nav">
-                        <a class="footer-nav-link" href="/for-employers">Post a need</a>
+                        <a class="footer-nav-link" href="/for-employers">Post vacancy</a>
                         <a class="footer-nav-link" href="/find-candidates">Find candidates</a>
                         <a class="footer-nav-link" href="/plans-for-employers">Plans</a>
                         <a class="footer-nav-link" href="/how-it-works-for-employers">How it works</a>
