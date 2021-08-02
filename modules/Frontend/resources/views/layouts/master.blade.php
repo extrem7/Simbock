@@ -31,7 +31,7 @@
                 j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''
             j.async = true
             j.src =
-                'googletagmanager.com/gtm.js?id=' + i + dl
+                'https://www.googletagmanager.com/gtm.js?id=' + i + dl
             f.parentNode.insertBefore(j, f)
         })(window, document, 'script', 'dataLayer', 'GTM-5SPK2PM')</script>
     <!-- End Google Tag Manager -->
