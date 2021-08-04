@@ -54,4 +54,5 @@
             </div>
         </div>
     </section>
+    <seo-text></seo-text>
 @endsection

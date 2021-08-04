@@ -23,7 +23,9 @@ export default {
     PasswordChangeForm: () => import('./auth/PasswordChange'),
     SubscriptionManagement: () => import('./company/SubscriptionManagement'),
 
-    ChatNotifications: () => import('./ChatNotifications')
+    ChatNotifications: () => import('./ChatNotifications'),
+
+    SeoText: () => import('./SeoText')
 }
 
 Vue.component('SimbokSelect', () => import('./layout/SimbokSelect'))
