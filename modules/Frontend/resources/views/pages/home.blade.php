@@ -17,9 +17,7 @@
             <div class="row">
                 <div class="offset-xl-2 col-xl-8">
                     <div class="text-center">
-                        <div class="large-size semi-bold-weight">
-                            Let's work together in giving back to this communities. > Let’s work together to give back
-                            to the community.
+                        <div class="large-size semi-bold-weight">Let’s work together to give back to the community.
                         </div>
                         <div class="mt-4">
                             Simboсk is here to encourage people to give back to society by volunteering and acting as
