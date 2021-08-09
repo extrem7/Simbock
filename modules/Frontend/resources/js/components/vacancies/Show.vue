@@ -23,7 +23,7 @@
                         <div class="sector-label">Job Description</div>
                         <div class="item-box">
                             <div class="sector-body">
-                                <div class="sector-body-inner dynamic-sector-text">{{ vacancy.description }}</div>
+                                <div class="sector-body-inner dynamic-sector-text" v-html="nToBr(vacancy.description)"/>
                             </div>
                         </div>
                     </div>
@@ -90,10 +90,10 @@
 </template>
 
 <script>
-import Vue from "vue"
-import AccessBox from "~/components/layout/AccessBox"
-import HistoryBack from "~/components/layout/HistoryBack"
-import VacancyCard from "./VacancyCard"
+import Vue from 'vue'
+import AccessBox from '~/components/layout/AccessBox'
+import HistoryBack from '~/components/layout/HistoryBack'
+import VacancyCard from './VacancyCard'
 
 
 export default {
@@ -127,6 +127,9 @@ export default {
             const fields = ['id', 'title', 'location', 'employment', 'date', 'company', 'company_title']
             for (let field of fields) props[field] = vacancy[field]
             return props
+        },
+        nToBr(text) {
+            return text.replace(/(?:\r\n|\r|\n)/g, '<br>')
         }
     }
 }
