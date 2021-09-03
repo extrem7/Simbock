@@ -39,8 +39,7 @@ beyondcode/laravel-websockets | ^1.9 |
 ### JS
 
 Name | version
---- | --- | 
-laravel/framework | ^7.24
+--- | --- |
 bootstrap-vue | ^2.2.2
 vue | ^2.5.17
 vue-stripe-checkout | ^3.5.14-beta.0
